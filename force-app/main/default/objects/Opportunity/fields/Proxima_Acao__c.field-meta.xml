@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Proxima_Acao__c</fullName>
-    <description>Responde a PP8: nenhuma negociacao fica sem se saber o que fazer a seguir, mesmo passando meses.</description>
-    <label>Próxima Ação</label>
-    <length>255</length>
-    <required>false</required>
-    <type>Text</type>
-</CustomField>

@@ -13,8 +13,7 @@
         <picklistValueName>Interesse Registado</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
-        <fieldNames>Proxima_Acao__c</fieldNames>
-        <fieldNames>Proxima_Acao_Data__c</fieldNames>
+        <fieldNames>NextStep</fieldNames>
         <info>Escreve nas Notas e Preferências do cliente o que ele disse na visita, sobretudo o que rejeitou e porquê. É esse detalhe que permite sugerir o imóvel certo a seguir. Agenda o follow-up antes de sair.</info>
         <picklistValueName>Visita Realizada</picklistValueName>
     </pathAssistantSteps>
@@ -34,7 +33,7 @@
         <picklistValueName>Escritura Realizada</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
-        <fieldNames>Proxima_Acao__c</fieldNames>
+        <fieldNames>NextStep</fieldNames>
         <info>Regista o motivo real da perda: preço, financiamento, ou concorrência. Um cliente perdido por preço volta daqui a seis meses — mantém-no na carteira com o perfil atualizado.</info>
         <picklistValueName>Perdido</picklistValueName>
     </pathAssistantSteps>

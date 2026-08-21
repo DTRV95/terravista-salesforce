@@ -12,8 +12,7 @@
         <picklistValueName>Interesse Registado</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
-        <fieldNames>Proxima_Acao__c</fieldNames>
-        <fieldNames>Proxima_Acao_Data__c</fieldNames>
+        <fieldNames>NextStep</fieldNames>
         <info>Visita feita. Reúne já a documentação do inquilino — recibos de vencimento, fiador, IRS. É o que atrasa os arrendamentos, não a decisão.</info>
         <picklistValueName>Visita Realizada</picklistValueName>
     </pathAssistantSteps>
@@ -28,7 +27,7 @@
         <picklistValueName>Contrato Assinado</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
-        <fieldNames>Proxima_Acao__c</fieldNames>
+        <fieldNames>NextStep</fieldNames>
         <info>Regista o motivo. Se foi por documentação em falta, o cliente pode voltar preparado — não o percas.</info>
         <picklistValueName>Perdido</picklistValueName>
     </pathAssistantSteps>

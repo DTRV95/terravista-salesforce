@@ -13,16 +13,14 @@
         <picklistValueName>Contacto Inicial</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
-        <fieldNames>Proxima_Acao__c</fieldNames>
-        <fieldNames>Proxima_Acao_Data__c</fieldNames>
+        <fieldNames>NextStep</fieldNames>
         <info>Confirma no PDM a classificação do solo e a área bruta de construção admissível, e regista-as no imóvel. É esse número que determina o valor para uma construtora — sem ele, a negociação é a olho.</info>
         <picklistValueName>Avaliacao de Viabilidade</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
         <fieldNames>Amount</fieldNames>
         <fieldNames>CloseDate</fieldNames>
-        <fieldNames>Proxima_Acao__c</fieldNames>
-        <fieldNames>Proxima_Acao_Data__c</fieldNames>
+        <fieldNames>NextStep</fieldNames>
         <info>Negociações de terreno arrastam-se meses. A Próxima Ação e a sua data são obrigatórias aqui: são a única defesa contra um processo que adormece sem ninguém dar por isso.</info>
         <picklistValueName>Negociacao</picklistValueName>
     </pathAssistantSteps>
@@ -36,7 +34,7 @@
         <picklistValueName>Escritura Realizada</picklistValueName>
     </pathAssistantSteps>
     <pathAssistantSteps>
-        <fieldNames>Proxima_Acao__c</fieldNames>
+        <fieldNames>NextStep</fieldNames>
         <info>Regista porque caiu: preço, viabilidade construtiva ou desistência do proprietário. Terrenos inviabilizados hoje mudam de estatuto quando o PDM é revisto.</info>
         <picklistValueName>Perdido</picklistValueName>
     </pathAssistantSteps>
