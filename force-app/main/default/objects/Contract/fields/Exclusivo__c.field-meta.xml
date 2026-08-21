@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exclusivo__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Regime de exclusividade do contrato de mediação (CMI em regime de exclusividade).</description>
+    <label>Exclusivo</label>
+    <type>Checkbox</type>
+</CustomField>

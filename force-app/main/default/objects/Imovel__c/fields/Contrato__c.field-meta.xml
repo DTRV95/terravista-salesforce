@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contrato__c</fullName>
+    <description>Contrato de Mediação Imobiliária ao abrigo do qual este imóvel é comercializado. Master-Detail para permitir Roll-Up Summary nativo no Contract.</description>
+    <label>Contrato de Mediação</label>
+    <referenceTo>Contract</referenceTo>
+    <relationshipLabel>Imóveis</relationshipLabel>
+    <relationshipName>Imoveis</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>true</reparentableMasterDetail>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>
