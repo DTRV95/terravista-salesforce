@@ -2,7 +2,7 @@
 <BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Venda_Terreno</fullName>
     <isActive>true</isActive>
-    <values><fullName>Contacto Inicial</fullName><default>true</default></values>
+    <values><fullName>Contacto Inicial</fullName><default>false</default></values>
     <values><fullName>Avaliacao de Viabilidade</fullName><default>false</default></values>
     <values><fullName>Negociacao</fullName><default>false</default></values>
     <values><fullName>CPCV Assinado</fullName><default>false</default></values>
