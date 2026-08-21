@@ -63,7 +63,9 @@
                     <behavior>Edit</behavior>
                     <field>Orcamento_Max__c</field>
                 </layoutItems>
-                <emptySpace>true</emptySpace>
+                <layoutItems>
+                    <emptySpace>true</emptySpace>
+                </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

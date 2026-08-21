@@ -74,7 +74,9 @@
                     <behavior>Readonly</behavior>
                     <field>Percentagem_Comercializada__c</field>
                 </layoutItems>
-                <emptySpace>true</emptySpace>
+                <layoutItems>
+                    <emptySpace>true</emptySpace>
+                </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -98,7 +100,9 @@
                     <behavior>Readonly</behavior>
                     <field>EndDate</field>
                 </layoutItems>
-                <emptySpace>true</emptySpace>
+                <layoutItems>
+                    <emptySpace>true</emptySpace>
+                </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
