@@ -111,10 +111,10 @@
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <relatedLists>
-        <fields>NAME</fields>
-        <fields>StageName</fields>
-        <fields>Amount</fields>
-        <fields>CloseDate</fields>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.AMOUNT</fields>
+        <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <relatedList>Opportunity.Imovel__c</relatedList>
     </relatedLists>
 </Layout>
