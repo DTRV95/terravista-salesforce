@@ -59,6 +59,10 @@
                     <behavior>Readonly</behavior>
                     <field>Comissao_Terravista__c</field>
                 </layoutItems>
+                <layoutItems>
+                    <behavior>Readonly</behavior>
+                    <field>Probability</field>
+                </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
