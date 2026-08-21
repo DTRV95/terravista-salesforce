@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Venda_Habitacao</fullName>
+    <active>true</active>
+    <entityName>Opportunity</entityName>
+    <fieldName>StageName</fieldName>
+    <masterLabel>Venda de Habitação</masterLabel>
+    <recordTypeName>Venda_Habitacao</recordTypeName>
+    <pathAssistantSteps>
+        <fieldNames>Imovel__c</fieldNames>
+        <fieldNames>Linha_Negocio__c</fieldNames>
+        <info>Regista o imóvel de interesse e a origem do contacto. Confirma o orçamento e as zonas na ficha do cliente antes da visita — evita repetir perguntas já feitas.</info>
+        <picklistValueName>Interesse Registado</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Proxima_Acao__c</fieldNames>
+        <fieldNames>Proxima_Acao_Data__c</fieldNames>
+        <info>Escreve nas Notas e Preferências do cliente o que ele disse na visita, sobretudo o que rejeitou e porquê. É esse detalhe que permite sugerir o imóvel certo a seguir. Agenda o follow-up antes de sair.</info>
+        <picklistValueName>Visita Realizada</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Amount</fieldNames>
+        <fieldNames>CloseDate</fieldNames>
+        <info>Regista o valor proposto, que pode diferir do preço pedido. Confirma a situação de financiamento do comprador — é a causa mais comum de negócios que caem depois do CPCV.</info>
+        <picklistValueName>Proposta Apresentada</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>CloseDate</fieldNames>
+        <info>Contrato-promessa assinado e sinal pago. Atualiza o Estado Comercial do imóvel para Reservado e avisa a angariação de que sai do mercado.</info>
+        <picklistValueName>CPCV Assinado</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>Escritura feita. O imóvel passa a Vendido e a comissão entra no cálculo do mês. Pede referência ou testemunho ao cliente enquanto a experiência é recente.</info>
+        <picklistValueName>Escritura Realizada</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Proxima_Acao__c</fieldNames>
+        <info>Regista o motivo real da perda: preço, financiamento, ou concorrência. Um cliente perdido por preço volta daqui a seis meses — mantém-no na carteira com o perfil atualizado.</info>
+        <picklistValueName>Perdido</picklistValueName>
+    </pathAssistantSteps>
+</PathAssistant>

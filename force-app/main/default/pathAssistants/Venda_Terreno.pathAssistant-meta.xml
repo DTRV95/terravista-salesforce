@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Venda_Terreno</fullName>
+    <active>true</active>
+    <entityName>Opportunity</entityName>
+    <fieldName>StageName</fieldName>
+    <masterLabel>Venda de Terreno</masterLabel>
+    <recordTypeName>Venda_Terreno</recordTypeName>
+    <pathAssistantSteps>
+        <fieldNames>Imovel__c</fieldNames>
+        <fieldNames>Linha_Negocio__c</fieldNames>
+        <info>Antes de contactar, verifica os critérios registados na ficha do comprador: tipo de solo, ABC mínima e zonas. Oferecer um terreno que não encaixa no perfil queima crédito para a próxima.</info>
+        <picklistValueName>Contacto Inicial</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Proxima_Acao__c</fieldNames>
+        <fieldNames>Proxima_Acao_Data__c</fieldNames>
+        <info>Confirma no PDM a classificação do solo e a área bruta de construção admissível, e regista-as no imóvel. É esse número que determina o valor para uma construtora — sem ele, a negociação é a olho.</info>
+        <picklistValueName>Avaliacao de Viabilidade</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Amount</fieldNames>
+        <fieldNames>CloseDate</fieldNames>
+        <fieldNames>Proxima_Acao__c</fieldNames>
+        <fieldNames>Proxima_Acao_Data__c</fieldNames>
+        <info>Negociações de terreno arrastam-se meses. A Próxima Ação e a sua data são obrigatórias aqui: são a única defesa contra um processo que adormece sem ninguém dar por isso.</info>
+        <picklistValueName>Negociacao</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>CloseDate</fieldNames>
+        <info>Promessa assinada, normalmente com condição suspensiva de licenciamento. Regista a condição e o prazo na Próxima Ação.</info>
+        <picklistValueName>CPCV Assinado</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>Escritura feita. Se o comprador é construtora, este terreno pode voltar como empreendimento a comercializar — regista essa intenção na conta agora, enquanto a relação está quente.</info>
+        <picklistValueName>Escritura Realizada</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Proxima_Acao__c</fieldNames>
+        <info>Regista porque caiu: preço, viabilidade construtiva ou desistência do proprietário. Terrenos inviabilizados hoje mudam de estatuto quando o PDM é revisto.</info>
+        <picklistValueName>Perdido</picklistValueName>
+    </pathAssistantSteps>
+</PathAssistant>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Localizacao__c</fullName>
+    <description>Freguesia e concelho. Criterio central de matching com o perfil de procura.</description>
+    <label>Localização</label>
+    <length>150</length>
+    <required>false</required>
+    <type>Text</type>
+</CustomField>

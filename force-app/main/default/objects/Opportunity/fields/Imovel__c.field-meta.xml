@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Imovel__c</fullName>
+    <description>Imovel objeto desta oportunidade. Lookup e nao Master-Detail: a oportunidade sobrevive ao imovel ser removido da carteira.</description>
+    <label>Imóvel</label>
+    <referenceTo>Imovel__c</referenceTo>
+    <relationshipLabel>Oportunidades</relationshipLabel>
+    <relationshipName>Oportunidades</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Perfil_Comprador__c</fullName>
+    <label>Perfil de Comprador</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Habitacao Propria</fullName><default>true</default><label>Habitação Própria</label></value>
+            <value><fullName>Investimento</fullName><default>false</default><label>Investimento</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

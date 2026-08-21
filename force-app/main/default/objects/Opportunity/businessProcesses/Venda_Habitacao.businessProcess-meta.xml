@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Venda_Habitacao</fullName>
+    <isActive>true</isActive>
+    <values><fullName>Interesse Registado</fullName><default>true</default></values>
+    <values><fullName>Visita Realizada</fullName><default>false</default></values>
+    <values><fullName>Proposta Apresentada</fullName><default>false</default></values>
+    <values><fullName>CPCV Assinado</fullName><default>false</default></values>
+    <values><fullName>Escritura Realizada</fullName><default>false</default></values>
+    <values><fullName>Perdido</fullName><default>false</default></values>
+</BusinessProcess>
