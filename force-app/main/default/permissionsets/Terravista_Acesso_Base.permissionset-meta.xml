@@ -123,6 +123,11 @@
         <field>Contract.Percentagem_Comercializada__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Comissao_Terravista__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <applicationVisibilities>
         <application>Terravista</application>
         <visible>true</visible>

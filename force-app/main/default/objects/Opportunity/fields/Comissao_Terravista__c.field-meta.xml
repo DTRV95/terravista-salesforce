@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Comissao_Terravista__c</fullName>
+    <description>Receita real da agencia. O campo Amount e o preco do imovel (volume transacionado), nao a faturacao da Terravista. A percentagem vem do contrato de mediacao associado ao imovel.</description>
+    <formula>IF(
+  ISBLANK(Imovel__r.Contrato__r.Comissao__c),
+  0,
+  Amount * (Imovel__r.Contrato__r.Comissao__c / 100)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Comissão Terravista</label>
+    <precision>12</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <type>Currency</type>
+</CustomField>
