@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Classificacao__c</fullName>
-    <formula>IF(Pontuacao_Lead__c &gt;= 70, "Quente",
-IF(Pontuacao_Lead__c &gt;= 40, "Morno", "Frio"))</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <formula>IF(ISBLANK(Pontuacao_Lead__c), "",
+IF(Pontuacao_Lead__c &gt;= 70, "Quente",
+IF(Pontuacao_Lead__c &gt;= 40, "Morno", "Frio")))</formula>
     <label>Classificação</label>
     <length>10</length>
     <required>false</required>
