@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <sorted>false</sorted>
-    <standardValue><fullName>Novo</fullName><default>true</default><converted>false</converted><label>Novo</label></standardValue>
-    <standardValue><fullName>Em Contacto</fullName><default>false</default><converted>false</converted><label>Em Contacto</label></standardValue>
-    <standardValue><fullName>Qualificado</fullName><default>false</default><converted>false</converted><label>Qualificado</label></standardValue>
-    <standardValue><fullName>Visita Agendada</fullName><default>false</default><converted>false</converted><label>Visita Agendada</label></standardValue>
-    <standardValue><fullName>Avaliacao do Imovel</fullName><default>false</default><converted>false</converted><label>Avaliação do Imóvel</label></standardValue>
-    <standardValue><fullName>Proposta de Mediacao</fullName><default>false</default><converted>false</converted><label>Proposta de Mediação</label></standardValue>
-    <standardValue><fullName>Convertido</fullName><default>false</default><converted>true</converted><label>Convertido</label></standardValue>
-    <standardValue><fullName>Nao Qualificado</fullName><default>false</default><converted>false</converted><label>Não Qualificado</label></standardValue>
+    <standardValue><fullName>Novo</fullName><default>true</default><converted>false</converted></standardValue>
+    <standardValue><fullName>Em Contacto</fullName><default>false</default><converted>false</converted></standardValue>
+    <standardValue><fullName>Qualificado</fullName><default>false</default><converted>false</converted></standardValue>
+    <standardValue><fullName>Visita Agendada</fullName><default>false</default><converted>false</converted></standardValue>
+    <standardValue><fullName>Avaliacao do Imovel</fullName><default>false</default><converted>false</converted></standardValue>
+    <standardValue><fullName>Proposta de Mediacao</fullName><default>false</default><converted>false</converted></standardValue>
+    <standardValue><fullName>Convertido</fullName><default>false</default><converted>true</converted></standardValue>
+    <standardValue><fullName>Nao Qualificado</fullName><default>false</default><converted>false</converted></standardValue>
 </StandardValueSet>

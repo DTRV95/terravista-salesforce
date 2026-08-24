@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <sorted>false</sorted>
-    <standardValue><fullName>Site</fullName><default>true</default><label>Site da Terravista</label></standardValue>
-    <standardValue><fullName>Portal Imobiliario</fullName><default>false</default><label>Portal Imobiliário</label></standardValue>
-    <standardValue><fullName>Telefone</fullName><default>false</default><label>Telefone</label></standardValue>
-    <standardValue><fullName>Campanha</fullName><default>false</default><label>Campanha</label></standardValue>
-    <standardValue><fullName>Referencia</fullName><default>false</default><label>Referência</label></standardValue>
-    <standardValue><fullName>Placa</fullName><default>false</default><label>Placa no Imóvel</label></standardValue>
-    <standardValue><fullName>Outro</fullName><default>false</default><label>Outro</label></standardValue>
+    <standardValue><fullName>Site</fullName><default>true</default></standardValue>
+    <standardValue><fullName>Portal Imobiliario</fullName><default>false</default></standardValue>
+    <standardValue><fullName>Telefone</fullName><default>false</default></standardValue>
+    <standardValue><fullName>Campanha</fullName><default>false</default></standardValue>
+    <standardValue><fullName>Referencia</fullName><default>false</default></standardValue>
+    <standardValue><fullName>Placa</fullName><default>false</default></standardValue>
+    <standardValue><fullName>Outro</fullName><default>false</default></standardValue>
 </StandardValueSet>
