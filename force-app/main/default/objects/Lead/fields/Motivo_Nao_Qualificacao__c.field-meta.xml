@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Motivo_Nao_Qualificacao__c</fullName>
+    <label>Motivo de Não Qualificação</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Fora da area de atuacao</fullName><default>false</default><label>Fora da área de atuação</label></value>
+            <value><fullName>Sem capacidade financeira</fullName><default>false</default><label>Sem capacidade financeira</label></value>
+            <value><fullName>Procura sem correspondencia</fullName><default>false</default><label>Procura sem correspondência na carteira</label></value>
+            <value><fullName>Contacto invalido ou duplicado</fullName><default>false</default><label>Contacto inválido ou duplicado</label></value>
+            <value><fullName>Sem intencao real</fullName><default>false</default><label>Sem intenção real</label></value>
+            <value><fullName>Sem resposta</fullName><default>false</default><label>Sem resposta após tentativas</label></value>
+            <value><fullName>Foi para a concorrencia</fullName><default>false</default><label>Foi para a concorrência</label></value>
+            <value><fullName>Demora no primeiro contacto</fullName><default>false</default><label>Demora no primeiro contacto</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

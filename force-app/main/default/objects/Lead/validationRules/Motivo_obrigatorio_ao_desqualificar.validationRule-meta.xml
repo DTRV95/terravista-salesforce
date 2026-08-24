@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Motivo_obrigatorio_ao_desqualificar</fullName>
+    <active>true</active>
+    <description>Sem esta regra o motivo fica vazio na maioria dos registos e a metrica de perdas nao existe.</description>
+    <errorConditionFormula>AND(
+  ISPICKVAL(Status, "Nao Qualificado"),
+  ISBLANK(TEXT(Motivo_Nao_Qualificacao__c))
+)</errorConditionFormula>
+    <errorDisplayField>Motivo_Nao_Qualificacao__c</errorDisplayField>
+    <errorMessage>Indique o motivo antes de desqualificar o lead. Sem isso não conseguimos saber onde estamos a perder negócio.</errorMessage>
+</ValidationRule>

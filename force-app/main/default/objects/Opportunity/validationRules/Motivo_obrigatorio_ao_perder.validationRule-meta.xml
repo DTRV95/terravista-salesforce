@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Motivo_obrigatorio_ao_perder</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  ISPICKVAL(StageName, "Perdido"),
+  ISBLANK(TEXT(Motivo_Perda__c))
+)</errorConditionFormula>
+    <errorDisplayField>Motivo_Perda__c</errorDisplayField>
+    <errorMessage>Indique o motivo da perda. Um negócio perdido sem razão registada não ensina nada à equipa.</errorMessage>
+</ValidationRule>

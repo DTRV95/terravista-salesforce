@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Primeiro_Contacto__c</fullName>
+    <description>Momento do primeiro contacto real com o cliente. Meta: menos de 2 horas uteis.</description>
+    <label>Data do Primeiro Contacto</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

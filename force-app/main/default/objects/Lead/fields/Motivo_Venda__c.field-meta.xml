@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Motivo_Venda__c</fullName>
+    <label>Motivo da Venda</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Mudanca de casa</fullName><default>false</default><label>Mudança de casa</label></value>
+            <value><fullName>Heranca</fullName><default>false</default><label>Herança</label></value>
+            <value><fullName>Investimento</fullName><default>false</default><label>Desinvestimento</label></value>
+            <value><fullName>Emigracao</fullName><default>false</default><label>Emigração</label></value>
+            <value><fullName>Divorcio</fullName><default>false</default><label>Divórcio</label></value>
+            <value><fullName>Outro</fullName><default>false</default><label>Outro</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

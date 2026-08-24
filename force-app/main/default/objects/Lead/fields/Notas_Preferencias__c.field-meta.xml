@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Notas_Preferencias__c</fullName>
+    <description>Campo nao estruturado. Materia-prima do matching por AI.</description>
+    <label>Notas e Preferências</label>
+    <length>32768</length>
+    <type>LongTextArea</type>
+    <visibleLines>6</visibleLines>
+</CustomField>

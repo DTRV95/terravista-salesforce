@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Financiamento__c</fullName>
+    <description>Estado atual da capacidade de financiamento. Recebe o valor do Lead na conversao. Fonte de verdade unica: a Opportunity le daqui pela relacao, nao tem copia.</description>
+    <label>Financiamento</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Pre-aprovado</fullName><default>false</default><label>Pré-aprovado</label></value>
+            <value><fullName>Em analise</fullName><default>false</default><label>Em análise</label></value>
+            <value><fullName>Nao iniciado</fullName><default>false</default><label>Não iniciado</label></value>
+            <value><fullName>Nao necessita</fullName><default>false</default><label>Não necessita (compra a pronto)</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

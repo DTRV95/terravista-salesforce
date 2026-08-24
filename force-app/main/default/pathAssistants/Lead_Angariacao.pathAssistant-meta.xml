@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Angariacao</fullName>
+    <active>true</active>
+    <entityName>Lead</entityName>
+    <fieldName>Status</fieldName>
+    <masterLabel>Angariação</masterLabel>
+    <recordTypeName>Angariacao</recordTypeName>
+    <pathAssistantSteps>
+        <fieldNames>Imovel_Tipo__c</fieldNames>
+        <fieldNames>Imovel_Localizacao__c</fieldNames>
+        <info>Um proprietário que contacta é um imóvel potencial na carteira. Regista já o tipo e a localização — é o que permite dizer-lhe em minutos se temos procura para aquilo.</info>
+        <picklistValueName>Novo</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Data_Primeiro_Contacto__c</fieldNames>
+        <fieldNames>Motivo_Venda__c</fieldNames>
+        <info>O motivo da venda não é curiosidade: quem vende por mudança de casa tem pressa, quem vende uma herança negoceia melhor. Muda a forma de conduzir a conversa.</info>
+        <picklistValueName>Em Contacto</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Imovel_Area_m2__c</fieldNames>
+        <fieldNames>Valor_Pretendido__c</fieldNames>
+        <info>Compara o valor pretendido com o mercado da zona. Uma expectativa irrealista detetada agora poupa três meses de imóvel parado no site.</info>
+        <picklistValueName>Avaliacao do Imovel</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>Apresenta o contrato de mediação: percentagem, exclusividade e duração. A exclusividade justifica-se com o esforço comercial que ela permite, não com pressão.</info>
+        <picklistValueName>Proposta de Mediacao</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>Angariação fechada. Cria o Contrato de Mediação e o Imóvel — a partir daqui entra na carteira e conta para a meta de angariações.</info>
+        <picklistValueName>Convertido</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Motivo_Nao_Qualificacao__c</fieldNames>
+        <info>Regista porquê. Um proprietário com expectativa de preço irrealista hoje volta daqui a seis meses — mantém-no na base.</info>
+        <picklistValueName>Nao Qualificado</picklistValueName>
+    </pathAssistantSteps>
+</PathAssistant>

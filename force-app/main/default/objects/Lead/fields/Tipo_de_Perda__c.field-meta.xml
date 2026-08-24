@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tipo_de_Perda__c</fullName>
+    <description>Separa o que nunca foi viavel (problema de marketing) do que era viavel e perdemos (problema nosso). Da a metrica percentagem de leads perdidos por falha nossa.</description>
+    <formula>IF(ISBLANK(TEXT(Motivo_Nao_Qualificacao__c)), "",
+IF(OR(ISPICKVAL(Motivo_Nao_Qualificacao__c, "Foi para a concorrencia"),
+      ISPICKVAL(Motivo_Nao_Qualificacao__c, "Demora no primeiro contacto")),
+   "Era viavel - perdemos",
+   "Nunca foi viavel"))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Tipo de Perda</label>
+    <length>30</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

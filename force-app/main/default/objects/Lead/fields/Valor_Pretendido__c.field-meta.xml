@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valor_Pretendido__c</fullName>
+    <description>Valor que o proprietario pretende obter. Comparar com a avaliacao para medir expectativa realista.</description>
+    <label>Valor Pretendido</label>
+    <precision>12</precision><scale>2</scale>
+    <required>false</required>
+    <type>Currency</type>
+</CustomField>
