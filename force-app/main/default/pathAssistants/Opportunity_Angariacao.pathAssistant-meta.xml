@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Angariacao</fullName>
+    <active>true</active>
+    <entityName>Opportunity</entityName>
+    <fieldName>StageName</fieldName>
+    <masterLabel>Angariação</masterLabel>
+    <recordTypeName>Angariacao</recordTypeName>
+    <pathAssistantSteps>
+        <fieldNames>AccountId</fieldNames>
+        <fieldNames>CloseDate</fieldNames>
+        <info>Estamos a competir com outras agências pelo mesmo imóvel. Responder no próprio dia é metade do trabalho ganho: o proprietário costuma escolher quem apareceu primeiro e melhor preparado.</info>
+        <picklistValueName>Contacto Inicial</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Amount</fieldNames>
+        <info>Visita de avaliação. Leva comparáveis da zona impressos. Se o valor pretendido estiver acima do mercado, é agora que se gere a expectativa — não depois de três meses com o imóvel parado no site.</info>
+        <picklistValueName>Visita de Avaliacao</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>NextStep</fieldNames>
+        <info>Apresenta comissão, exclusividade e duração. A exclusividade justifica-se pelo esforço comercial que permite — fotografia profissional, destaque nos portais, contacto ativo à carteira — nunca por pressão.</info>
+        <picklistValueName>Proposta de Mediacao</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>CMI assinado. Cria o Contrato de Mediação e o Imóvel: a partir daqui está na carteira, disponível para cruzar com os compradores registados. Conta para a meta de angariações.</info>
+        <picklistValueName>Contrato Assinado</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Motivo_Perda__c</fieldNames>
+        <info>Perdemos para outra agência, ou o proprietário desistiu? Angariações perdidas por comissão dizem-nos que estamos fora de mercado; perdidas por demora dizem-nos outra coisa.</info>
+        <picklistValueName>Perdido</picklistValueName>
+    </pathAssistantSteps>
+</PathAssistant>

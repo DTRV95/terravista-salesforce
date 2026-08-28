@@ -4,9 +4,11 @@
     <description>Pontuacao objetiva 0-100. Substitui deliberadamente o campo Rating standard: um rating escolhido a mao e uma opiniao, nao um dado.</description>
     <formula>IF(RecordType.DeveloperName = "Angariacao", null,
 
-IF(ISPICKVAL(Financiamento__c, "Pre-aprovado"), 30,
-IF(ISPICKVAL(Financiamento__c, "Nao necessita"), 30,
-IF(ISPICKVAL(Financiamento__c, "Em analise"), 15, 0)))
+IF(RecordType.DeveloperName = "Arrendamento",
+   IF(OR(ISPICKVAL(Fiador__c, "Tem fiador"), ISPICKVAL(Fiador__c, "Nao necessita")), 30, 0),
+   IF(ISPICKVAL(Financiamento__c, "Pre-aprovado"), 30,
+   IF(ISPICKVAL(Financiamento__c, "Nao necessita"), 30,
+   IF(ISPICKVAL(Financiamento__c, "Em analise"), 15, 0))))
 +
 IF(ISPICKVAL(Prazo_Decisao__c, "Menos de 3 meses"), 25,
 IF(ISPICKVAL(Prazo_Decisao__c, "3 a 6 meses"), 15,

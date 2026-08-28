@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Arrendamento</fullName>
+    <active>true</active>
+    <entityName>Lead</entityName>
+    <fieldName>Status</fieldName>
+    <masterLabel>Arrendamento</masterLabel>
+    <recordTypeName>Arrendamento</recordTypeName>
+    <pathAssistantSteps>
+        <fieldNames>LeadSource</fieldNames>
+        <fieldNames>Orcamento_Max__c</fieldNames>
+        <info>No arrendamento o orçamento é a renda mensal máxima. Confirma também a data pretendida de entrada: a urgência é quase sempre maior do que na compra.</info>
+        <picklistValueName>Novo</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Data_Primeiro_Contacto__c</fieldNames>
+        <fieldNames>Fiador__c</fieldNames>
+        <info>Pergunta pelo fiador, não por crédito. É a documentação — recibos de vencimento, IRS, fiador — que atrasa os arrendamentos, não a decisão do cliente.</info>
+        <picklistValueName>Em Contacto</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Notas_Preferencias__c</fieldNames>
+        <info>Regista prazo de contrato pretendido e se tem animais — dois motivos comuns de recusa pelo senhorio que é melhor saber antes da visita do que depois.</info>
+        <picklistValueName>Qualificado</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>Visita agendada como Evento. Leva já a lista de documentos necessários — poupa uma semana.</info>
+        <picklistValueName>Visita Agendada</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>Converter cria o Contacto e a Oportunidade de Arrendamento.</info>
+        <picklistValueName>Convertido</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Motivo_Nao_Qualificacao__c</fieldNames>
+        <info>Se caiu por documentação em falta, o cliente pode voltar preparado. Regista para não o perder de vez.</info>
+        <picklistValueName>Nao Qualificado</picklistValueName>
+    </pathAssistantSteps>
+</PathAssistant>

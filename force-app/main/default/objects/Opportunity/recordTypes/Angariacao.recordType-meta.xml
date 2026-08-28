@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Angariacao</fullName>
+    <active>true</active>
+    <businessProcess>Angariacao</businessProcess>
+    <description>Conquistar o contrato de mediacao de um imovel. E uma venda: a Terravista vende o seu servico e perde contra agencias concorrentes. Ganhar cria o Contrato de Mediacao e o Imovel na carteira. ATENCAO: o Amount e o valor estimado do imovel, nao receita - todo o relatorio de faturacao tem de excluir este Record Type.</description>
+    <label>Angariação</label>
+</RecordType>

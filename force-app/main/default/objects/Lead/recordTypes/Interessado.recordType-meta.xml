@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Interessado</fullName>
-    <active>true</active>
+    <active>false</active>
     <businessProcess>Lead_Interessado</businessProcess>
-    <description>Quem procura comprar ou arrendar. A Terravista ganha a comissao da venda.</description>
-    <label>Interessado</label>
+    <description>SUBSTITUIDO por Compra e Arrendamento. Desativado e nao apagado: preserva o historico dos registos ja associados.</description>
+    <label>Interessado (descontinuado)</label>
 </RecordType>

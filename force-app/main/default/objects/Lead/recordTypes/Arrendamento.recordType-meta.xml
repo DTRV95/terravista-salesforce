@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Arrendamento</fullName>
+    <active>true</active>
+    <businessProcess>Lead_Arrendamento</businessProcess>
+    <description>Quer arrendar. Qualifica-se por fiador e comprovativo de rendimentos - perguntar por pre-aprovacao de credito nao faz sentido aqui.</description>
+    <label>Arrendamento</label>
+</RecordType>

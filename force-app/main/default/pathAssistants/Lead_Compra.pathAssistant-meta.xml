@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Compra</fullName>
+    <active>true</active>
+    <entityName>Lead</entityName>
+    <fieldName>Status</fieldName>
+    <masterLabel>Compra</masterLabel>
+    <recordTypeName>Compra</recordTypeName>
+    <pathAssistantSteps>
+        <fieldNames>LeadSource</fieldNames>
+        <fieldNames>Pontuacao_Lead__c</fieldNames>
+        <info>Lê o que já sabemos antes de ligar: tipologia, zonas e orçamento vieram do formulário. A pontuação diz a prioridade — não é opinião, é o que os dados dizem.</info>
+        <picklistValueName>Novo</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Data_Primeiro_Contacto__c</fieldNames>
+        <fieldNames>Financiamento__c</fieldNames>
+        <info>Pergunta cedo pelo financiamento: é o maior previsor de negócio fechado, e descobrir tarde que não há crédito custa semanas de trabalho perdido.</info>
+        <picklistValueName>Em Contacto</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Prazo_Decisao__c</fieldNames>
+        <fieldNames>Notas_Preferencias__c</fieldNames>
+        <info>Escreve o que ele disse por palavras dele — sobretudo o que NÃO quer. É o detalhe que os campos estruturados não captam.</info>
+        <picklistValueName>Qualificado</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>Agenda a visita como Evento no calendário. Depois preenche o Resultado da Visita — porque rejeitou vale mais do que o que viu.</info>
+        <picklistValueName>Visita Agendada</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>Converter cria o Contacto com o perfil já preenchido e a Oportunidade de Venda sobre o imóvel. Escolhe Venda de Habitação ou Venda de Terreno conforme o caso.</info>
+        <picklistValueName>Convertido</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Motivo_Nao_Qualificacao__c</fieldNames>
+        <info>O motivo é obrigatório. Separamos o que nunca foi viável do que era viável e perdemos — só assim sabemos se o problema é das campanhas ou nosso.</info>
+        <picklistValueName>Nao Qualificado</picklistValueName>
+    </pathAssistantSteps>
+</PathAssistant>
