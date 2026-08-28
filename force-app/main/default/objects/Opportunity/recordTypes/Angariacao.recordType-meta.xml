@@ -3,6 +3,6 @@
     <fullName>Angariacao</fullName>
     <active>true</active>
     <businessProcess>Angariacao</businessProcess>
-    <description>Conquistar o contrato de mediacao de um imovel. E uma venda: a Terravista vende o seu servico e perde contra agencias concorrentes. Ganhar cria o Contrato de Mediacao e o Imovel na carteira. ATENCAO: o Amount e o valor estimado do imovel, nao receita - todo o relatorio de faturacao tem de excluir este Record Type.</description>
+    <description>Conquistar o contrato de mediacao de um imovel: e uma venda, perdida contra agencias concorrentes. ATENCAO: o Amount e o valor estimado do imovel, nao receita - excluir dos relatorios de faturacao.</description>
     <label>Angariação</label>
 </RecordType>
