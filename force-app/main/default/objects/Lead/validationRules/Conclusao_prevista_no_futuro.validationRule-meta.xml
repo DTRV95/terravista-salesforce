@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Conclusao_prevista_no_futuro</fullName>
+    <active>true</active>
+    <description>Guardada por ISNEW/ISCHANGED para nao bloquear a edicao de registos historicos que ja nasceram com data passada.</description>
+    <errorConditionFormula>AND(
+  OR(ISNEW(), ISCHANGED(Data_Conclusao_Prevista__c)),
+  NOT(ISBLANK(Data_Conclusao_Prevista__c)),
+  Data_Conclusao_Prevista__c &lt; TODAY(),
+  OR(ISPICKVAL(Fase_Obra__c, "Projeto"), ISPICKVAL(Fase_Obra__c, "Em construcao"))
+)</errorConditionFormula>
+    <errorDisplayField>Data_Conclusao_Prevista__c</errorDisplayField>
+    <errorMessage>Um empreendimento em projeto ou em construção não pode ter conclusão no passado. Confirme a data ou atualize a fase da obra.</errorMessage>
+</ValidationRule>

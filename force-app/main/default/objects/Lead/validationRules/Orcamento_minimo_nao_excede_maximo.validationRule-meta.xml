@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Orcamento_minimo_nao_excede_maximo</fullName>
+    <active>true</active>
+    <description>Um intervalo invertido faz o matching nao devolver nada, sem que ninguem perceba porque.</description>
+    <errorConditionFormula>AND(NOT(ISBLANK(Orcamento_Min__c)), NOT(ISBLANK(Orcamento_Max__c)), Orcamento_Min__c &gt; Orcamento_Max__c)</errorConditionFormula>
+    <errorDisplayField>Orcamento_Min__c</errorDisplayField>
+    <errorMessage>O orçamento mínimo não pode ser superior ao máximo.</errorMessage>
+</ValidationRule>

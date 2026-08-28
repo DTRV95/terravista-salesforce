@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valor_obrigatorio_a_partir_da_proposta</fullName>
+    <active>true</active>
+    <description>Sem valor nao ha comissao calculada, nem pipeline, nem forecast. A partir da proposta o numero tem de existir.</description>
+    <errorConditionFormula>AND(
+  OR(ISPICKVAL(StageName, "Proposta Apresentada"),
+     ISPICKVAL(StageName, "Proposta de Mediacao"),
+     ISPICKVAL(StageName, "Negociacao"),
+     ISPICKVAL(StageName, "CPCV Assinado"),
+     ISPICKVAL(StageName, "Escritura Realizada"),
+     ISPICKVAL(StageName, "Contrato Assinado")),
+  OR(ISBLANK(Amount), Amount &lt;= 0)
+)</errorConditionFormula>
+    <errorDisplayField>Amount</errorDisplayField>
+    <errorMessage>Indique o valor do negócio. A partir da proposta não é possível avançar sem ele — sem valor não há comissão nem previsão.</errorMessage>
+</ValidationRule>

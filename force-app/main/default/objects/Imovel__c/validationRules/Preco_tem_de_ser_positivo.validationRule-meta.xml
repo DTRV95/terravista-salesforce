@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Preco_tem_de_ser_positivo</fullName>
+    <active>true</active>
+    <description>Um imovel a zero euros destroi qualquer media de preco por m2 e qualquer soma de carteira.</description>
+    <errorConditionFormula>OR(ISBLANK(Preco__c), Preco__c &lt;= 0)</errorConditionFormula>
+    <errorDisplayField>Preco__c</errorDisplayField>
+    <errorMessage>O preço tem de ser maior que zero.</errorMessage>
+</ValidationRule>
