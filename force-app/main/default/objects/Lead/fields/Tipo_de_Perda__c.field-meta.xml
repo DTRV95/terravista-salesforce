@@ -9,7 +9,6 @@ IF(OR(ISPICKVAL(Motivo_Nao_Qualificacao__c, "Foi para a concorrencia"),
    "Nunca foi viavel"))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Tipo de Perda</label>
-    <length>30</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>

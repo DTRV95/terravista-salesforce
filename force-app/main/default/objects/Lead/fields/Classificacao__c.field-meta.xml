@@ -5,7 +5,6 @@
 IF(Pontuacao_Lead__c &gt;= 70, "Quente",
 IF(Pontuacao_Lead__c &gt;= 40, "Morno", "Frio")))</formula>
     <label>Classificação</label>
-    <length>10</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>
