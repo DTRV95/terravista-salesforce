@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Angariacao_Empreendimento</fullName>
+    <active>true</active>
+    <businessProcess>Lead_Angariacao_Empreendimento</businessProcess>
+    <description>Construtora que confia a comercializacao de um empreendimento. Avalia-se o empreendimento, nao um imovel: numero de fracoes, fase de obra, licenciamento. Um contrato da origem a N imoveis.</description>
+    <label>Angariação de Empreendimento</label>
+</RecordType>

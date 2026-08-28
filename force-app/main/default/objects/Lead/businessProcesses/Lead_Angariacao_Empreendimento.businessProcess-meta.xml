@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Angariacao_Empreendimento</fullName>
+    <isActive>true</isActive>
+    <values><fullName>Novo</fullName><default>true</default></values>
+    <values><fullName>Em Contacto</fullName><default>false</default></values>
+    <values><fullName>Analise do Empreendimento</fullName><default>false</default></values>
+    <values><fullName>Proposta de Mediacao</fullName><default>false</default></values>
+    <values><fullName>Convertido</fullName><default>false</default></values>
+    <values><fullName>Nao Qualificado</fullName><default>false</default></values>
+</BusinessProcess>

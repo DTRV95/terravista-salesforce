@@ -9,4 +9,5 @@
     <standardValue><fullName>Proposta de Mediacao</fullName><default>false</default><converted>false</converted></standardValue>
     <standardValue><fullName>Convertido</fullName><default>false</default><converted>true</converted></standardValue>
     <standardValue><fullName>Nao Qualificado</fullName><default>false</default><converted>false</converted></standardValue>
+    <standardValue><fullName>Analise do Empreendimento</fullName><default>false</default><converted>false</converted></standardValue>
 </StandardValueSet>

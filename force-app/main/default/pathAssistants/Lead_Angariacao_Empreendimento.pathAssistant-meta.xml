@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Angariacao_Empreendimento</fullName>
+    <active>true</active>
+    <entityName>Lead</entityName>
+    <fieldName>Status</fieldName>
+    <masterLabel>Angariação de Empreendimento</masterLabel>
+    <recordTypeName>Angariacao_Empreendimento</recordTypeName>
+    <pathAssistantSteps>
+        <fieldNames>Nome_Empreendimento__c</fieldNames>
+        <fieldNames>LeadSource</fieldNames>
+        <info>Uma construtora não escolhe agência pelo preço da comissão — escolhe por quem lhe prova que consegue escoar as frações. Prepara antes do primeiro contacto: quantos investidores temos em carteira para aquela zona e tipologia.</info>
+        <picklistValueName>Novo</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Data_Primeiro_Contacto__c</fieldNames>
+        <fieldNames>Numero_Fracoes__c</fieldNames>
+        <info>Confirma quem decide. Numa construtora a decisão é de uma administração, não de uma pessoa — identificar cedo o decisor poupa semanas a falar com quem não assina.</info>
+        <picklistValueName>Em Contacto</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Fase_Obra__c</fieldNames>
+        <fieldNames>Data_Conclusao_Prevista__c</fieldNames>
+        <info>A fase da obra determina o negócio. Em projeto significa venda na planta e 18 meses até à primeira escritura — bom para fluxo de trabalho, mau para receita este ano. Concluído vende-se em seis meses. Confirma também o licenciamento: sem alvará não há promessa de compra e venda.</info>
+        <picklistValueName>Analise do Empreendimento</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>Propõe comissão ajustada ao volume — 32 frações não se cobram à taxa de uma moradia — e leva um plano de comercialização concreto: fotografia, portais, stand de vendas, e a lista de investidores da carteira que já encaixam no perfil.</info>
+        <picklistValueName>Proposta de Mediacao</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>Contrato assinado. Cria o Contrato de Comercialização e as frações uma a uma — a partir daí os Roll-Up Summary dão o estado do empreendimento sem trabalho manual, que é o relatório que a construtora vai pedir todos os meses.</info>
+        <picklistValueName>Convertido</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Motivo_Nao_Qualificacao__c</fieldNames>
+        <info>Perder um empreendimento custa anos de relação. Regista porquê: se foi comissão, estamos fora de mercado no B2B; se foi por não provarmos capacidade de escoamento, o problema é a carteira de investidores.</info>
+        <picklistValueName>Nao Qualificado</picklistValueName>
+    </pathAssistantSteps>
+</PathAssistant>

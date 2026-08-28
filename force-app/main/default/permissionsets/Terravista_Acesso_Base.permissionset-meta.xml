@@ -248,6 +248,26 @@
         <field>Lead.Fiador__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Nome_Empreendimento__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Numero_Fracoes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Fase_Obra__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Data_Conclusao_Prevista__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <applicationVisibilities>
         <application>Terravista</application>
         <visible>true</visible>

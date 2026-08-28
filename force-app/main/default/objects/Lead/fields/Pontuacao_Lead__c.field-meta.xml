@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Pontuacao_Lead__c</fullName>
     <description>Pontuacao objetiva 0-100. Substitui deliberadamente o campo Rating standard: um rating escolhido a mao e uma opiniao, nao um dado.</description>
-    <formula>IF(RecordType.DeveloperName = "Angariacao", null,
+    <formula>IF(OR(RecordType.DeveloperName = "Angariacao", RecordType.DeveloperName = "Angariacao_Empreendimento"), null,
 
 IF(RecordType.DeveloperName = "Arrendamento",
    IF(OR(ISPICKVAL(Fiador__c, "Tem fiador"), ISPICKVAL(Fiador__c, "Nao necessita")), 30, 0),

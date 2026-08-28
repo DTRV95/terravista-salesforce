@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Numero_Fracoes__c</fullName>
+    <description>Numero de fracoes a comercializar. Determina a escala do negocio e a comissao negociavel por volume.</description>
+    <label>Nº de Frações</label>
+    <precision>4</precision><scale>0</scale>
+    <required>false</required>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
