@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>A_adormecer</fullName>
-    <columns>NAME</columns>
+    <columns>OPPORTUNITY.NAME</columns>
     <columns>StageName</columns>
     <columns>Amount</columns>
     <columns>Dias_Sem_Atividade__c</columns>

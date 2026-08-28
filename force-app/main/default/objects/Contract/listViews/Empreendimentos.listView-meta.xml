@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Empreendimentos</fullName>
-    <columns>CONTRACT_NUMBER</columns>
+    <columns>CONTRACT.CONTRACT_NUMBER</columns>
     <columns>Nome_Empreendimento__c</columns>
     <columns>Localizacao__c</columns>
     <columns>Imoveis_Total__c</columns>
