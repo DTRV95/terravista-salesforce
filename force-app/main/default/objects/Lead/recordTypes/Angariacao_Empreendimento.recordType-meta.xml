@@ -3,6 +3,6 @@
     <fullName>Angariacao_Empreendimento</fullName>
     <active>true</active>
     <businessProcess>Lead_Angariacao_Empreendimento</businessProcess>
-    <description>Construtora que confia a comercializacao de um empreendimento. Avalia-se o empreendimento, nao um imovel: numero de fracoes, fase de obra, licenciamento. Um contrato da origem a N imoveis.</description>
+    <description>Construtora que confia a comercialização de um empreendimento. Avalia-se o empreendimento, não um imóvel: número de frações, fase de obra, licenciamento. Um contrato dá origem a N imóveis.</description>
     <label>Angariação de Empreendimento</label>
 </RecordType>

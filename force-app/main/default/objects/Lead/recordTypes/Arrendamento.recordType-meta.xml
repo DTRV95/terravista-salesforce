@@ -3,6 +3,6 @@
     <fullName>Arrendamento</fullName>
     <active>true</active>
     <businessProcess>Lead_Arrendamento</businessProcess>
-    <description>Quer arrendar. Qualifica-se por fiador e comprovativo de rendimentos - perguntar por pre-aprovacao de credito nao faz sentido aqui.</description>
+    <description>Quer arrendar. Qualifica-se por fiador e comprovativo de rendimentos — perguntar por pré-aprovação de crédito não faz sentido aqui.</description>
     <label>Arrendamento</label>
 </RecordType>

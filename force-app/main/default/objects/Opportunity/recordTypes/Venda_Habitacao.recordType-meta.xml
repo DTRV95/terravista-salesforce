@@ -3,6 +3,6 @@
     <fullName>Venda_Habitacao</fullName>
     <active>true</active>
     <businessProcess>Venda_Habitacao</businessProcess>
-    <description>Venda de apartamento, moradia ou fração de empreendimento. Comprador pode ser particular ou empresa.</description>
+    <description>Venda de apartamento, moradia ou fração. O comprador pode ser particular ou empresa.</description>
     <label>Venda de Habitação</label>
 </RecordType>

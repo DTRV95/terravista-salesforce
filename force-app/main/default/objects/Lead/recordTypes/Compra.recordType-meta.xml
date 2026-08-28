@@ -3,6 +3,6 @@
     <fullName>Compra</fullName>
     <active>true</active>
     <businessProcess>Lead_Compra</businessProcess>
-    <description>Quer comprar. Qualifica-se por financiamento, orcamento e prazo de decisao.</description>
+    <description>Quer comprar. Qualifica-se por financiamento, orçamento e prazo de decisão.</description>
     <label>Compra</label>
 </RecordType>

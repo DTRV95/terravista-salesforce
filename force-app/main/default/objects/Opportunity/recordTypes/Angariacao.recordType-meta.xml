@@ -3,6 +3,6 @@
     <fullName>Angariacao</fullName>
     <active>true</active>
     <businessProcess>Angariacao</businessProcess>
-    <description>Conquistar o contrato de mediacao de um imovel: e uma venda, perdida contra agencias concorrentes. ATENCAO: o Amount e o valor estimado do imovel, nao receita - excluir dos relatorios de faturacao.</description>
+    <description>Conquistar o contrato de mediação de um imóvel: é uma venda, perdida contra agências concorrentes. ATENÇÃO: o Amount é o valor estimado do imóvel, não receita — excluir dos relatórios de faturação.</description>
     <label>Angariação</label>
 </RecordType>
