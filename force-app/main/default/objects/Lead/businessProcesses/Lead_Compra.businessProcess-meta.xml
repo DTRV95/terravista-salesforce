@@ -2,7 +2,7 @@
 <BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Lead_Compra</fullName>
     <isActive>true</isActive>
-    <values><fullName>Novo</fullName><default>false</default></values>
+    <values><fullName>Novo</fullName><default>true</default></values>
     <values><fullName>Em Contacto</fullName><default>false</default></values>
     <values><fullName>Qualificado</fullName><default>false</default></values>
     <values><fullName>Visita Agendada</fullName><default>false</default></values>
