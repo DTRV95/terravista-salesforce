@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Viabilidade_antes_de_negociar_terreno</fullName>
+    <active>true</active>
+    <description>Atravessa o lookup ate ao imovel. Negociar um terreno sem saber o tipo de solo e a area bruta de construcao admissivel e negociar a olho.</description>
+    <errorConditionFormula>AND(
+  RecordType.DeveloperName = "Venda_Terreno",
+  OR(ISPICKVAL(StageName, "Negociacao"),
+     ISPICKVAL(StageName, "CPCV Assinado"),
+     ISPICKVAL(StageName, "Escritura Realizada")),
+  OR(ISBLANK(TEXT(Imovel__r.Tipo_Solo__c)), ISBLANK(Imovel__r.Area_Bruta_Construcao_m2__c))
+)</errorConditionFormula>
+    <errorDisplayField>Imovel__c</errorDisplayField>
+    <errorMessage>Antes de negociar, registe no imóvel o tipo de solo e a área bruta de construção admissível. É esse número que determina o valor para uma construtora.</errorMessage>
+</ValidationRule>

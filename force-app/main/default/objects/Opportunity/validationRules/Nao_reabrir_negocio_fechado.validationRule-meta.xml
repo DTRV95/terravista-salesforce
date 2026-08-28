@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nao_reabrir_negocio_fechado</fullName>
+    <active>true</active>
+    <description>Reabrir um negocio de julho muda retroativamente todos os relatorios historicos, e ninguem percebe porque e que os numeros de ontem deixaram de bater certo.</description>
+    <errorConditionFormula>AND(
+  ISCHANGED(StageName),
+  OR(ISPICKVAL(PRIORVALUE(StageName), "Escritura Realizada"),
+     ISPICKVAL(PRIORVALUE(StageName), "Contrato Assinado"),
+     ISPICKVAL(PRIORVALUE(StageName), "Perdido"))
+)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>Um negócio fechado não pode ser reaberto. Se houve engano, crie um novo negócio — o histórico dos relatórios depende disto.</errorMessage>
+</ValidationRule>

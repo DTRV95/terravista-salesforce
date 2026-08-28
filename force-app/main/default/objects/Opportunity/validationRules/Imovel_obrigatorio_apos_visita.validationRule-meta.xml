@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Imovel_obrigatorio_apos_visita</fullName>
+    <active>true</active>
+    <description>Sem imovel a formula Comissao_Terravista__c devolve zero, porque nao alcanca o contrato de mediacao. Um negocio fechado sem imovel soma 0 EUR a faturacao sem dar erro.</description>
+    <errorConditionFormula>AND(
+  OR(RecordType.DeveloperName = "Venda_Habitacao", RecordType.DeveloperName = "Arrendamento"),
+  NOT(ISPICKVAL(StageName, "Interesse Registado")),
+  NOT(ISPICKVAL(StageName, "Perdido")),
+  ISBLANK(Imovel__c)
+)</errorConditionFormula>
+    <errorDisplayField>Imovel__c</errorDisplayField>
+    <errorMessage>Indique o imóvel. Sem ele a comissão não é calculada — o negócio contaria como zero euros de faturação.</errorMessage>
+</ValidationRule>
