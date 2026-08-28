@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Regime__c</fullName>
+    <description>Distingue os dois regimes de mediacao de forma explicita. Antes inferia-se de Nome_Empreendimento__c estar preenchido, o que e fragil. Campo e nao Record Type porque so muda a escala, nao o que se pergunta.</description>
+    <label>Regime de Mediação</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Mediacao a Particular</fullName><default>true</default></value>
+            <value><fullName>Comercializacao de Empreendimento</fullName><default>false</default></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
