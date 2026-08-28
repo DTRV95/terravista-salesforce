@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dias_Disponivel__c</fullName>
+    <description>Ha quantos dias este imovel esta parado. Um imovel que nao sai passados 60 dias esta mal posicionado no preco - e o sinal para renegociar com o proprietario antes de queimar a relacao.</description>
+    <formula>IF(
+  OR(ISBLANK(Data_Disponibilizacao__c), NOT(ISPICKVAL(Estado_Comercial__c, "Disponivel"))),
+  null,
+  TODAY() - Data_Disponibilizacao__c
+)</formula>
+    <label>Dias Disponível</label>
+    <precision>5</precision><scale>0</scale>
+    <required>false</required>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
