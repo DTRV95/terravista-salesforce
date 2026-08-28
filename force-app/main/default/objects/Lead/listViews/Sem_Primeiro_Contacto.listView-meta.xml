@@ -13,12 +13,12 @@
         <operation>equals</operation>
     </filters>
     <filters>
-        <field>IsConverted</field>
+        <field>LEAD.CONVERTED</field>
         <operation>equals</operation>
-        <value>false</value>
+        <value>0</value>
     </filters>
     <filters>
-        <field>Status</field>
+        <field>LEAD.STATUS</field>
         <operation>notEqual</operation>
         <value>Nao Qualificado</value>
     </filters>

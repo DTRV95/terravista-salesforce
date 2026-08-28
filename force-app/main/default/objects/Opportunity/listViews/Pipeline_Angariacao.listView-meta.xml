@@ -9,14 +9,14 @@
     <columns>OPPORTUNITY.NEXT_STEP</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>RecordType.DeveloperName</field>
+        <field>OPPORTUNITY.RECORDTYPE</field>
         <operation>equals</operation>
-        <value>Angariacao</value>
+        <value>Opportunity.Angariacao</value>
     </filters>
     <filters>
-        <field>IsClosed</field>
+        <field>OPPORTUNITY.CLOSED</field>
         <operation>equals</operation>
-        <value>false</value>
+        <value>0</value>
     </filters>
     <label>🏗 Pipeline de Angariação</label>
     <sharedTo>

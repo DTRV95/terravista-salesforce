@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Angariacoes_em_Curso</fullName>
+    <booleanFilter>(1 OR 2) AND 3</booleanFilter>
     <columns>FULL_NAME</columns>
     <columns>LEAD.COMPANY</columns>
     <columns>LEAD.STATUS</columns>
@@ -9,14 +10,19 @@
     <columns>Nome_Empreendimento__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>RecordType.DeveloperName</field>
-        <operation>contains</operation>
-        <value>Angariacao</value>
+        <field>LEAD.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Lead.Angariacao</value>
     </filters>
     <filters>
-        <field>IsConverted</field>
+        <field>LEAD.RECORDTYPE</field>
         <operation>equals</operation>
-        <value>false</value>
+        <value>Lead.Angariacao_Empreendimento</value>
+    </filters>
+    <filters>
+        <field>LEAD.CONVERTED</field>
+        <operation>equals</operation>
+        <value>0</value>
     </filters>
     <label>🏠 Angariações em Curso</label>
     <sharedTo>

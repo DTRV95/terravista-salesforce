@@ -14,9 +14,9 @@
         <value>Quente</value>
     </filters>
     <filters>
-        <field>IsConverted</field>
+        <field>LEAD.CONVERTED</field>
         <operation>equals</operation>
-        <value>false</value>
+        <value>0</value>
     </filters>
     <label>🔥 Leads Quentes</label>
     <sharedTo>
