@@ -4,5 +4,5 @@
     <active>true</active>
     <businessProcess>Lead_Angariacao</businessProcess>
     <description>Proprietario que quer vender ou arrendar o seu imovel. A Terravista ganha um imovel na carteira - e o que alimenta o negocio.</description>
-    <label>Angariação</label>
+    <label>Angariação de Imóvel</label>
 </RecordType>

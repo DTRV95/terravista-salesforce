@@ -4,7 +4,7 @@
     <active>true</active>
     <entityName>Lead</entityName>
     <fieldName>Status</fieldName>
-    <masterLabel>Angariação</masterLabel>
+    <masterLabel>Angariação de Imóvel</masterLabel>
     <recordTypeName>Angariacao</recordTypeName>
     <pathAssistantSteps>
         <fieldNames>Imovel_Tipo__c</fieldNames>
