@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Angariacoes_em_Curso</fullName>
+    <columns>NAME</columns>
+    <columns>Company</columns>
+    <columns>Status</columns>
+    <columns>Imovel_Localizacao__c</columns>
+    <columns>Valor_Pretendido__c</columns>
+    <columns>Nome_Empreendimento__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RecordType.DeveloperName</field>
+        <operation>contains</operation>
+        <value>Angariacao</value>
+    </filters>
+    <filters>
+        <field>IsConverted</field>
+        <operation>equals</operation>
+        <value>false</value>
+    </filters>
+    <label>🏠 Angariações em Curso</label>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

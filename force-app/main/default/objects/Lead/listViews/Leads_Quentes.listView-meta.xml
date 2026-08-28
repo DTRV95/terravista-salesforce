@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Leads_Quentes</fullName>
+    <columns>NAME</columns>
+    <columns>Company</columns>
+    <columns>Classificacao__c</columns>
+    <columns>Pontuacao_Lead__c</columns>
+    <columns>Status</columns>
+    <columns>LeadSource</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Classificacao__c</field>
+        <operation>equals</operation>
+        <value>Quente</value>
+    </filters>
+    <filters>
+        <field>IsConverted</field>
+        <operation>equals</operation>
+        <value>false</value>
+    </filters>
+    <label>🔥 Leads Quentes</label>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

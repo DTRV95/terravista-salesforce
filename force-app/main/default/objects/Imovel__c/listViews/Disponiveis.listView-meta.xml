@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disponiveis</fullName>
+    <columns>NAME</columns>
+    <columns>Tipologia__c</columns>
+    <columns>Localizacao__c</columns>
+    <columns>Area_m2__c</columns>
+    <columns>Preco__c</columns>
+    <columns>Dias_Disponivel__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Estado_Comercial__c</field>
+        <operation>equals</operation>
+        <value>Disponivel</value>
+    </filters>
+    <label>✅ Disponíveis</label>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>
