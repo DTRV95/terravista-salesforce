@@ -41,4 +41,20 @@
         <recordType>Lead.Angariacao_Empreendimento</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <layoutAssignments>
+        <layout>Lead-Lead Compra</layout>
+        <recordType>Lead.Compra</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Lead-Lead Arrendamento</layout>
+        <recordType>Lead.Arrendamento</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Lead-Lead Angariacao</layout>
+        <recordType>Lead.Angariacao</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Lead-Lead Angariacao Empreendimento</layout>
+        <recordType>Lead.Angariacao_Empreendimento</recordType>
+    </layoutAssignments>
 </Profile>
