@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Avanco_exige_atividade_registada</fullName>
+    <active>true</active>
+    <description>Mesma logica do Lead. Um negocio que avanca sem uma unica atividade registada e um negocio que so existe na cabeca do agente - o problema numero um do Case Study. Perdido fica de fora: um negocio pode morrer sem nunca ter havido contacto.</description>
+    <errorConditionFormula>AND(
+  ISCHANGED(StageName),
+  NOT(ISPICKVAL(StageName, "Interesse Registado")),
+  NOT(ISPICKVAL(StageName, "Contacto Inicial")),
+  NOT(ISPICKVAL(StageName, "Perdido")),
+  ISBLANK(LastActivityDate)
+)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>Este negócio não tem nenhuma atividade registada. Registe a chamada, a visita ou a reunião antes de avançar a fase — sem isso o negócio existe apenas na sua memória.</errorMessage>
+</ValidationRule>

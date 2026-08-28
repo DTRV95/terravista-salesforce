@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Avanco_exige_contacto_registado</fullName>
+    <active>true</active>
+    <description>Dizer que um lead foi contactado exige prova, nao afirmacao. LastActivityDate e standard e preenche-se sozinho com Tasks concluidas e Events passados - se esta vazio, nao houve contacto nenhum. Guardada por ISCHANGED(Status) para so agir na progressao, nunca a bloquear a edicao de registos antigos.</description>
+    <errorConditionFormula>AND(
+  ISCHANGED(Status),
+  OR(ISPICKVAL(Status, "Em Contacto"),
+     ISPICKVAL(Status, "Qualificado"),
+     ISPICKVAL(Status, "Visita Agendada"),
+     ISPICKVAL(Status, "Avaliacao do Imovel"),
+     ISPICKVAL(Status, "Analise do Empreendimento"),
+     ISPICKVAL(Status, "Proposta de Mediacao")),
+  ISBLANK(LastActivityDate)
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>Não há nenhum contacto registado neste lead. Registe a chamada como Tarefa concluída, ou a visita como Evento, antes de avançar a fase.</errorMessage>
+</ValidationRule>
