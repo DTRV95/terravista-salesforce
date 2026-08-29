@@ -11,7 +11,11 @@ sf project deploy start -o terravista
 
 ---
 
-## Bloco atual — 29/08/2026
+## Bloco atual — 29/08/2026 *(2.ª tentativa)*
+
+> A 1.ª tentativa falhou num erro só. Como o deploy é transacional (`rollbackOnError`), **nada
+> entrou na org** — nem a correção da comissão, nem o valor `Arrendado`, nem o Flow 1. Repete-se
+> o comando tal e qual.
 
 | # | Alteração | Ficheiro | Testar depois |
 |---|---|---|---|
@@ -68,5 +72,6 @@ Flow 2 de se auto-disparar quando o seu próprio último passo atualiza a Opport
 | `ISNEW()` recusado nas entry conditions do Flow 1 | Tirar `OR(ISNEW(), ...)` e deixar só `ISCHANGED({!$Record.StageName})`. Perde-se apenas o caso raro de um negócio criado já em CPCV |
 | `$Record.RecordType.DeveloperName` recusado na fórmula de entrada | Substituir por um elemento Decision logo a seguir ao Start, com a mesma condição |
 | `Draft` recusado no `Status` do Contrato | Confirmar o valor exato do picklist standard ContractStatus na org |
+| ~~Comparar um picklist com `=` numa fórmula de Flow~~ | **Aconteceu.** `{!$Record.StageName} = "Contrato Assinado"` foi recusado no deploy. Corrigido com `ISPICKVAL()` nos dois sítios do Flow 2 |
 
 Nenhum destes parte dados — falham no deploy, que é onde se quer que falhem.

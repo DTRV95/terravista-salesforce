@@ -15,7 +15,7 @@
         </connector>
         <filterFormula>AND(
   {!$Record.RecordType.DeveloperName} = "Angariacao",
-  {!$Record.StageName} = "Contrato Assinado",
+  ISPICKVAL({!$Record.StageName}, "Contrato Assinado"),
   ISCHANGED({!$Record.StageName})
 )</filterFormula>
         <object>Opportunity</object>
@@ -25,7 +25,7 @@
     <formulas>
         <name>frmRegime</name>
         <dataType>String</dataType>
-        <expression>IF({!$Record.Linha_Negocio__c} = "B2B", "Comercializacao de Empreendimento", "Mediacao a Particular")</expression>
+        <expression>IF(ISPICKVAL({!$Record.Linha_Negocio__c}, "B2B"), "Comercializacao de Empreendimento", "Mediacao a Particular")</expression>
     </formulas>
     <formulas>
         <name>frmVencimentoTask</name>
