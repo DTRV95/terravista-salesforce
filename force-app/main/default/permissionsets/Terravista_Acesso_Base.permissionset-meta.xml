@@ -292,6 +292,14 @@
         <application>Terravista</application>
         <visible>true</visible>
     </applicationVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Account.Empresa</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Account.PersonAccount</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <tabSettings>
         <tab>Imovel__c</tab>
         <visibility>Visible</visibility>
