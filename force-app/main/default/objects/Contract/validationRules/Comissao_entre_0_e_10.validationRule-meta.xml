@@ -2,8 +2,8 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Comissao_entre_0_e_10</fullName>
     <active>true</active>
-    <description>Defende a formula Comissao_Terravista__c. Uma comissao mal introduzida - 45 em vez de 4,5 - multiplicava a faturacao por dez sem dar erro nenhum.</description>
-    <errorConditionFormula>AND(NOT(ISBLANK(Comissao__c)), OR(Comissao__c &lt;= 0, Comissao__c &gt; 10))</errorConditionFormula>
+    <description>Defende a formula Comissao_Terravista__c. Uma comissao mal introduzida - 45 em vez de 4,5 - multiplicava a faturacao por dez sem dar erro. O limite e 0.10 e nao 10: num campo Percent, o valor em contexto de formula e o da API dividido por 100.</description>
+    <errorConditionFormula>AND(NOT(ISBLANK(Comissao__c)), OR(Comissao__c &lt;= 0, Comissao__c &gt; 0.10))</errorConditionFormula>
     <errorDisplayField>Comissao__c</errorDisplayField>
     <errorMessage>A comissão tem de estar entre 0% e 10%. Valores fora deste intervalo são quase sempre erro de introdução.</errorMessage>
 </ValidationRule>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Quando uma angariacao chega a Contrato Assinado, cria o CMI em rascunho e uma Task para o agente completar o que so se sabe no terreno. Nao cria o Imovel: nessa altura ainda ninguem mediu nem avaliou.</description>
+    <environments>Default</environments>
+    <interviewLabel>Angariacao Ganha Cria Contrato {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Angariacao Ganha Cria Contrato</label>
+    <processType>AutoLaunchedFlow</processType>
+    <status>Active</status>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Criar_Contrato</targetReference>
+        </connector>
+        <filterFormula>AND(
+  {!$Record.RecordType.DeveloperName} = "Angariacao",
+  {!$Record.StageName} = "Contrato Assinado",
+  ISCHANGED({!$Record.StageName})
+)</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <formulas>
+        <name>frmRegime</name>
+        <dataType>String</dataType>
+        <expression>IF({!$Record.Linha_Negocio__c} = "B2B", "Comercializacao de Empreendimento", "Mediacao a Particular")</expression>
+    </formulas>
+    <formulas>
+        <name>frmVencimentoTask</name>
+        <dataType>Date</dataType>
+        <expression>TODAY() + 3</expression>
+    </formulas>
+    <recordCreates>
+        <name>Criar_Contrato</name>
+        <label>Criar Contrato de Mediacao em rascunho</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <connector>
+            <targetReference>Criar_Task_de_Completacao</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContractTerm</field>
+            <value>
+                <numberValue>6.0</numberValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Regime__c</field>
+            <value>
+                <elementReference>frmRegime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StartDate</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Draft</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Contract</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Criar_Task_de_Completacao</name>
+        <label>Criar Task para completar o CMI</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <connector>
+            <targetReference>Ligar_Contrato_ao_Negocio</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>ActivityDate</field>
+            <value>
+                <elementReference>frmVencimentoTask</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <stringValue>O contrato foi criado automaticamente com o essencial. Falta o que so se sabe no terreno: percentagem de comissao acordada, regime de exclusividade, e criar o registo de Imovel com preco e area depois da avaliacao.</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Priority</field>
+            <value>
+                <stringValue>High</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Completar CMI: comissao, exclusividade e imovel</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>Criar_Contrato</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordUpdates>
+        <name>Ligar_Contrato_ao_Negocio</name>
+        <label>Ligar o contrato ao negocio</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ContractId</field>
+            <value>
+                <elementReference>Criar_Contrato</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+</Flow>
