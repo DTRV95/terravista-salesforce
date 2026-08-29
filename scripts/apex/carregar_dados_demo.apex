@@ -55,7 +55,7 @@ Map<String, Account> contas = new Map<String, Account>{
     'casal'     => new Account(Name='Família Casal',               Description=MARCA+' agregado comprador'),
     'rios'      => new Account(Name='Família Rios',                Description=MARCA+' agregado arrendatario'),
     'vilar'     => new Account(Name='Família Vilar',               Description=MARCA+' agregado - negocio perdido'),
-    'nogueira'  => new Account(Name='Património Nogueira',         Description=MARCA+' proprietario - arrendamento'),
+    'vasconcelos'  => new Account(Name='Património Vasconcelos',         Description=MARCA+' proprietario - arrendamento'),
     'ameal'     => new Account(Name='Quinta do Ameal, Lda',        Description=MARCA+' proprietaria - terreno'),
     'douro'     => new Account(Name='Construtora Douro Vale, S.A.',Description=MARCA+' construtora compradora de terreno',
                                Procura_Tipo_Solo__c='Urbanizavel', Procura_ABC_Minima_m2__c=2000,
@@ -94,8 +94,8 @@ List<Contact> cts = new List<Contact>{
                 Email='pedro.vilar@exemplo.pt', Phone='912000107', Perfil_Comprador__c='Habitacao Propria',
                 Procura_Tipologia__c='T2', Procura_Zonas__c='Matosinhos', Orcamento_Min__c=150000, Orcamento_Max__c=190000,
                 Financiamento__c='Nao iniciado', Notas_Preferencias__c='Banco recusou o credito. Volta a tentar daqui a 6 meses.'),
-    new Contact(AccountId=contas.get('nogueira').Id, FirstName='Isabel',  LastName='Nogueira',
-                Email='isabel.nogueira@exemplo.pt', Phone='912000108',
+    new Contact(AccountId=contas.get('vasconcelos').Id, FirstName='Isabel',  LastName='Vasconcelos',
+                Email='isabel.vasconcelos@exemplo.pt', Phone='912000108',
                 Notas_Preferencias__c='Proprietaria. Herdou o T2 e prefere arrendar a vender.'),
     new Contact(AccountId=contas.get('douro').Id,    FirstName='Alvaro',  LastName='Sequeira',
                 Email='alvaro.sequeira@dourovale.pt', Phone='229000200',
@@ -107,7 +107,7 @@ insert cts;
 // Servem para demonstrar dois Record Types que ate agora nao tinham dados:
 // Arrendamento e Venda de Terreno.
 List<Contract> novosContratos = new List<Contract>{
-    new Contract(AccountId=contas.get('nogueira').Id, Status='Draft', StartDate=HOJE.addDays(-80), ContractTerm=12,
+    new Contract(AccountId=contas.get('vasconcelos').Id, Status='Draft', StartDate=HOJE.addDays(-80), ContractTerm=12,
                  Regime__c='Mediacao a Particular', Comissao__c=5, Exclusivo__c=false,
                  Localizacao__c='Porto', Description=MARCA+' CMI de arrendamento'),
     new Contract(AccountId=contas.get('ameal').Id,    Status='Draft', StartDate=HOJE.addDays(-45), ContractTerm=12,
