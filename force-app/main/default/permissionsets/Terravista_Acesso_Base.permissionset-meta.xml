@@ -296,10 +296,6 @@
         <recordType>Account.Empresa</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>PersonAccount.PersonAccount</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
     <tabSettings>
         <tab>Imovel__c</tab>
         <visibility>Visible</visibility>

@@ -112,6 +112,32 @@ Person Account. Se aparecer, está feito — diz-me e passo à migração.
 
 ---
 
+## FASE 3 — o que ficou registado
+
+**Person Accounts ativado com sucesso.** A org tem dois Record Types em Account: `Empresa` e
+`PersonAccount` (tipo pessoa, ativo). O Record Type de person account foi atribuído **à mão no
+perfil System Administrator** — não está em metadata.
+
+> **Porque não está no Permission Set:** tentámos declarar a visibilidade do record type de
+> person account no `Terravista — Acesso Base` e o deploy recusou `Account.PersonAccount`.
+> A referência correta em metadata não usa o objeto Account, e não a conseguimos confirmar na
+> documentação oficial a partir deste ambiente. Em vez de deixar uma referência não verificada
+> a bloquear **todos** os deploys futuros, ficou de fora e o passo é manual e documentado aqui.
+> `Account.Empresa` esse ficou declarado, porque é um record type normal.
+
+### Efeito colateral útil
+
+Ao ativar Person Accounts, os 7 campos de perfil do Contact foram **automaticamente espelhados
+no Account** com sufixo `__pc`:
+
+`Perfil_Comprador__pc` · `Procura_Tipologia__pc` · `Procura_Zonas__pc` · `Orcamento_Min__pc` ·
+`Orcamento_Max__pc` · `Notas_Preferencias__pc` · `Financiamento__pc`
+
+Não foi preciso criar nada. É a plataforma a fazer o trabalho — e é o argumento mais forte a
+favor desta decisão: o perfil de procura passa a viver no mesmo registo que a pessoa.
+
+---
+
 ## FASE 4 · Migrar os dados — trabalho meu
 
 Depois de ativado, escrevo o script de conversão. O plano:

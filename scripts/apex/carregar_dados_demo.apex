@@ -49,66 +49,96 @@ for (RecordType rt : [SELECT Id, DeveloperName, SobjectType FROM RecordType WHER
     if (rt.SobjectType == 'Opportunity') rtOpp.put(rt.DeveloperName, rt.Id); else rtLead.put(rt.DeveloperName, rt.Id);
 }
 
-// ===== 2 · CONTAS E CONTACTOS ===============================================
-// CONVENCAO: um Account NUNCA e uma pessoa. E a parte contratante — o agregado
-// que compra ('Familia Peixoto'), a empresa que investe, o proprietario que
-// coloca o imovel no mercado, a construtora que o promove. As pessoas sao Contactos dentro dela, e e no
-// Contacto que vive o perfil de procura.
-Map<String, Account> contas = new Map<String, Account>{
-    'ferraz'    => new Account(AccountNumber=MARCA_AC, Name='Família Ferraz',              Description=MARCA+' agregado comprador'),
-    'peixoto'   => new Account(AccountNumber=MARCA_AC, Name='Família Peixoto',             Description=MARCA+' agregado comprador'),
-    'nobre'     => new Account(AccountNumber=MARCA_AC, Name='Nobre Investimentos, Unipessoal Lda', Description=MARCA+' investidor - compra para arrendar'),
-    'almada'    => new Account(AccountNumber=MARCA_AC, Name='Família Almada',              Description=MARCA+' agregado comprador'),
-    'casal'     => new Account(AccountNumber=MARCA_AC, Name='Família Casal',               Description=MARCA+' agregado comprador'),
-    'rios'      => new Account(AccountNumber=MARCA_AC, Name='Família Rios',                Description=MARCA+' agregado arrendatario'),
-    'vilar'     => new Account(AccountNumber=MARCA_AC, Name='Família Vilar',               Description=MARCA+' agregado - negocio perdido'),
-    'vasconcelos'  => new Account(AccountNumber=MARCA_AC, Name='Património Vasconcelos',         Description=MARCA+' proprietario - arrendamento'),
-    'ameal'     => new Account(AccountNumber=MARCA_AC, Name='Quinta do Ameal, Lda',        Description=MARCA+' proprietaria - terreno'),
-    'douro'     => new Account(AccountNumber=MARCA_AC, Name='Construtora Douro Vale, S.A.',Description=MARCA+' construtora compradora de terreno',
-                               Procura_Tipo_Solo__c='Urbanizavel', Procura_ABC_Minima_m2__c=2000,
-                               Procura_Zonas__c='Maia, Matosinhos, Valongo', Orcamento_Max__c=600000,
-                               Notas_Criterios__c='So avanca com PIP aprovado. Prefere lotes acima de 2000 m2 de ABC.'),
-    'herdeiros' => new Account(AccountNumber=MARCA_AC, Name='Herdeiros de Silva Matos',    Description=MARCA+' angariacao em curso')
-};
+// ===== 2 · CONTAS =========================================================
+// MODELO: um Account nunca representa uma pessoa disfarcada de empresa.
+//   · Particulares  -> Person Account (record type de tipo pessoa). A pessoa E a
+//     conta; os campos de perfil vivem no proprio registo com sufixo __pc.
+//   · Empresas      -> Account de record type Empresa, com Contactos dentro.
+Id rtPessoa  = [SELECT Id FROM RecordType WHERE SobjectType = 'Account' AND IsPersonType = true LIMIT 1].Id;
+Id rtEmpresa = [SELECT Id FROM RecordType WHERE SobjectType = 'Account' AND DeveloperName = 'Empresa' LIMIT 1].Id;
+
+Map<String, Account> contas = new Map<String, Account>();
+
+// --- Particulares: Person Accounts ---------------------------------------
+contas.put('ferraz', new Account(RecordTypeId=rtPessoa, AccountNumber=MARCA_AC,
+    FirstName='Nuno', LastName='Ferraz', PersonEmail='nuno.ferraz@exemplo.pt', PersonMobilePhone='912000101',
+    Perfil_Comprador__pc='Habitacao Propria', Procura_Tipologia__pc='T2', Procura_Zonas__pc='Matosinhos',
+    Orcamento_Min__pc=150000, Orcamento_Max__pc=200000, Financiamento__pc='Em analise',
+    Notas_Preferencias__pc='Primeira casa. Nao quer r/c. Precisa de garagem.',
+    Description=MARCA+' comprador particular'));
+
+contas.put('peixoto', new Account(RecordTypeId=rtPessoa, AccountNumber=MARCA_AC,
+    FirstName='Carla', LastName='Peixoto', PersonEmail='carla.peixoto@exemplo.pt', PersonMobilePhone='912000102',
+    Perfil_Comprador__pc='Habitacao Propria', Procura_Tipologia__pc='T3', Procura_Zonas__pc='Matosinhos, Leca da Palmeira',
+    Orcamento_Min__pc=250000, Orcamento_Max__pc=300000, Financiamento__pc='Pre-aprovado',
+    Notas_Preferencias__pc='Dois filhos em idade escolar. Quer perto da escola basica de Leca.',
+    Description=MARCA+' compradora particular'));
+
+contas.put('almada', new Account(RecordTypeId=rtPessoa, AccountNumber=MARCA_AC,
+    FirstName='Sofia', LastName='Almada', PersonEmail='sofia.almada@exemplo.pt', PersonMobilePhone='912000104',
+    Perfil_Comprador__pc='Habitacao Propria', Procura_Tipologia__pc='T4+', Procura_Zonas__pc='Foz, Matosinhos',
+    Orcamento_Min__pc=450000, Orcamento_Max__pc=560000, Financiamento__pc='Pre-aprovado',
+    Notas_Preferencias__pc='Vem de Lisboa. Quer vista mar, e o unico ponto inegociavel.',
+    Description=MARCA+' compradora particular'));
+
+contas.put('casal', new Account(RecordTypeId=rtPessoa, AccountNumber=MARCA_AC,
+    FirstName='Bruno', LastName='Casal', PersonEmail='bruno.casal@exemplo.pt', PersonMobilePhone='912000105',
+    Perfil_Comprador__pc='Habitacao Propria', Procura_Tipologia__pc='T3', Procura_Zonas__pc='Matosinhos',
+    Orcamento_Min__pc=320000, Orcamento_Max__pc=370000, Financiamento__pc='Pre-aprovado',
+    Notas_Preferencias__pc='CPCV assinado. Escritura dependente da entrega da obra.',
+    Description=MARCA+' comprador particular'));
+
+contas.put('rios', new Account(RecordTypeId=rtPessoa, AccountNumber=MARCA_AC,
+    FirstName='Marta', LastName='Rios', PersonEmail='marta.rios@exemplo.pt', PersonMobilePhone='912000106',
+    Perfil_Comprador__pc='Habitacao Propria', Procura_Tipologia__pc='T2', Procura_Zonas__pc='Porto',
+    Orcamento_Max__pc=1100,
+    Notas_Preferencias__pc='Arrendamento. Tem fiador. Contrato minimo de 2 anos.',
+    Description=MARCA+' arrendataria'));
+
+contas.put('vilar', new Account(RecordTypeId=rtPessoa, AccountNumber=MARCA_AC,
+    FirstName='Pedro', LastName='Vilar', PersonEmail='pedro.vilar@exemplo.pt', PersonMobilePhone='912000107',
+    Perfil_Comprador__pc='Habitacao Propria', Procura_Tipologia__pc='T2', Procura_Zonas__pc='Matosinhos',
+    Orcamento_Min__pc=150000, Orcamento_Max__pc=190000, Financiamento__pc='Nao iniciado',
+    Notas_Preferencias__pc='Banco recusou o credito. Volta a tentar daqui a 6 meses.',
+    Description=MARCA+' negocio perdido'));
+
+contas.put('vasconcelos', new Account(RecordTypeId=rtPessoa, AccountNumber=MARCA_AC,
+    FirstName='Isabel', LastName='Vasconcelos', PersonEmail='isabel.vasconcelos@exemplo.pt', PersonMobilePhone='912000108',
+    Notas_Preferencias__pc='Proprietaria. Herdou o T2 e prefere arrendar a vender.',
+    Description=MARCA+' proprietaria - arrendamento'));
+
+// --- Empresas e outras partes contratantes -------------------------------
+contas.put('nobre', new Account(RecordTypeId=rtEmpresa, AccountNumber=MARCA_AC,
+    Name='Nobre Investimentos, Unipessoal Lda',
+    Description=MARCA+' investidor - compra para arrendar'));
+
+contas.put('ameal', new Account(RecordTypeId=rtEmpresa, AccountNumber=MARCA_AC,
+    Name='Quinta do Ameal, Lda', Description=MARCA+' proprietaria - terreno'));
+
+contas.put('douro', new Account(RecordTypeId=rtEmpresa, AccountNumber=MARCA_AC,
+    Name='Construtora Douro Vale, S.A.', Description=MARCA+' construtora compradora de terreno',
+    Procura_Tipo_Solo__c='Urbanizavel', Procura_ABC_Minima_m2__c=2000,
+    Procura_Zonas__c='Maia, Matosinhos, Valongo', Orcamento_Max__c=600000,
+    Notas_Criterios__c='So avanca com PIP aprovado. Prefere lotes acima de 2000 m2 de ABC.'));
+
+// Heranca indivisa: uma parte contratante coletiva, nao uma pessoa
+contas.put('herdeiros', new Account(RecordTypeId=rtEmpresa, AccountNumber=MARCA_AC,
+    Name='Herdeiros de Silva Matos', Description=MARCA+' angariacao em curso'));
+
 insert contas.values();
 
-List<Contact> cts = new List<Contact>{
-    new Contact(AccountId=contas.get('ferraz').Id,   FirstName='Nuno',    LastName='Ferraz',
-                Email='nuno.ferraz@exemplo.pt', Phone='912000101', Perfil_Comprador__c='Habitacao Propria',
-                Procura_Tipologia__c='T2', Procura_Zonas__c='Matosinhos', Orcamento_Min__c=150000, Orcamento_Max__c=200000,
-                Financiamento__c='Em analise', Notas_Preferencias__c='Primeira casa. Nao quer resr/c. Precisa de garagem.'),
-    new Contact(AccountId=contas.get('peixoto').Id,  FirstName='Carla',   LastName='Peixoto',
-                Email='carla.peixoto@exemplo.pt', Phone='912000102', Perfil_Comprador__c='Habitacao Propria',
-                Procura_Tipologia__c='T3', Procura_Zonas__c='Matosinhos, Leca da Palmeira', Orcamento_Min__c=250000, Orcamento_Max__c=300000,
-                Financiamento__c='Pre-aprovado', Notas_Preferencias__c='Dois filhos em idade escolar. Quer perto da escola basica de Leca.'),
-    new Contact(AccountId=contas.get('nobre').Id,    FirstName='Ricardo', LastName='Nobre',
+// ===== 2b · CONTACTOS DAS EMPRESAS ========================================
+// So as contas empresariais levam Contactos. Os Person Accounts ja SAO a pessoa.
+insert new List<Contact>{
+    new Contact(AccountId=contas.get('douro').Id, FirstName='Alvaro', LastName='Sequeira',
+                Email='alvaro.sequeira@dourovale.pt', Phone='229000200',
+                Notas_Preferencias__c='Director de expansao. Decide com o conselho, reune a primeira segunda-feira do mes.'),
+    new Contact(AccountId=contas.get('nobre').Id, FirstName='Ricardo', LastName='Nobre',
                 Email='ricardo.nobre@exemplo.pt', Phone='912000103', Perfil_Comprador__c='Investimento',
                 Procura_Tipologia__c='T3', Procura_Zonas__c='Matosinhos', Orcamento_Min__c=260000, Orcamento_Max__c=300000,
-                Financiamento__c='Nao necessita', Notas_Preferencias__c='Compra para arrendar. So interessa rentabilidade acima de 5%.'),
-    new Contact(AccountId=contas.get('almada').Id,   FirstName='Sofia',   LastName='Almada',
-                Email='sofia.almada@exemplo.pt', Phone='912000104', Perfil_Comprador__c='Habitacao Propria',
-                Procura_Tipologia__c='T4+', Procura_Zonas__c='Foz, Matosinhos', Orcamento_Min__c=450000, Orcamento_Max__c=560000,
-                Financiamento__c='Pre-aprovado', Notas_Preferencias__c='Vem de Lisboa. Quer vista mar, e o unico ponto inegociavel.'),
-    new Contact(AccountId=contas.get('casal').Id,    FirstName='Bruno',   LastName='Casal',
-                Email='bruno.casal@exemplo.pt', Phone='912000105', Perfil_Comprador__c='Habitacao Propria',
-                Procura_Tipologia__c='T3', Procura_Zonas__c='Matosinhos', Orcamento_Min__c=320000, Orcamento_Max__c=370000,
-                Financiamento__c='Pre-aprovado', Notas_Preferencias__c='CPCV assinado. Escritura dependente da entrega da obra.'),
-    new Contact(AccountId=contas.get('rios').Id,     FirstName='Marta',   LastName='Rios',
-                Email='marta.rios@exemplo.pt', Phone='912000106', Perfil_Comprador__c='Habitacao Propria',
-                Procura_Tipologia__c='T2', Procura_Zonas__c='Porto', Orcamento_Max__c=1100,
-                Notas_Preferencias__c='Arrendamento. Tem fiador. Contrato minimo de 2 anos.'),
-    new Contact(AccountId=contas.get('vilar').Id,    FirstName='Pedro',   LastName='Vilar',
-                Email='pedro.vilar@exemplo.pt', Phone='912000107', Perfil_Comprador__c='Habitacao Propria',
-                Procura_Tipologia__c='T2', Procura_Zonas__c='Matosinhos', Orcamento_Min__c=150000, Orcamento_Max__c=190000,
-                Financiamento__c='Nao iniciado', Notas_Preferencias__c='Banco recusou o credito. Volta a tentar daqui a 6 meses.'),
-    new Contact(AccountId=contas.get('vasconcelos').Id, FirstName='Isabel',  LastName='Vasconcelos',
-                Email='isabel.vasconcelos@exemplo.pt', Phone='912000108',
-                Notas_Preferencias__c='Proprietaria. Herdou o T2 e prefere arrendar a vender.'),
-    new Contact(AccountId=contas.get('douro').Id,    FirstName='Alvaro',  LastName='Sequeira',
-                Email='alvaro.sequeira@dourovale.pt', Phone='229000200',
-                Notas_Preferencias__c='Director de expansao. Decide com o conselho, reune a primeira segunda-feira do mes.')
+                Financiamento__c='Nao necessita',
+                Notas_Preferencias__c='Compra para arrendar. So interessa rentabilidade acima de 5%.')
 };
-insert cts;
 
 // ===== 3 · DOIS CONTRATOS NOVOS E OS RESPETIVOS IMOVEIS =====================
 // Servem para demonstrar dois Record Types que ate agora nao tinham dados:
