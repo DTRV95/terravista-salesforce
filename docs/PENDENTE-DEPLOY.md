@@ -40,6 +40,24 @@ O limite passou a `0.10`. A mensagem de erro não muda.
 
 ---
 
+## Depois do deploy — carregar os dados de demonstração
+
+```
+sf apex run -f scripts/apex/carregar_dados_demo.apex -o terravista
+```
+
+Cria o pipeline aberto que faltava: 9 negócios em 4 Record Types, 10 atividades,
+3 leads por contactar, 2 contratos novos e 2 imóveis (um de arrendamento, um terreno).
+
+**É re-executável.** Tudo o que cria leva a marca `[DEMO]` na descrição e a primeira secção
+apaga a carga anterior antes de criar a nova. Não toca nas 12 vendas do Aurora nem nos
+contratos reais. Se estragares dados a testar, corres outra vez e volta ao estado limpo.
+
+Correr **depois** do deploy: o negócio da Marta Rios usa o estado `Arrendado`, e o teste
+do Flow 1 assenta neste pipeline.
+
+---
+
 ## Testes de aceitação dos Flows
 
 ### Flow 1 · Sincronizar Estado do Imóvel
