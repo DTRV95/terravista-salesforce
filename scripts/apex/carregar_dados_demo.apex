@@ -256,16 +256,10 @@ Map<String, String> notas = new Map<String, String>{
     'Angariacao — Herdeiros de Silva Matos' => 'Tres herdeiros, dois ja concordam. O terceiro quer avaliacao independente.',
     'Pedro Vilar — Aurora 2ºD'            => 'Banco recusou por taxa de esforco. Recontactar dentro de 6 meses.'
 };
-Map<String, String> resultadoVisita = new Map<String, String>{
-    'Carla Peixoto — Aurora 5ºB'   => 'Vai pensar',
-    'Marta Rios — T2 Costa Cabral' => 'Interessado'
-};
-
 List<Task> tarefas = new List<Task>();
 for (Opportunity o : opps) {
     Task t = new Task(WhatId=o.Id, Subject=assunto.get(o.Name), Description=notas.get(o.Name),
                       Status='Completed', Priority='Normal', ActivityDate=HOJE.addDays(-diasAtras.get(o.Name)));
-    if (resultadoVisita.containsKey(o.Name)) t.Resultado_Visita__c = resultadoVisita.get(o.Name);
     tarefas.add(t);
 }
 // uma tarefa em aberto, para a lista de trabalho do consultor nao estar vazia
