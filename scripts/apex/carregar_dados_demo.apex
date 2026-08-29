@@ -8,12 +8,19 @@
  * tenha essa marca — as 12 vendas do Aurora e os contratos reais ficam intactos.
  */
 
-final String MARCA  = '[DEMO]';
-final String PADRAO = MARCA + '%';
+final String MARCA    = '[DEMO]';                        // texto legivel na descricao
+final String MARCA_AC = 'DEMO';                          // Account.AccountNumber
+final String MARCA_LD = 'https://demo.terravista.local'; // Lead.Website
+
+/*  PORQUE NAO SE FILTRA PELA DESCRICAO
+ *  Description e um Long Text Area em Account, Opportunity, Contract e Lead, e
+ *  o SOQL NAO deixa filtrar por campos desse tipo. A primeira versao deste script
+ *  usava 'WHERE Description LIKE' e rebentava na primeira linha.
+ *  A marca vive agora em campos de texto normais, que sao filtraveis.  */
 final Date   HOJE   = Date.today();
 
 // ===== 0 · LIMPAR A CARGA ANTERIOR ==========================================
-List<Opportunity> oppsAntigas = [SELECT Id, Imovel__c FROM Opportunity WHERE Description LIKE :PADRAO];
+List<Opportunity> oppsAntigas = [SELECT Id, Imovel__c FROM Opportunity WHERE Account.AccountNumber = :MARCA_AC];
 Set<Id> imoveisALibertar = new Set<Id>();
 for (Opportunity o : oppsAntigas) if (o.Imovel__c != null) imoveisALibertar.add(o.Imovel__c);
 if (!oppsAntigas.isEmpty()) delete oppsAntigas;
@@ -26,11 +33,11 @@ for (Imovel__c im : [SELECT Id, Estado_Comercial__c FROM Imovel__c WHERE Id IN :
 if (!aLibertar.isEmpty()) update aLibertar;
 
 // apagar contratos demo (o Master-Detail leva os imoveis atras) e depois as contas
-List<Contract> contratosAntigos = [SELECT Id FROM Contract WHERE Description LIKE :PADRAO];
+List<Contract> contratosAntigos = [SELECT Id FROM Contract WHERE Account.AccountNumber = :MARCA_AC];
 if (!contratosAntigos.isEmpty()) delete contratosAntigos;
-List<Lead> leadsAntigos = [SELECT Id FROM Lead WHERE Description LIKE :PADRAO];
+List<Lead> leadsAntigos = [SELECT Id FROM Lead WHERE Website = :MARCA_LD];
 if (!leadsAntigos.isEmpty()) delete leadsAntigos;
-List<Account> contasAntigas = [SELECT Id FROM Account WHERE Description LIKE :PADRAO];
+List<Account> contasAntigas = [SELECT Id FROM Account WHERE AccountNumber = :MARCA_AC];
 if (!contasAntigas.isEmpty()) delete contasAntigas;
 
 System.debug('Limpeza: ' + oppsAntigas.size() + ' negocios, ' + contratosAntigos.size() + ' contratos, ' + contasAntigas.size() + ' contas.');
@@ -48,20 +55,20 @@ for (RecordType rt : [SELECT Id, DeveloperName, SobjectType FROM RecordType WHER
 // coloca o imovel no mercado, a construtora que o promove. As pessoas sao Contactos dentro dela, e e no
 // Contacto que vive o perfil de procura.
 Map<String, Account> contas = new Map<String, Account>{
-    'ferraz'    => new Account(Name='Família Ferraz',              Description=MARCA+' agregado comprador'),
-    'peixoto'   => new Account(Name='Família Peixoto',             Description=MARCA+' agregado comprador'),
-    'nobre'     => new Account(Name='Nobre Investimentos, Unipessoal Lda', Description=MARCA+' investidor - compra para arrendar'),
-    'almada'    => new Account(Name='Família Almada',              Description=MARCA+' agregado comprador'),
-    'casal'     => new Account(Name='Família Casal',               Description=MARCA+' agregado comprador'),
-    'rios'      => new Account(Name='Família Rios',                Description=MARCA+' agregado arrendatario'),
-    'vilar'     => new Account(Name='Família Vilar',               Description=MARCA+' agregado - negocio perdido'),
-    'vasconcelos'  => new Account(Name='Património Vasconcelos',         Description=MARCA+' proprietario - arrendamento'),
-    'ameal'     => new Account(Name='Quinta do Ameal, Lda',        Description=MARCA+' proprietaria - terreno'),
-    'douro'     => new Account(Name='Construtora Douro Vale, S.A.',Description=MARCA+' construtora compradora de terreno',
+    'ferraz'    => new Account(AccountNumber=MARCA_AC, Name='Família Ferraz',              Description=MARCA+' agregado comprador'),
+    'peixoto'   => new Account(AccountNumber=MARCA_AC, Name='Família Peixoto',             Description=MARCA+' agregado comprador'),
+    'nobre'     => new Account(AccountNumber=MARCA_AC, Name='Nobre Investimentos, Unipessoal Lda', Description=MARCA+' investidor - compra para arrendar'),
+    'almada'    => new Account(AccountNumber=MARCA_AC, Name='Família Almada',              Description=MARCA+' agregado comprador'),
+    'casal'     => new Account(AccountNumber=MARCA_AC, Name='Família Casal',               Description=MARCA+' agregado comprador'),
+    'rios'      => new Account(AccountNumber=MARCA_AC, Name='Família Rios',                Description=MARCA+' agregado arrendatario'),
+    'vilar'     => new Account(AccountNumber=MARCA_AC, Name='Família Vilar',               Description=MARCA+' agregado - negocio perdido'),
+    'vasconcelos'  => new Account(AccountNumber=MARCA_AC, Name='Património Vasconcelos',         Description=MARCA+' proprietario - arrendamento'),
+    'ameal'     => new Account(AccountNumber=MARCA_AC, Name='Quinta do Ameal, Lda',        Description=MARCA+' proprietaria - terreno'),
+    'douro'     => new Account(AccountNumber=MARCA_AC, Name='Construtora Douro Vale, S.A.',Description=MARCA+' construtora compradora de terreno',
                                Procura_Tipo_Solo__c='Urbanizavel', Procura_ABC_Minima_m2__c=2000,
                                Procura_Zonas__c='Maia, Matosinhos, Valongo', Orcamento_Max__c=600000,
                                Notas_Criterios__c='So avanca com PIP aprovado. Prefere lotes acima de 2000 m2 de ABC.'),
-    'herdeiros' => new Account(Name='Herdeiros de Silva Matos',    Description=MARCA+' angariacao em curso')
+    'herdeiros' => new Account(AccountNumber=MARCA_AC, Name='Herdeiros de Silva Matos',    Description=MARCA+' angariacao em curso')
 };
 insert contas.values();
 
@@ -245,17 +252,17 @@ update new Imovel__c(Id=im.get('Aurora - 4ºC').Id, Estado_Comercial__c='Reserva
 // ===== 8 · LEADS POR CONTACTAR ==============================================
 // Sem atividade, de proposito: alimentam a vista "Sem Primeiro Contacto".
 insert new List<Lead>{
-    new Lead(FirstName='Vera',  LastName='Antunes', Company='Vera Antunes (Particular)',
+    new Lead(Website=MARCA_LD, FirstName='Vera',  LastName='Antunes', Company='Vera Antunes (Particular)',
              Email='vera.antunes@exemplo.pt', Phone='912000201', Status='Novo',
              LeadSource='Portal Imobiliario', RecordTypeId=rtLead.get('Compra'),
              Procura_Tipologia__c='T2', Procura_Zonas__c='Matosinhos', Orcamento_Min__c=160000, Orcamento_Max__c=210000,
              Financiamento__c='Em analise', Prazo_Decisao__c='3 a 6 meses', Description=MARCA+' lead por contactar'),
-    new Lead(FirstName='Hugo',  LastName='Bastos',  Company='Hugo Bastos (Particular)',
+    new Lead(Website=MARCA_LD, FirstName='Hugo',  LastName='Bastos',  Company='Hugo Bastos (Particular)',
              Email='hugo.bastos@exemplo.pt', Phone='912000202', Status='Novo',
              LeadSource='Site', RecordTypeId=rtLead.get('Compra'),
              Procura_Tipologia__c='T3', Procura_Zonas__c='Foz, Boavista', Orcamento_Min__c=400000, Orcamento_Max__c=550000,
              Financiamento__c='Pre-aprovado', Prazo_Decisao__c='Menos de 3 meses', Description=MARCA+' lead por contactar'),
-    new Lead(FirstName='Celia', LastName='Moura',   Company='Celia Moura (Particular)',
+    new Lead(Website=MARCA_LD, FirstName='Celia', LastName='Moura',   Company='Celia Moura (Particular)',
              Email='celia.moura@exemplo.pt', Phone='912000203', Status='Novo',
              LeadSource='Referencia', RecordTypeId=rtLead.get('Arrendamento'),
              Procura_Tipologia__c='T1', Procura_Zonas__c='Porto', Orcamento_Max__c=800,
