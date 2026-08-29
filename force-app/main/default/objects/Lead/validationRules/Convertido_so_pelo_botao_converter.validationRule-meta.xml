@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Convertido_so_pelo_botao_converter</fullName>
+    <active>true</active>
+    <description>Status e IsConverted sao coisas diferentes: marcar o estado nao converte nada, fica um lead que diz estar convertido sem Contacto, Conta nem Oportunidade. Esta regra fecha essa porta - so a operacao de conversao pode la chegar.</description>
+    <errorConditionFormula>AND(
+  ISCHANGED(Status),
+  ISPICKVAL(Status, "Convertido"),
+  NOT(IsConverted)
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>Este estado não se escolhe — resulta da conversão. Use o botão Converter para criar o Contacto, a Conta e a Oportunidade.</errorMessage>
+</ValidationRule>
