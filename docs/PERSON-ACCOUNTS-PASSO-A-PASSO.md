@@ -71,9 +71,44 @@ Nessa página há um botão **Check Readiness**. Carrega nele.
 
 ---
 
-## FASE 3 · Ativar — só depois de eu ver o resultado
+## FASE 3 · Ativar
 
-Fica por escrever até a Fase 2 estar validada. Não avances sozinho por esta fase.
+Os três pré-requisitos estão confirmados:
+
+| # | Pré-requisito | Como foi confirmado |
+|---|---|---|
+| 1 | Account com pelo menos um Record Type | Record Type **Empresa**, ativo na org |
+| 2 | Perfis com Read em Account têm Read em Contact | Verificado nos 30 perfis, todos em par |
+| 3 | Contact em *Controlled by Parent* | Confirmado no ecrã de Sharing Settings |
+
+> Nota de método: o `EntityDefinition.InternalSharingModel` devolve `ReadWrite` para o Contact
+> mesmo quando ele está em *Controlled by Parent*. Levou a um alarme falso. **Para partilhas,
+> a interface é a fonte de verdade, não aquela query.**
+
+### 3.1 Ativar
+
+1. **Setup** → pesquisa **Person Accounts**
+2. Carrega em **Check Readiness** — confirma que passa
+3. Carrega em **Enable Person Accounts**
+4. Na mensagem de aviso, carrega em **Enable**
+
+> ⚠️ O passo 4 é o ponto sem retorno.
+
+### 3.2 Atribuir o Record Type ao perfil
+
+A ativação cria automaticamente um Record Type de Person Account. Ele existe, mas **ninguém o
+vê** até ser atribuído a um perfil — é a mesma lição que já apanhámos com os campos: criar
+metadados e conceder acesso a metadados são operações distintas.
+
+Em **Setup → Profiles → System Administrator**, nas definições do objeto **Account**, atribui
+o Record Type de Person Account e deixa-o disponível.
+
+### 3.3 Confirmar
+
+Cria uma Account nova. Deve aparecer um ecrã a perguntar o Record Type, com **Empresa** e o de
+Person Account. Se aparecer, está feito — diz-me e passo à migração.
+
+---
 
 ---
 
