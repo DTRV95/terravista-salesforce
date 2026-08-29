@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Avanco_exige_contacto_registado</fullName>
     <active>true</active>
-    <description>Dizer que um lead foi contactado exige prova, nao afirmacao. LastActivityDate e standard e preenche-se sozinho com Tasks concluidas e Events passados - se esta vazio, nao houve contacto nenhum. Guardada por ISCHANGED(Status) para so agir na progressao, nunca a bloquear a edicao de registos antigos.</description>
+    <description>Dizer que um lead foi contactado exige prova, nao afirmacao. LastActivityDate e standard e preenche-se sozinho com Tasks concluidas e Events passados. Guardada por ISCHANGED: so age na progressao, nunca bloqueia a edicao de registos antigos.</description>
     <errorConditionFormula>AND(
   ISCHANGED(Status),
   OR(ISPICKVAL(Status, "Em Contacto"),
