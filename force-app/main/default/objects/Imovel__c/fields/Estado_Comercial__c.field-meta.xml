@@ -12,6 +12,7 @@
             <value><fullName>Disponivel</fullName><default>true</default><label>Disponível</label></value>
             <value><fullName>Reservado</fullName><default>false</default><label>Reservado</label></value>
             <value><fullName>Vendido</fullName><default>false</default><label>Vendido</label></value>
+            <value><fullName>Arrendado</fullName><default>false</default><label>Arrendado</label></value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
