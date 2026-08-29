@@ -43,17 +43,19 @@ for (RecordType rt : [SELECT Id, DeveloperName, SobjectType FROM RecordType WHER
 }
 
 // ===== 2 · CONTAS E CONTACTOS ===============================================
-// Cada comprador e uma Conta com um Contacto. O perfil de procura vive no
-// Contacto — e o que permite cruzar pessoas com a carteira.
+// CONVENCAO: um Account NUNCA e uma pessoa. E a parte contratante — o agregado
+// que compra ('Familia Peixoto'), a empresa que investe, o proprietario que
+// coloca o imovel no mercado, a construtora que o promove. As pessoas sao Contactos dentro dela, e e no
+// Contacto que vive o perfil de procura.
 Map<String, Account> contas = new Map<String, Account>{
-    'ferraz'    => new Account(Name='Nuno Ferraz',                 Description=MARCA+' comprador particular'),
-    'peixoto'   => new Account(Name='Carla Peixoto',               Description=MARCA+' compradora particular'),
-    'nobre'     => new Account(Name='Ricardo Nobre',               Description=MARCA+' investidor'),
-    'almada'    => new Account(Name='Sofia Almada',                Description=MARCA+' compradora particular'),
-    'casal'     => new Account(Name='Bruno Casal',                 Description=MARCA+' comprador particular'),
-    'rios'      => new Account(Name='Marta Rios',                  Description=MARCA+' arrendataria'),
-    'vilar'     => new Account(Name='Pedro Vilar',                 Description=MARCA+' negocio perdido'),
-    'nogueira'  => new Account(Name='Isabel Nogueira',             Description=MARCA+' proprietaria - arrendamento'),
+    'ferraz'    => new Account(Name='Família Ferraz',              Description=MARCA+' agregado comprador'),
+    'peixoto'   => new Account(Name='Família Peixoto',             Description=MARCA+' agregado comprador'),
+    'nobre'     => new Account(Name='Nobre Investimentos, Unipessoal Lda', Description=MARCA+' investidor - compra para arrendar'),
+    'almada'    => new Account(Name='Família Almada',              Description=MARCA+' agregado comprador'),
+    'casal'     => new Account(Name='Família Casal',               Description=MARCA+' agregado comprador'),
+    'rios'      => new Account(Name='Família Rios',                Description=MARCA+' agregado arrendatario'),
+    'vilar'     => new Account(Name='Família Vilar',               Description=MARCA+' agregado - negocio perdido'),
+    'nogueira'  => new Account(Name='Património Nogueira',         Description=MARCA+' proprietario - arrendamento'),
     'ameal'     => new Account(Name='Quinta do Ameal, Lda',        Description=MARCA+' proprietaria - terreno'),
     'douro'     => new Account(Name='Construtora Douro Vale, S.A.',Description=MARCA+' construtora compradora de terreno',
                                Procura_Tipo_Solo__c='Urbanizavel', Procura_ABC_Minima_m2__c=2000,
