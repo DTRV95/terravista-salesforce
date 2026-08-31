@@ -22,12 +22,20 @@ Map<String, Id> roles = new Map<String, Id>();
 for (UserRole r : [SELECT Id, DeveloperName FROM UserRole]) roles.put(r.DeveloperName, r.Id);
 
 // ===== 1 · A Direcao e quem ja ca esta =====================================
-User admin = [SELECT Id, UserRoleId FROM User WHERE Id = :UserInfo.getUserId()];
+User admin = [SELECT Id, UserRoleId, UserPermissionsMarketingUser FROM User WHERE Id = :UserInfo.getUserId()];
+Boolean mudou = false;
 if (admin.UserRoleId == null && roles.containsKey('Direcao')) {
     admin.UserRoleId = roles.get('Direcao');
-    update admin;
-    System.debug('Administrador colocado na role Direcao.');
+    mudou = true;
 }
+// Sem esta flag, NENHUMA operacao de escrita em Campaign ou CampaignMember e
+// permitida - nem a um System Administrator. E uma permissao ao nivel do
+// registo de User, separada do perfil, e nao se descobre ate rebentar.
+if (!admin.UserPermissionsMarketingUser) {
+    admin.UserPermissionsMarketingUser = true;
+    mudou = true;
+}
+if (mudou) { update admin; System.debug('Administrador: role Direcao + Marketing User.'); }
 
 // ===== 2 · Os dois consultores =============================================
 List<User> aCriar = new List<User>();

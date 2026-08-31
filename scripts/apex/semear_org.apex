@@ -9,7 +9,8 @@
  *
  * PRE-REQUISITOS
  *   1. Deploy feito (roles, queue, campos de comissao)
- *   2. criar_utilizadores.apex ja correu (Carla e Miguel existem)
+ *   2. criar_utilizadores.apex ja correu (Carla e Miguel existem, e o
+ *      administrador tem a flag Marketing User - sem ela nao ha DML em Campaign)
  *
  * ORDEM DE ELIMINACAO - NAO MEXER
  * Imovel__c esta em Master-Detail com Contract: apagar um contrato apaga as
