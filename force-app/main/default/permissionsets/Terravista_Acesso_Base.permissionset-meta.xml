@@ -288,10 +288,6 @@
         <field>Lead.Minutos_Ate_Atribuicao__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <applicationVisibilities>
-        <application>Terravista</application>
-        <visible>true</visible>
-    </applicationVisibilities>
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Comissao_Consultor__c</field>
@@ -302,6 +298,10 @@
         <field>Opportunity.Margem_Terravista__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <applicationVisibilities>
+        <application>Terravista</application>
+        <visible>true</visible>
+    </applicationVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.Empresa</recordType>
         <visible>true</visible>

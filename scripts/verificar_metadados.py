@@ -50,6 +50,27 @@ for f in FORCE_APP.rglob("*.permissionset-meta.xml"):
         if f"<field>{campo}</field>" in s:
             erros.append(f"[FLS em campo obrigatorio: {campo}] {f.relative_to(RAIZ)}")
 
+# --- Descricao de Role: maximo 80 caracteres, e nao 255 -------------------
+# A description de uma Role tem um limite MUITO mais curto do que a dos campos.
+# Uma role que falha arrasta todas as filhas que a referenciam como parentRole.
+for f in FORCE_APP.rglob("roles/*.role-meta.xml"):
+    m = re.search(r"<description>(.*?)</description>", texto(f), re.S)
+    if m and len(m.group(1)) > 80:
+        erros.append(f"[Descricao de role com {len(m.group(1))} chars, maximo 80] {f.relative_to(RAIZ)}")
+
+# --- Permission Set: elementos do mesmo tipo tem de ficar juntos ----------
+# O XSD exige que os blocos do mesmo tipo sejam contiguos. Intercalar um
+# fieldPermissions depois de um applicationVisibilities faz o deploy falhar.
+for f in FORCE_APP.rglob("*.permissionset-meta.xml"):
+    tipos = re.findall(r"^    <([a-z][A-Za-z]*)>", texto(f), re.M)
+    vistos, anterior = set(), None
+    for tipo in tipos:
+        if tipo != anterior and tipo in vistos:
+            erros.append(f"[Elementos <{tipo}> separados por outro tipo] {f.relative_to(RAIZ)}")
+            break
+        vistos.add(tipo)
+        anterior = tipo
+
 if erros:
     print("\n".join(erros))
     print(f"\n{len(erros)} problema(s). Corrigir antes do deploy.")
