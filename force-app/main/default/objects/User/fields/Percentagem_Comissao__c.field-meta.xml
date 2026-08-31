@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Percentagem_Comissao__c</fullName>
+    <description>Quota da comissao da Terravista que fica para este consultor. Vive no User e nao no negocio: a percentagem e da pessoa, nao da venda. Mudar aqui recalcula o historico todo.</description>
+    <externalId>false</externalId>
+    <label>% Comissão do Consultor</label>
+    <precision>4</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Percent</type>
+</CustomField>

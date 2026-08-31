@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Margem_Terravista__c</fullName>
+    <description>O que sobra para a agencia depois de pagar o consultor. E a margem real do negocio, e nao a comissao bruta - a diferenca entre faturar e ganhar.</description>
+    <formula>Comissao_Terravista__c - (Comissao_Terravista__c * Owner.Percentagem_Comissao__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Margem Terravista</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

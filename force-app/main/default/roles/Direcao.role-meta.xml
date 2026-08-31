@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Role xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Topo da hierarquia. Ve por heranca tudo o que e das equipas abaixo - e o mecanismo que responde ao problema 2 do case study: ninguem sabe onde estamos.</description>
+    <mayForecastManagerShare>false</mayForecastManagerShare>
+    <name>Direção</name>
+</Role>

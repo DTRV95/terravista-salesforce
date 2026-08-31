@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Comissao_Consultor__c</fullName>
+    <description>O que o consultor recebe deste negocio. Atravessa ate ao Owner para ir buscar a percentagem dele. Um campo Percent chega as formulas ja em decimal - por isso NAO se divide por 100.</description>
+    <formula>Comissao_Terravista__c * Owner.Percentagem_Comissao__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Comissão do Consultor</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>
