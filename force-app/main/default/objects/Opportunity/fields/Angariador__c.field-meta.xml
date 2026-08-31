@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Angariador__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Quem trouxe o imovel para a carteira. Copiado do dono do Contrato de Mediacao. E um lookup e nao uma formula porque atravessar Imovel - Contrato - Owner excede o que uma formula consegue.</description>
+    <label>Angariador</label>
+    <referenceTo>User</referenceTo>
+    <relationshipLabel>Negócios Angariados</relationshipLabel>
+    <relationshipName>Negocios_Angariados</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

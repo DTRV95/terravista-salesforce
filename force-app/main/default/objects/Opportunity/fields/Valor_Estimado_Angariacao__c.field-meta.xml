@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valor_Estimado_Angariacao__c</fullName>
+    <description>Comissao futura estimada de um CMI. NAO E RECEITA: uma angariacao so paga quando um imovel do contrato for vendido. Existe para nunca ser somada a faturacao real.</description>
+    <formula>IF(AND(RecordType.DeveloperName = "Angariacao", NOT(ISPICKVAL(StageName, "Perdido"))), Amount, 0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Valor Estimado — Angariação</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

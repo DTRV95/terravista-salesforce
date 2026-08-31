@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valor_Estimado_Venda__c</fullName>
+    <description>Valor de negocios de venda ou arrendamento ainda em aberto. E pipeline, nao faturacao. Separado da angariacao porque as duas coisas nao se somam.</description>
+    <formula>IF(AND(RecordType.DeveloperName &lt;&gt; "Angariacao", NOT(IsClosed)), Amount, 0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Valor Estimado — Venda</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

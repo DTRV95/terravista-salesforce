@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Comissao_Consultor__c</fullName>
-    <description>O que o consultor recebe deste negocio. Atravessa ate ao Owner para ir buscar a percentagem dele. Um campo Percent chega as formulas ja em decimal - por isso NAO se divide por 100.</description>
-    <formula>Comissao_Terravista__c * Owner.Percentagem_Comissao__c</formula>
+    <description>O que o dono do negocio recebe. Leva sempre a parte da venda; leva TAMBEM a da angariacao quando foi ele proprio a trazer o imovel. Um campo Percent chega as formulas ja em decimal - por isso nao se divide por 100.</description>
+    <formula>(Comissao_Terravista__c * 0.5 * Owner.Percentagem_Comissao__c)
++ IF(Angariador__c = OwnerId, Comissao_Terravista__c * 0.5 * Owner.Percentagem_Comissao__c, 0)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Comissão do Consultor</label>
     <precision>18</precision>

@@ -153,27 +153,27 @@ insert pa.values();
 // Um CMI e sempre entre a Terravista e UM proprietario. Por isso cada imovel
 // disperso tem o seu contrato, e nao um contrato coletivo que nao existiria.
 Map<String, Contract> ct = new Map<String, Contract>{
- 'aurora' => new Contract(AccountId=emp.get('nortagua').Id, Status='Draft', StartDate=HOJE.addMonths(-13), ContractTerm=24,
+ 'aurora' => new Contract(OwnerId=MIGUEL, AccountId=emp.get('nortagua').Id, Status='Draft', StartDate=HOJE.addMonths(-13), ContractTerm=24,
     Regime__c='Comercializacao de Empreendimento', Comissao__c=4.5, Exclusivo__c=true,
     Nome_Empreendimento__c='Edificio Aurora', Localizacao__c='Matosinhos',
     Description='32 fracoes. O contrato que sustenta a maior parte da faturacao.'),
- 'gaia' => new Contract(AccountId=emp.get('edificios').Id, Status='Draft', StartDate=HOJE.addMonths(-2), ContractTerm=24,
+ 'gaia' => new Contract(OwnerId=MIGUEL, AccountId=emp.get('edificios').Id, Status='Draft', StartDate=HOJE.addMonths(-2), ContractTerm=24,
     Regime__c='Comercializacao de Empreendimento', Comissao__c=4, Exclusivo__c=false,
     Nome_Empreendimento__c='Varanda do Douro', Localizacao__c='Vila Nova de Gaia',
     Description='8 fracoes. Contrato ganho pela campanha do LinkedIn.'),
- 'britocapelo' => new Contract(AccountId=emp.get('herdeiros').Id, Status='Draft', StartDate=HOJE.addMonths(-7), ContractTerm=12,
+ 'britocapelo' => new Contract(OwnerId=CARLA, AccountId=emp.get('herdeiros').Id, Status='Draft', StartDate=HOJE.addMonths(-7), ContractTerm=12,
     Regime__c='Mediacao a Particular', Comissao__c=5, Exclusivo__c=true, Localizacao__c='Matosinhos',
     Description='Moradia da heranca.'),
- 'molhe' => new Contract(AccountId=pa.get('Tavares').Id, Status='Draft', StartDate=HOJE.addMonths(-6), ContractTerm=12,
+ 'molhe' => new Contract(OwnerId=CARLA, AccountId=pa.get('Tavares').Id, Status='Draft', StartDate=HOJE.addMonths(-6), ContractTerm=12,
     Regime__c='Mediacao a Particular', Comissao__c=5, Exclusivo__c=false, Localizacao__c='Foz',
     Description='Proprietario emigrado.'),
- 'hintze' => new Contract(AccountId=pa.get('Guerra').Id, Status='Draft', StartDate=HOJE.addMonths(-9), ContractTerm=12,
+ 'hintze' => new Contract(OwnerId=MIGUEL, AccountId=pa.get('Guerra').Id, Status='Draft', StartDate=HOJE.addMonths(-9), ContractTerm=12,
     Regime__c='Mediacao a Particular', Comissao__c=5, Exclusivo__c=true, Localizacao__c='Leca da Palmeira',
     Description='Venda por mudanca para lar.'),
- 'costacabral' => new Contract(AccountId=pa.get('Vasconcelos').Id, Status='Draft', StartDate=HOJE.addDays(-80), ContractTerm=12,
+ 'costacabral' => new Contract(OwnerId=CARLA, AccountId=pa.get('Vasconcelos').Id, Status='Draft', StartDate=HOJE.addDays(-80), ContractTerm=12,
     Regime__c='Mediacao a Particular', Comissao__c=5, Exclusivo__c=false, Localizacao__c='Porto',
     Description='CMI de arrendamento.'),
- 'maia' => new Contract(AccountId=emp.get('ameal').Id, Status='Draft', StartDate=HOJE.addDays(-45), ContractTerm=12,
+ 'maia' => new Contract(OwnerId=MIGUEL, AccountId=emp.get('ameal').Id, Status='Draft', StartDate=HOJE.addDays(-45), ContractTerm=12,
     Regime__c='Mediacao a Particular', Comissao__c=3, Exclusivo__c=true, Localizacao__c='Maia',
     Description='Terreno urbanizavel.')
 };
@@ -226,6 +226,14 @@ imv.add(new Imovel__c(Contrato__c=ct.get('maia').Id, Name='Terreno - Estrada da 
     Area_m2__c=3200, Localizacao__c='Maia', Tipo_Solo__c='Urbanizavel', Area_Bruta_Construcao_m2__c=2400,
     Data_Disponibilizacao__c=HOJE.addDays(-45)));
 insert imv;
+
+// O angariador de um imovel e o dono do CMI que o trouxe para a carteira.
+// O contrato 'hintze' e de proposito do Miguel enquanto a venda e da Carla:
+// e o caso que prova que a comissao se divide entre duas pessoas.
+Map<Id, Id> donoContrato = new Map<Id, Id>();
+for (Contract c : ct.values()) donoContrato.put(c.Id, c.OwnerId);
+Map<Id, Id> angariadorPorImovel = new Map<Id, Id>();
+for (Imovel__c x : imv) angariadorPorImovel.put(x.Id, donoContrato.get(x.Contrato__c));
 
 Map<String, Imovel__c> im = new Map<String, Imovel__c>();
 for (Imovel__c x : imv) im.put(x.Name, x);
@@ -312,6 +320,9 @@ ops.add(new Opportunity(Name='Rocha - T3 Rua do Molhe', RecordTypeId=rtO.get('Ve
     AccountId=pa.get('Rocha').Id, Imovel__c=im.get('Apartamento T3 - Rua do Molhe, Foz').Id,
     Linha_Negocio__c='B2C', StageName='Perdido', Amount=470000, CloseDate=HOJE.addDays(-25), OwnerId=CARLA,
     Motivo_Perda__c='Preco'));
+for (Opportunity o : ops) {
+    if (o.Imovel__c != null) o.Angariador__c = angariadorPorImovel.get(o.Imovel__c);
+}
 insert ops;
 System.debug('Negocios: ' + ops.size());
 

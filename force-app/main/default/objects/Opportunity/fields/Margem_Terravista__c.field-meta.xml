@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Margem_Terravista__c</fullName>
-    <description>O que sobra para a agencia depois de pagar o consultor. E a margem real do negocio, e nao a comissao bruta - a diferenca entre faturar e ganhar.</description>
-    <formula>Comissao_Terravista__c - (Comissao_Terravista__c * Owner.Percentagem_Comissao__c)</formula>
+    <description>O que sobra para a agencia depois de pagar a quem vendeu e a quem angariou. So desconta o angariador quando e outra pessoa - caso contrario ja esta contado na comissao do consultor.</description>
+    <formula>Comissao_Terravista__c - Comissao_Consultor__c
+- IF(Angariador__c = OwnerId, 0, Comissao_Angariador__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Margem Terravista</label>
     <precision>18</precision>
