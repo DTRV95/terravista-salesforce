@@ -71,6 +71,23 @@ for f in FORCE_APP.rglob("*.permissionset-meta.xml"):
         vistos.add(tipo)
         anterior = tipo
 
+# --- Apex: colisao de nomes que so diferem em maiusculas ------------------
+# Os identificadores em Apex NAO distinguem maiusculas de minusculas. Uma
+# constante MAXIMO e uma variavel local maximo sao o MESMO nome, e o local ganha
+# dentro do metodo - sem erro nem aviso nenhum do compilador.
+TIPOS = r"(?:Integer|Decimal|Double|Long|String|Boolean|Date|Datetime|Id)"
+for f in FORCE_APP.rglob("classes/*.cls"):
+    s = texto(f)
+    constantes = {m.lower(): m for m in
+                  re.findall(rf"static\s+final\s+{TIPOS}\s+(\w+)", s)}
+    if not constantes:
+        continue
+    for local in re.findall(rf"^\s+{TIPOS}\s+(\w+)\s*=", s, re.M):
+        if local.lower() in constantes and local != constantes[local.lower()]:
+            erros.append(
+                f"[Colisao de nomes em Apex: '{local}' e '{constantes[local.lower()]}' "
+                f"sao o mesmo identificador] {f.relative_to(RAIZ)}")
+
 if erros:
     print("\n".join(erros))
     print(f"\n{len(erros)} problema(s). Corrigir antes do deploy.")

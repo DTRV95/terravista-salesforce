@@ -27,7 +27,12 @@ public with sharing class MatchImoveis {
     // Compradores esticam o orcamento. 5% e o que a experiencia do sector diz
     // que se estica sem deixar de ser um negocio possivel.
     private static final Decimal TOLERANCIA_ORCAMENTO = 1.05;
-    private static final Integer MAXIMO = 5;
+    // ATENCAO: os identificadores em Apex NAO distinguem maiusculas de
+    // minusculas. Uma constante MAXIMO e uma variavel local maximo sao o MESMO
+    // nome para o compilador, e o local ganha dentro do metodo - sem erro nem
+    // aviso. Foi esse o bug: a comparacao do limite de resultados passou a usar
+    // o orcamento do cliente. Por isso os nomes sao deliberadamente distintos.
+    private static final Integer LIMITE_RESULTADOS = 5;
 
     public class Pedido {
         @InvocableVariable(required=true label='Cliente' description='Id da conta do comprador ou arrendatario')
@@ -74,7 +79,7 @@ public with sharing class MatchImoveis {
 
         String finalidade = String.isBlank(p.finalidade) ? 'Venda' : p.finalidade;
         Decimal minimo = (c.Orcamento_Min__pc == null) ? 0 : c.Orcamento_Min__pc;
-        Decimal maximo = (c.Orcamento_Max__pc == null) ? null
+        Decimal orcamentoMax = (c.Orcamento_Max__pc == null) ? null
                                                        : c.Orcamento_Max__pc * TOLERANCIA_ORCAMENTO;
 
         Set<String> tipologias = separar(c.Procura_Tipologia__pc, ';');
@@ -94,13 +99,13 @@ public with sharing class MatchImoveis {
 
         List<String> linhas = new List<String>();
         for (Imovel__c i : candidatos) {
-            if (maximo != null && i.Preco__c > maximo) continue;
+            if (orcamentoMax != null && i.Preco__c > orcamentoMax) continue;
             if (!tipologias.isEmpty() && !tipologias.contains(i.Tipologia__c)) continue;
             if (!zonas.isEmpty() && !zonaServe(i.Localizacao__c, zonas)) continue;
 
             r.imoveis.add(i);
             linhas.add(descrever(i, c));
-            if (r.imoveis.size() == MAXIMO) break;
+            if (r.imoveis.size() == LIMITE_RESULTADOS) break;
         }
 
         r.total = r.imoveis.size();
