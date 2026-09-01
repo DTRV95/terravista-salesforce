@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sugestoes_Imoveis__c</fullName>
+    <description>Sugestoes geradas para este cliente. O conteudo vem de um Prompt Template, mas os imoveis vem sempre de SOQL - o modelo ordena e justifica, nunca inventa registos.</description>
+    <externalId>false</externalId>
+    <label>Sugestões de Imóveis</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>12</visibleLines>
+</CustomField>
