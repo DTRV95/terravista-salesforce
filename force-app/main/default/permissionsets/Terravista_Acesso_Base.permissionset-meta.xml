@@ -3,6 +3,10 @@
     <description>Acesso base aos campos do modelo Terravista. Existe porque o metadata API nao concede field-level security a campos opcionais no momento da criacao.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Terravista — Acesso Base</label>
+    <classAccesses>
+        <apexClass>MatchImoveis</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
         <field>Imovel__c.Tipologia__c</field>

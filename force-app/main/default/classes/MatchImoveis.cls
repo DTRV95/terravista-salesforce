@@ -1,0 +1,152 @@
+/**
+ * Encontra os imoveis da carteira que servem a um cliente.
+ *
+ * DIVISAO DE TRABALHO
+ * Esta classe faz a parte determinista: filtra a carteira pelos criterios duros
+ * e devolve registos REAIS. Nao ordena por "qualidade" nem interpreta nada.
+ *
+ * A parte de julgar - ler as notas em texto livre e perceber que "elevador e
+ * condicao absoluta" elimina um imovel que passa em todos os filtros - fica
+ * para o Prompt Template que consome este resultado.
+ *
+ * O SOQL encontra. O modelo julga e explica.
+ * Um modelo de linguagem a quem se pede para encontrar registos inventa
+ * registos, e um imovel inventado a frente de um cliente e o fim da confianca
+ * no sistema.
+ *
+ * PORQUE E APEX E NAO UM FLOW
+ * O projeto usa configuracao antes de codigo, e esta e a unica excecao com
+ * logica de negocio. A razao e concreta: o perfil de procura vive em campos de
+ * texto - Procura_Tipologia__pc e um multi-select separado por ponto e virgula,
+ * Procura_Zonas__pc e texto livre separado por virgulas. Um Flow nao parte
+ * strings. Forcar isso em Flow daria um matching pior e ilegivel.
+ * Como Invocable, serve na mesma um Flow, um Prompt Template ou uma Agent Action.
+ */
+public with sharing class MatchImoveis {
+
+    // Compradores esticam o orcamento. 5% e o que a experiencia do sector diz
+    // que se estica sem deixar de ser um negocio possivel.
+    private static final Decimal TOLERANCIA_ORCAMENTO = 1.05;
+    private static final Integer MAXIMO = 5;
+
+    public class Pedido {
+        @InvocableVariable(required=true label='Cliente' description='Id da conta do comprador ou arrendatario')
+        public Id clienteId;
+
+        @InvocableVariable(label='Finalidade' description='Venda ou Arrendamento. Por omissao, Venda')
+        public String finalidade;
+    }
+
+    public class Resultado {
+        @InvocableVariable(label='Imóveis') public List<Imovel__c> imoveis;
+        @InvocableVariable(label='Resumo para o modelo') public String resumo;
+        @InvocableVariable(label='Notas do cliente') public String notasCliente;
+        @InvocableVariable(label='Total encontrado') public Integer total;
+    }
+
+    @InvocableMethod(
+        label='Encontrar imóveis para um cliente'
+        description='Filtra a carteira disponivel pelos criterios de procura do cliente e devolve os imoveis reais que servem.'
+        category='Terravista')
+    public static List<Resultado> encontrar(List<Pedido> pedidos) {
+        List<Resultado> saida = new List<Resultado>();
+        for (Pedido p : pedidos) saida.add(paraUmCliente(p));
+        return saida;
+    }
+
+    private static Resultado paraUmCliente(Pedido p) {
+        Resultado r = new Resultado();
+        r.imoveis = new List<Imovel__c>();
+        r.total = 0;
+
+        List<Account> contas = [
+            SELECT Id, Name, Procura_Tipologia__pc, Procura_Zonas__pc,
+                   Orcamento_Min__pc, Orcamento_Max__pc, Notas_Preferencias__pc,
+                   Perfil_Comprador__pc
+            FROM Account WHERE Id = :p.clienteId LIMIT 1];
+        if (contas.isEmpty()) {
+            r.resumo = 'Cliente nao encontrado.';
+            return r;
+        }
+        Account c = contas[0];
+        r.notasCliente = String.isBlank(c.Notas_Preferencias__pc)
+            ? 'Sem notas registadas.' : c.Notas_Preferencias__pc;
+
+        String finalidade = String.isBlank(p.finalidade) ? 'Venda' : p.finalidade;
+        Decimal minimo = (c.Orcamento_Min__pc == null) ? 0 : c.Orcamento_Min__pc;
+        Decimal maximo = (c.Orcamento_Max__pc == null) ? null
+                                                       : c.Orcamento_Max__pc * TOLERANCIA_ORCAMENTO;
+
+        Set<String> tipologias = separar(c.Procura_Tipologia__pc, ';');
+        Set<String> zonas = separar(c.Procura_Zonas__pc, ',');
+
+        // Ordena por preco decrescente: dentro do orcamento, o melhor imovel que
+        // o cliente consegue pagar. E uma ordem defensavel por omissao - quem a
+        // corrige com base nas notas e o modelo, que e quem as sabe ler.
+        List<Imovel__c> candidatos = [
+            SELECT Id, Name, Tipologia__c, Piso__c, Localizacao__c, Preco__c, Area_m2__c,
+                   Tipo_Imovel__c, Dias_Disponivel__c, Contrato__r.Nome_Empreendimento__c
+            FROM Imovel__c
+            WHERE Estado_Comercial__c = 'Disponivel'
+              AND Finalidade__c = :finalidade
+              AND Preco__c >= :minimo
+            ORDER BY Preco__c DESC];
+
+        List<String> linhas = new List<String>();
+        for (Imovel__c i : candidatos) {
+            if (maximo != null && i.Preco__c > maximo) continue;
+            if (!tipologias.isEmpty() && !tipologias.contains(i.Tipologia__c)) continue;
+            if (!zonas.isEmpty() && !zonaServe(i.Localizacao__c, zonas)) continue;
+
+            r.imoveis.add(i);
+            linhas.add(descrever(i, c));
+            if (r.imoveis.size() == MAXIMO) break;
+        }
+
+        r.total = r.imoveis.size();
+        r.resumo = (r.total == 0)
+            ? 'Nenhum imovel disponivel corresponde aos criterios de ' + c.Name + '.'
+            : String.join(linhas, '\n');
+        return r;
+    }
+
+    /** Um imovel serve a zona se o texto de uma das zonas procuradas aparecer
+     *  na localizacao, ou o contrario. "Leca" encontra "Leca da Palmeira". */
+    private static Boolean zonaServe(String localizacao, Set<String> zonas) {
+        if (String.isBlank(localizacao)) return false;
+        String loc = localizacao.toLowerCase();
+        for (String z : zonas) {
+            if (loc.contains(z) || z.contains(loc)) return true;
+        }
+        return false;
+    }
+
+    private static Set<String> separar(String texto, String separador) {
+        Set<String> partes = new Set<String>();
+        if (String.isBlank(texto)) return partes;
+        for (String s : texto.split(separador)) {
+            String limpo = s.trim();
+            if (limpo != '') partes.add(separador == ',' ? limpo.toLowerCase() : limpo);
+        }
+        return partes;
+    }
+
+    /** Linha legivel por uma pessoa e utilizavel por um modelo. Inclui o que o
+     *  modelo precisa para julgar: preco face ao orcamento e ha quanto tempo
+     *  esta parado - um imovel parado ha muito negoceia-se melhor. */
+    private static String descrever(Imovel__c i, Account c) {
+        String s = '- ' + i.Name + ' | ' + i.Tipologia__c + ' | ' + i.Localizacao__c
+                 + ' | ' + i.Area_m2__c + ' m2 | ' + i.Preco__c + ' EUR';
+        if (String.isNotBlank(i.Piso__c)) s += ' | piso ' + i.Piso__c;
+        if (i.Contrato__r != null && String.isNotBlank(i.Contrato__r.Nome_Empreendimento__c)) {
+            s += ' | empreendimento ' + i.Contrato__r.Nome_Empreendimento__c;
+        }
+        if (c.Orcamento_Max__pc != null && i.Preco__c > c.Orcamento_Max__pc) {
+            s += ' | ACIMA do orcamento maximo';
+        }
+        if (i.Dias_Disponivel__c != null && i.Dias_Disponivel__c > 60) {
+            s += ' | parado ha ' + i.Dias_Disponivel__c.intValue() + ' dias';
+        }
+        return s;
+    }
+}
