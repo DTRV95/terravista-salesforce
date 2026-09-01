@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Candidatos_Imoveis__c</fullName>
+    <description>Lista de imoveis que o SOQL encontrou para este cliente, escrita pelo Flow antes de chamar o Prompt Template. Fica visivel de proposito: e a prova de que o modelo so viu registos reais.</description>
+    <externalId>false</externalId>
+    <label>Candidatos (do SOQL)</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>8</visibleLines>
+</CustomField>

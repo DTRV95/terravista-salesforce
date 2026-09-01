@@ -34,29 +34,37 @@ Flow  "Sugerir Imóveis"
 | Name | `Sugerir Imóveis ao Cliente` |
 | Model | o modelo por omissão da org |
 
-### Inputs a criar
+### Input — um só
 
-| Nome | Tipo |
+| Campo | Valor |
 |---|---|
-| `NomeCliente` | Text |
-| `Candidatos` | Text |
-| `Notas` | Text |
-| `Orcamento` | Text |
+| Name / API Name | `Cliente` |
+| Source Type | `Object` |
+| Object | `Account` |
+| Require when template runs | ✅ |
+
+Os inputs de um template Flex são **objetos**, não texto solto. Por isso a lista de
+candidatos que o Apex produz é escrita antes num campo do próprio cliente,
+`Candidatos_Imoveis__c`, e o prompt lê-a de lá.
+
+> **Isto é melhor do que passar texto directamente.** A lista fica visível no
+> registo, ao lado da resposta. Consegue-se provar, olhando para o ecrã, que o
+> modelo só viu imóveis reais — e é exactamente a pergunta que um júri faz.
 
 ### O texto do prompt
 
 ```
 És assistente de um consultor imobiliário de uma agência do Porto.
-O consultor vai falar com {!$Input:NomeCliente} e precisa de saber que imóveis
+O consultor vai falar com {!$Input:Cliente.Name} e precisa de saber que imóveis
 lhe deve mostrar, e por que ordem.
 
 IMÓVEIS DISPONÍVEIS PARA ESTE CLIENTE:
-{!$Input:Candidatos}
+{!$Input:Cliente.Candidatos_Imoveis__c}
 
 O QUE SABEMOS DO CLIENTE (notas escritas pelo consultor):
-{!$Input:Notas}
+{!$Input:Cliente.Notas_Preferencias__pc}
 
-ORÇAMENTO: {!$Input:Orcamento}
+ORÇAMENTO: {!$Input:Cliente.Orcamento_Min__pc} a {!$Input:Cliente.Orcamento_Max__pc} EUR
 
 REGRAS QUE TENS DE CUMPRIR:
 1. Usa APENAS os imóveis da lista acima. Nunca menciones um imóvel que não esteja
@@ -118,8 +126,11 @@ O teste 4 é o mais importante. É onde um modelo mal instruído inventa.
 **Screen Flow** ou **Quick Action** na página da Account.
 
 1. **Apex Action** → `Encontrar imóveis para um cliente`, com `clienteId = {!recordId}`
-2. **Prompt Template Action** → passa `resumo`, `notasCliente`, nome e orçamento
-3. **Update Records** → `Sugestoes_Imoveis__c` = resposta do prompt
+2. **Update Records** → `Candidatos_Imoveis__c` = `resumo` do Apex
+3. **Prompt Template Action** → input `Cliente` = o registo da Account
+4. **Update Records** → `Sugestoes_Imoveis__c` = resposta do prompt
+
+A ordem importa: o campo dos candidatos tem de estar escrito **antes** de o prompt correr.
 
 Põe o campo `Sugestões de Imóveis` no layout da Account e o botão ao lado.
 
