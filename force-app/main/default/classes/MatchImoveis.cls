@@ -100,7 +100,8 @@ public with sharing class MatchImoveis {
         // corrige com base nas notas e o modelo, que e quem as sabe ler.
         List<Imovel__c> candidatos = [
             SELECT Id, Name, Tipologia__c, Piso__c, Localizacao__c, Preco__c, Area_m2__c,
-                   Tipo_Imovel__c, Dias_Disponivel__c, Contrato__r.Nome_Empreendimento__c
+                   Tipo_Imovel__c, Dias_Disponivel__c, Elevador__c, Foto_URL__c,
+                   Contrato__r.Nome_Empreendimento__c
             FROM Imovel__c
             WHERE Estado_Comercial__c = 'Disponivel'
               AND Finalidade__c = :finalidade
@@ -170,6 +171,9 @@ public with sharing class MatchImoveis {
         String s = '- ' + i.Name + ' | ' + i.Tipologia__c + ' | ' + i.Localizacao__c
                  + ' | ' + i.Area_m2__c + ' m2 | ' + i.Preco__c + ' EUR';
         if (String.isNotBlank(i.Piso__c)) s += ' | piso ' + i.Piso__c;
+        // Dito sempre, mesmo quando e 'Por confirmar': o silencio e o que convida
+        // o modelo a inventar.
+        s += ' | elevador: ' + (String.isBlank(i.Elevador__c) ? 'por confirmar' : i.Elevador__c);
         if (i.Contrato__r != null && String.isNotBlank(i.Contrato__r.Nome_Empreendimento__c)) {
             s += ' | empreendimento ' + i.Contrato__r.Nome_Empreendimento__c;
         }

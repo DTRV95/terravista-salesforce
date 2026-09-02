@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Foto_URL__c</fullName>
+    <description>Fotografia do imovel. Preenchida apenas nos imoveis usados na demonstracao: um link partido a frente do juri custa mais do que a foto vale.</description>
+    <externalId>false</externalId>
+    <label>Fotografia</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Url</type>
+</CustomField>
