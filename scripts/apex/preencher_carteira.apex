@@ -14,7 +14,7 @@
  * frente do juri custa mais do que a foto vale. O terreno fica sem foto de
  * proposito - a unica que havia era de banco de imagens pago.
  */
-final String FOTO_PREDIO   = 'https://images.unsplash.com/photo-1670589953882-b94c9cb380f5?q=80&w=1332&auto=format&fit=crop';
+final String FOTO_PREDIO   = 'https://images.unsplash.com/photo-1580041065738-e72023775cdc?q=80&w=1170&auto=format&fit=crop';
 final String FOTO_MORADIA  = 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1074&auto=format&fit=crop';
 final String FOTO_INTERIOR = 'https://images.unsplash.com/photo-1745429523615-2a82c60bfc02?q=80&w=1074&auto=format&fit=crop';
 
