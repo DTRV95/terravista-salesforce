@@ -51,6 +51,10 @@
                     <behavior>Edit</behavior>
                     <field>Localizacao__c</field>
                 </layoutItems>
+                <layoutItems>
+                    <behavior>Edit</behavior>
+                    <field>Elevador__c</field>
+                </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -87,6 +91,25 @@
         <layoutColumns>
                 <layoutItems>
                     <emptySpace>true</emptySpace>
+                </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Fotografia</label>
+        <layoutColumns>
+                <layoutItems>
+                    <behavior>Readonly</behavior>
+                    <field>Foto__c</field>
+                </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+                <layoutItems>
+                    <behavior>Edit</behavior>
+                    <field>Foto_URL__c</field>
                 </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

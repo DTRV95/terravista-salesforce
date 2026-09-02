@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Foto__c</fullName>
+    <description>Mostra a fotografia no registo. Um campo Url so mostra um link azul - para se ver a imagem e preciso uma formula com IMAGE(). O IF evita a imagem partida no terreno, que nao tem foto.</description>
+    <label>Fotografia</label>
+    <formula>IF(ISBLANK(Foto_URL__c), &quot;&quot;, IMAGE(Foto_URL__c, &quot;Fotografia do imovel&quot;, 200, 300))</formula>
+    <formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs>
+    <externalId>false</externalId>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

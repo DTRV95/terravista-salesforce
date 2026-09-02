@@ -3,7 +3,7 @@
     <fullName>Foto_URL__c</fullName>
     <description>Fotografia do imovel. Preenchida apenas nos imoveis usados na demonstracao: um link partido a frente do juri custa mais do que a foto vale.</description>
     <externalId>false</externalId>
-    <label>Fotografia</label>
+    <label>URL da fotografia</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Url</type>
