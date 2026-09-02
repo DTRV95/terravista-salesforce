@@ -141,6 +141,23 @@ private class MatchImoveisTest {
     }
 
     @IsTest
+    static void acento_no_nome_encontra_na_mesma() {
+        // O LIKE do SOQL e sensivel a acentos. Sem normalizar, quem escrever
+        // 'Claudia' com acento agudo ouve 'nao encontrei nenhum cliente' - e e
+        // assim que um portugues escreve o nome.
+        criarComprador('Claudia', 'T3', 'Matosinhos', 150000, 250000, null);
+
+        MatchImoveis.Pedido p = new MatchImoveis.Pedido();
+        p.nomeCliente = 'Cl\u00E1udia';
+
+        List<MatchImoveis.Resultado> r = MatchImoveis.encontrar(
+            new List<MatchImoveis.Pedido>{ p });
+
+        System.assertEquals(2, r[0].total,
+            'O acento nao pode impedir de encontrar o cliente');
+    }
+
+    @IsTest
     static void nome_ambiguo_pergunta_em_vez_de_adivinhar() {
         // Dois clientes com o mesmo apelido: escolher um ao acaso daria uma
         // resposta confiante sobre a pessoa errada. Tem de perguntar.

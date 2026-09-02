@@ -136,11 +136,33 @@ public with sharing class MatchImoveis {
                     FROM Account WHERE Id = :p.clienteId LIMIT 1];
         }
         if (String.isBlank(p.nomeCliente)) return new List<Account>();
-        String padrao = '%' + p.nomeCliente.trim() + '%';
+        String padrao = '%' + semAcentos(p.nomeCliente.trim()) + '%';
         return [SELECT Id, Name, Procura_Tipologia__pc, Procura_Zonas__pc,
                        Orcamento_Min__pc, Orcamento_Max__pc, Notas_Preferencias__pc,
                        Perfil_Comprador__pc
                 FROM Account WHERE Name LIKE :padrao LIMIT 5];
+    }
+
+    /** O LIKE do SOQL e sensivel a acentos: '%Claudia%' encontra a Claudia
+     *  Marques, '%Claudia%' com acento agudo nao encontra nada. Quem escreve
+     *  portugues a serio escreve com acentos, e o agente passa a pergunta tal e
+     *  qual - por isso e aqui que se tira o acento, antes de ir para o SOQL.
+     *
+     *  Funciona porque os nomes na base estao sem acentos. Se um dia passarem a
+     *  ter, isto deixa de chegar: seria preciso normalizar os dois lados, e o
+     *  SOQL nao normaliza o campo. */
+    private static String semAcentos(String texto) {
+        final String acentuadas = '\u00E1\u00E0\u00E2\u00E3\u00E4\u00E9\u00E8\u00EA\u00EB'
+            + '\u00ED\u00EC\u00EE\u00EF\u00F3\u00F2\u00F4\u00F5\u00F6'
+            + '\u00FA\u00F9\u00FB\u00FC\u00E7';
+        final String simples = 'aaaaaeeeeiiiiooooouuuuc';
+        String r = texto;
+        for (Integer i = 0; i < acentuadas.length(); i++) {
+            String a = acentuadas.substring(i, i + 1);
+            String b = simples.substring(i, i + 1);
+            r = r.replace(a, b).replace(a.toUpperCase(), b.toUpperCase());
+        }
+        return r;
     }
 
     /** Um imovel serve a zona se o texto de uma das zonas procuradas aparecer

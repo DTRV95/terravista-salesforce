@@ -18,7 +18,8 @@ sf project deploy start -o terravista
 
 | # | O quê | Bloqueia |
 |---|---|---|
-| 1 | `descrever()` passa a levar o URL da fotografia no resumo (+1 teste) | **Sim** — sem isto o modelo não tem link nenhum para dar, e testar o agente gasta créditos por nada |
+| 1 | `Tipologia__c = 'T4'` → `'T4+'` no teste novo | **Sim** — o teste falhava |
+| 2 | Procura por nome deixa de tropeçar em acentos (+1 teste) | **Sim** — *Cláudia* não encontrava a `Claudia Marques`, e é assim que um português escreve |
 
 **Um deploy.** Depois:
 
@@ -26,7 +27,7 @@ sf project deploy start -o terravista
 sf apex run test --class-names MatchImoveisTest --result-format human -o terravista
 ```
 
-Devem passar **9**.
+Devem passar **10**.
 
 ---
 
