@@ -111,11 +111,15 @@ os que têm um senão.
 | **Cartão clicável do imóvel** | No chat, se a ação tiver `Show in conversation` e `Output Rendering = Object` |
 | **Caracterização** (tipologia, zona, área, preço, piso, elevador) | No texto da resposta, vinda do resumo do Apex |
 | **Link para a fotografia** | No texto, como link markdown — o URL vai no resumo |
-| **A imagem em si** | ❌ Nunca. O chat do Agentforce mostra texto e cartões, não imagens |
+| **A imagem em si** | Só com um **Custom Lightning Type** — LWC próprio, não configuração |
 
-> A fotografia vê-se **clicando no cartão** e abrindo o registo do imóvel, onde o
-> campo de fórmula `Foto__c` a mostra. Não há configuração que meta a imagem dentro
-> da conversa — quem prometer isso ao júri fica a dever.
+> Por omissão o chat mostra texto e cartões. A fotografia vê-se clicando no cartão e
+> abrindo o registo, onde o campo de fórmula `Foto__c` a mostra.
+>
+> Para a imagem aparecer **dentro** da conversa é preciso um *custom Lightning type*
+> com um `renderer` a apontar para um LWC com o target `lightning__AgentforceOutput`.
+> Só é possível em ações cujo input ou output seja uma classe Apex — a nossa é.
+> Ver `docs/foto-no-chat.md`.
 
 ---
 
