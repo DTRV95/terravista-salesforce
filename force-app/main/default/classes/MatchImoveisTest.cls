@@ -175,11 +175,11 @@ private class MatchImoveisTest {
         // O chat do Agentforce nao mostra imagens. Se o URL nao for no texto, o
         // modelo nao tem link nenhum para dar - e ai inventa um.
         Contract c = [SELECT Id FROM Contract LIMIT 1];
-        Imovel__c com = criarImovel(c.Id, 'Com foto', 'T4', 'Gaia', 200000);
+        Imovel__c com = criarImovel(c.Id, 'Com foto', 'T4+', 'Gaia', 200000);
         com.Foto_URL__c = 'https://exemplo.pt/foto.jpg';
         insert com;
 
-        Account comprador = criarComprador('Foto', 'T4', 'Gaia', 100000, 250000, null);
+        Account comprador = criarComprador('Foto', 'T4+', 'Gaia', 100000, 250000, null);
         MatchImoveis.Pedido p = new MatchImoveis.Pedido();
         p.clienteId = comprador.Id;
 

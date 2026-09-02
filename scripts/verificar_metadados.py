@@ -88,6 +88,32 @@ for f in FORCE_APP.rglob("classes/*.cls"):
                 f"[Colisao de nomes em Apex: '{local}' e '{constantes[local.lower()]}' "
                 f"sao o mesmo identificador] {f.relative_to(RAIZ)}")
 
+# --- Valores de picklist que nao existem no campo -------------------------
+# Ja aconteceu tres vezes: LeadSource='LinkedIn', um motivo de nao qualificacao
+# escrito a mao, e Tipologia__c='T4' quando o valor e 'T4+'. O compilador aceita
+# tudo - so a org e que rejeita, e so na linha que corre. Um script de dados que
+# rebenta a meio deixa a org num estado intermedio, que e pior do que nao correr.
+valores = {}
+for f in FORCE_APP.rglob("fields/*.field-meta.xml"):
+    s_campo = texto(f)
+    if "<type>Picklist</type>" not in s_campo:
+        continue
+    if "<valueSetName>" in s_campo:  # global value set: nao esta neste ficheiro
+        continue
+    nome = re.search(r"<fullName>(\w+__c)</fullName>", s_campo)
+    vals = re.findall(r"<value>\s*<fullName>(.*?)</fullName>", s_campo, re.S)
+    if nome and vals:
+        valores[nome.group(1)] = set(v.strip() for v in vals)
+
+if valores:
+    campos = "|".join(re.escape(c) for c in valores)
+    for f in list(FORCE_APP.rglob("classes/*.cls")) + list(RAIZ.rglob("scripts/apex/*.apex")):
+        for campo, valor in re.findall(rf"\b({campos})\s*=\s*'([^']*)'", texto(f)):
+            if valor and valor not in valores[campo]:
+                erros.append(
+                    f"[{campo} = '{valor}' nao existe na picklist. Valores: "
+                    f"{', '.join(sorted(valores[campo]))}] {f.relative_to(RAIZ)}")
+
 if erros:
     print("\n".join(erros))
     print(f"\n{len(erros)} problema(s). Corrigir antes do deploy.")
