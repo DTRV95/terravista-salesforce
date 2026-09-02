@@ -18,15 +18,17 @@ sf project deploy start -o terravista
 
 | # | O quê | Bloqueia |
 |---|---|---|
-| 1 | `MatchImoveis` aceita nome do cliente + 3 testes novos | **Sim** — sem isto não consegues criar a Agent Action |
+| 1 | Campo de fórmula `Foto__c` — mostra a imagem com `IMAGE()` | **Sim** — um campo Url só mostra um link azul, nunca a fotografia |
+| 2 | `Elevador__c` e `Foto_URL__c` postos no layout do Imóvel | **Sim** — os campos existiam e estavam preenchidos, mas fora do ecrã |
+| 3 | FLS de `Foto__c` (só leitura — é fórmula) | **Sim** — sem FLS o campo comporta-se como se não existisse |
 
-**Um deploy.** Depois corre os testes:
+**Um deploy.** Já verificado na org: `Foto__c` ainda **não** existe lá, e os dados já
+lá estão (44 dos 45 imóveis com foto; o terreno não tem, de propósito).
 
-```
-sf apex run test --class-names MatchImoveisTest --result-format human -o terravista
-```
-
-Devem passar 9.
+Depois do deploy, abre um imóvel do tipo `Fracao`. Se aparecer o ícone de imagem
+partida em vez da fotografia, o bloqueio é a CSP do Lightning:
+**Setup → CSP Trusted Sites → New Trusted Site**, URL `https://images.unsplash.com`,
+com `allow_img_src` ligado.
 
 ---
 
