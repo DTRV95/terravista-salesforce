@@ -138,3 +138,25 @@ git reset --hard origin/main
 
 Este último **apaga alterações locais não guardadas**. Usa-o só quando quiseres deitar fora o
 que tens em cima da mesa e recomeçar do que está no GitHub.
+
+---
+
+## Nunca deploiar a pasta toda
+
+`sf project deploy start` sem caminho manda **tudo**, e escreve por cima do que
+foi ajustado na org à mão. Já aconteceu: a tab dos imóveis voltava ao ícone
+antigo e as list views fixadas perdiam o pin, a cada deploy.
+
+Duas defesas:
+
+1. **`.forceignore`** — a pasta `tabs/` e as `listViews/` estão ignoradas. Quem
+   manda nelas é a org, não o repositório.
+2. **Deploy dirigido** — apontar sempre o caminho do que mudou:
+
+```
+sf project deploy start -d force-app/main/default/classes -o terravista
+```
+
+> O repositório é dono do código e do modelo de dados. A org é dona da interface.
+> Um deploy que desfaz o trabalho de quem está a usar o sistema é um deploy mal
+> feito, mesmo quando corre sem erros.

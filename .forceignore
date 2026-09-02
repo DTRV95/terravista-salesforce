@@ -12,3 +12,15 @@ package.xml
 **/__tests__/**
 
 node_modules/
+
+# --- O que e do David, nao meu -------------------------------------------
+# Escolhas de interface feitas na org a mao. Estavam a ser escritas por cima a
+# cada deploy: a tab dos imoveis voltava ao icone antigo e as list views fixadas
+# perdiam o pin. Ficam ignoradas no deploy - quem manda nelas e a org, nao o
+# repositorio.
+#
+# Continuam versionadas para se poder reconstruir uma org do zero. Nesse caso
+# unico, deploiam-se a mao apontando o caminho:
+#   sf project deploy start -d force-app/main/default/tabs -o terravista --ignore-conflicts
+force-app/main/default/tabs/**
+force-app/main/default/objects/*/listViews/**
