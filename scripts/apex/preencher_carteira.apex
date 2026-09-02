@@ -14,9 +14,17 @@
  * frente do juri custa mais do que a foto vale. O terreno fica sem foto de
  * proposito - a unica que havia era de banco de imagens pago.
  */
-final String FOTO_PREDIO   = 'https://images.unsplash.com/photo-1580041065738-e72023775cdc?q=80&w=1170&auto=format&fit=crop';
-final String FOTO_MORADIA  = 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1074&auto=format&fit=crop';
-final String FOTO_INTERIOR = 'https://images.unsplash.com/photo-1745429523615-2a82c60bfc02?q=80&w=1074&auto=format&fit=crop';
+// URLs servidos pelo proprio Salesforce (Static Resource fotos_imoveis).
+// Um URL externo depende da rede da sala e de um servico de terceiros: ja
+// falhou duas vezes aqui, e um link partido a frente do juri custa mais do que
+// a foto vale.
+// O dominio vem da propria org em tempo de execucao. Escrito a mao, o script
+// deixava de correr em qualquer outra org - e o projeto tem de poder ser
+// reconstruido do zero.
+final String BASE = URL.getOrgDomainUrl().toExternalForm() + '/resource/fotos_imoveis/';
+final String FOTO_PREDIO   = BASE + 'predio.jpg';
+final String FOTO_MORADIA  = BASE + 'moradia.jpg';
+final String FOTO_INTERIOR = BASE + 'interior.jpg';
 
 List<Imovel__c> todos = [SELECT Id, Name, Tipo_Imovel__c, Localizacao__c,
                                 Elevador__c, Foto_URL__c FROM Imovel__c];

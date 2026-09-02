@@ -1,0 +1,10 @@
+Larga aqui tres ficheiros, com estes nomes exatos:
+
+  predio.jpg     - edificio de apartamentos (fracoes e apartamentos)
+  moradia.jpg    - exterior de moradia
+  interior.jpg   - sala de apartamento
+
+Depois do deploy ficam em:
+  /resource/fotos_imoveis/predio.jpg
+
+Este ficheiro pode ficar ca dentro, nao faz mal nenhum.

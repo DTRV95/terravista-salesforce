@@ -1,60 +1,75 @@
 # A fotografia dentro da conversa
 
-O objetivo: o consultor pergunta *"que imóveis tenho para o Jorge?"* e vê **as
-fotografias**, não uma lista de nomes.
+O consultor pergunta *"que imóveis tenho para a Claudia?"* e vê **as fotografias**,
+não uma lista de nomes.
 
 ---
 
-## O que é preciso, e o que não chega
+## Porque é que nada mais chega
 
 | Tentativa | Resultado |
 |---|---|
-| Campo `Foto_URL__c` no output da ação | Aparece como texto ou link. Não é imagem |
-| Link markdown no texto da resposta | Continua a ser um link azul |
+| `Foto_URL__c` no output da acção | Texto ou link. Não é imagem |
+| Link markdown no texto | Continua um link azul |
 | `Output Rendering = Object` | Cartão do registo, clicável. **Sem imagem** |
-| **Custom Lightning Type com `renderer`** | ✅ É este |
-
-## Como funciona
-
-Um *custom Lightning type* deixa substituir o UI por omissão do Agentforce por um
-Lightning Web Component nosso. Para output, o LWC usa o target
-`lightning__AgentforceOutput`, e é aí que se pode desenhar um `<img>` com o
-`Foto_URL__c` de cada imóvel.
-
-**Restrição que nos serve:** só se pode fazer este override em ações cujo input ou
-output seja uma **classe Apex**. `MatchImoveis.Resultado` é exatamente isso — foi
-sorte, não desenho, mas é o que torna isto possível sem reescrever a ação.
-
-Peças envolvidas:
-
-1. Um bundle `lightningTypes` com o **schema** do output e um **`renderer.json`** a
-   apontar para o LWC
-2. Um **LWC** com `lightning__AgentforceOutput` nos targets, que recebe os imóveis e
-   desenha o cartão com fotografia
-3. A ação Apex ligada a esse tipo
+| **Custom Lightning Type + LWC** | ✅ É este. É a única via suportada |
 
 ---
 
-## Estado
+## As peças
 
-**Por fazer.** A estrutura exata dos ficheiros tem de sair da documentação oficial —
-não se inventa metadata a partir de memória, que é como se perde uma tarde a
-depurar um deploy que nunca podia funcionar.
+```
+force-app/main/default/
+├── lwc/imoveisSugeridos/          ← desenha os cartões com <img>
+│   ├── imoveisSugeridos.js
+│   ├── imoveisSugeridos.html
+│   ├── imoveisSugeridos.css
+│   └── imoveisSugeridos.js-meta.xml   (target lightning__AgentforceOutput)
+└── lightningTypes/imoveisSugeridos/
+    ├── schema.json                 ← aponta para MatchImoveis.Resultado
+    └── lightningDesktopGenAi/
+        └── renderer.json           ← aponta para c/imoveisSugeridos
+```
 
-Página a consultar:
+`lightningDesktopGenAi` é o canal do **Employee Agent em Lightning Experience**, que
+é o nosso. Há outras pastas para o chat de serviço e para mobile — não precisamos.
+
+**Mudança no Apex:** os campos de `MatchImoveis.Resultado` levam agora `@AuraEnabled`
+além de `@InvocableVariable`. A camada que liga a acção ao tipo lê a classe à procura
+de `@AuraEnabled`; sem isso o output nunca chega ao componente.
+
+---
+
+## O que está por confirmar
+
+A documentação oficial esteve em baixo (503) quando isto foi escrito, dos dois lados.
+Portanto **dois ficheiros são reconstrução, não cópia**:
+
+| Ficheiro | Dúvida |
+|---|---|
+| `schema.json` | A forma exacta de referenciar a classe Apex |
+| `renderer.json` | A chave que aponta para o LWC |
+
+O LWC em si não tem dúvida nenhuma — é LWC normal.
+
+**Antes de deitar tempo a isto**, abre a página quando o site voltar e compara:
 `developer.salesforce.com/docs/ai/agentforce/guide/lightning-types-example-collection-renderer.html`
 
+Se os dois ficheiros estiverem certos, o deploy passa e a acção passa a desenhar-se
+com o componente. Se estiverem errados, o deploy falha — o que é o bom caso, porque
+falha **antes** da apresentação e não durante.
+
 ---
 
-## Vale a pena? — decisão a tomar
+## Fotografias: dentro do Salesforce, não no Unsplash
 
-| | |
-|---|---|
-| **Recomendação** | Fazer **depois** dos dashboards, não antes |
-| **Alternativa** | Ficar pelo cartão clicável, que já funciona hoje |
-| **Vantagem** | É o único ponto da demonstração que nenhum colega vai ter. LWC + Agentforce + Apex numa peça só é exatamente o que se mostra a quem contrata |
-| **Desvantagem** | É a única parte do projeto que exige LWC. Não é configuração, e não há caminho pelo Setup |
-| **Risco** | Alto em tempo, baixo em consequência: se falhar, o cartão clicável continua lá e a demonstração não parte |
+As fotos passaram a ser um **Static Resource** (`fotos_imoveis`), servido pela própria
+org. Antes eram URLs do Unsplash.
 
-Os dashboards são o requisito do enunciado; isto é o extra. Um extra bonito com o
-requisito por fazer é o pior sítio onde estar a três semanas da apresentação.
+> Um URL externo depende da rede da sala onde apresentas e de um serviço de terceiros
+> continuar de pé. Já falhou duas vezes neste projeto. Um Static Resource não depende
+> de nada — e a fotografia é a parte da demonstração que toda a gente vê.
+
+Larga três ficheiros em `force-app/main/default/staticresources/fotos_imoveis/`:
+`predio.jpg`, `moradia.jpg`, `interior.jpg`. Depois corre o `preencher_carteira.apex`,
+que constrói os URLs a partir do domínio da org com `URL.getOrgDomainUrl()`.

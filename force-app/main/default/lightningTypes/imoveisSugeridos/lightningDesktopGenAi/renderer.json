@@ -1,0 +1,8 @@
+{
+  "description": "Cartões com fotografia, na conversa do Agentforce em Lightning Experience.",
+  "lightning:renderer": {
+    "componentOverrides": {
+      "$": { "definition": "c/imoveisSugeridos" }
+    }
+  }
+}

@@ -45,11 +45,18 @@ public with sharing class MatchImoveis {
         public String finalidade;
     }
 
+    /**
+     * O @AuraEnabled em cada campo nao e decoracao: e o que permite desenhar a
+     * resposta no chat com um LWC nosso. A camada que liga uma accao a um custom
+     * Lightning type le a classe a procura de @AuraEnabled - com so
+     * @InvocableVariable, o output nao chega ao componente e nao ha maneira de
+     * mostrar a fotografia dentro da conversa.
+     */
     public class Resultado {
-        @InvocableVariable(label='Imóveis') public List<Imovel__c> imoveis;
-        @InvocableVariable(label='Resumo para o modelo') public String resumo;
-        @InvocableVariable(label='Notas do cliente') public String notasCliente;
-        @InvocableVariable(label='Total encontrado') public Integer total;
+        @InvocableVariable(label='Imóveis') @AuraEnabled public List<Imovel__c> imoveis;
+        @InvocableVariable(label='Resumo para o modelo') @AuraEnabled public String resumo;
+        @InvocableVariable(label='Notas do cliente') @AuraEnabled public String notasCliente;
+        @InvocableVariable(label='Total encontrado') @AuraEnabled public Integer total;
     }
 
     @InvocableMethod(

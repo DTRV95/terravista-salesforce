@@ -1,0 +1,21 @@
+<template>
+    <template lwc:if={temImoveis}>
+        <div class="lista">
+            <template for:each={cartoes} for:item="imovel">
+                <article key={imovel.id} class="cartao">
+                    <template lwc:if={imovel.foto}>
+                        <img src={imovel.foto} alt={imovel.nome} class="foto" />
+                    </template>
+                    <div class="texto">
+                        <a href={imovel.link} target="_blank" class="nome">{imovel.nome}</a>
+                        <p class="detalhe">{imovel.detalhe}</p>
+                        <p class="preco">{imovel.preco}</p>
+                    </div>
+                </article>
+            </template>
+        </div>
+    </template>
+    <template lwc:else>
+        <p class="vazio">Nao ha imoveis em carteira que sirvam este cliente.</p>
+    </template>
+</template>
