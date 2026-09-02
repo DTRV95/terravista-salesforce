@@ -183,6 +183,11 @@ public with sharing class MatchImoveis {
         if (i.Dias_Disponivel__c != null && i.Dias_Disponivel__c > 60) {
             s += ' | parado ha ' + i.Dias_Disponivel__c.intValue() + ' dias';
         }
+        // O URL vai literal para o resumo porque o chat do Agentforce NAO mostra
+        // imagens - mostra texto. Sem isto o modelo nao tem link nenhum para dar,
+        // e um modelo sem link inventa um. Vai por ultimo para nao empurrar os
+        // dados que interessam ao julgamento para o fim da linha.
+        if (String.isNotBlank(i.Foto_URL__c)) s += ' | foto: ' + i.Foto_URL__c;
         return s;
     }
 }

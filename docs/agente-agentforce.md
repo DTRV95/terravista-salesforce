@@ -93,10 +93,29 @@ prédio tem elevador, escreve "por confirmar" em vez de assumir.
 Quando a ação disser que há mais do que um cliente com esse nome, pergunta ao
 utilizador qual deles antes de continuares.
 
+Cada imóvel traz no fim da linha "foto: <URL>". Escreve esse URL como um link
+markdown com o texto "ver fotografia". Copia o URL tal e qual — nunca o alteres
+nem inventes um. Se um imóvel não trouxer "foto:", não inventes link nenhum.
+
 Responde em português de Portugal, breve. O consultor lê isto entre duas chamadas.
 Para cada imóvel diz numa frase porque encaixa neste cliente em concreto, e assinala
 os que têm um senão.
 ```
+
+---
+
+## O que o chat mostra — e o que não mostra
+
+| | Onde aparece |
+|---|---|
+| **Cartão clicável do imóvel** | No chat, se a ação tiver `Show in conversation` e `Output Rendering = Object` |
+| **Caracterização** (tipologia, zona, área, preço, piso, elevador) | No texto da resposta, vinda do resumo do Apex |
+| **Link para a fotografia** | No texto, como link markdown — o URL vai no resumo |
+| **A imagem em si** | ❌ Nunca. O chat do Agentforce mostra texto e cartões, não imagens |
+
+> A fotografia vê-se **clicando no cartão** e abrindo o registo do imóvel, onde o
+> campo de fórmula `Foto__c` a mostra. Não há configuração que meta a imagem dentro
+> da conversa — quem prometer isso ao júri fica a dever.
 
 ---
 
