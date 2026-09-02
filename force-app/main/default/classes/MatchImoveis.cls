@@ -35,8 +35,11 @@ public with sharing class MatchImoveis {
     private static final Integer LIMITE_RESULTADOS = 5;
 
     public class Pedido {
-        @InvocableVariable(required=true label='Cliente' description='Id da conta do comprador ou arrendatario')
+        @InvocableVariable(label='Id do Cliente' description='Id da conta do cliente. Usa este quando estas na pagina de um cliente. Se so souberes o nome, deixa vazio e preenche o Nome do Cliente.')
         public Id clienteId;
+
+        @InvocableVariable(label='Nome do Cliente' description='Nome ou apelido do cliente, para quando nao se tem o Id. Exemplo: Jorge Teixeira, ou apenas Teixeira.')
+        public String nomeCliente;
 
         @InvocableVariable(label='Finalidade' description='Venda ou Arrendamento. Por omissao, Venda')
         public String finalidade;
@@ -64,13 +67,20 @@ public with sharing class MatchImoveis {
         r.imoveis = new List<Imovel__c>();
         r.total = 0;
 
-        List<Account> contas = [
-            SELECT Id, Name, Procura_Tipologia__pc, Procura_Zonas__pc,
-                   Orcamento_Min__pc, Orcamento_Max__pc, Notas_Preferencias__pc,
-                   Perfil_Comprador__pc
-            FROM Account WHERE Id = :p.clienteId LIMIT 1];
+        List<Account> contas = resolverCliente(p);
         if (contas.isEmpty()) {
-            r.resumo = 'Cliente nao encontrado.';
+            r.resumo = String.isBlank(p.nomeCliente)
+                ? 'Cliente nao encontrado.'
+                : 'Nao encontrei nenhum cliente com o nome "' + p.nomeCliente + '".';
+            return r;
+        }
+        if (contas.size() > 1) {
+            // Ambiguidade resolve-se PERGUNTANDO, nunca adivinhando. Escolher um
+            // ao acaso daria uma resposta confiante sobre o cliente errado.
+            List<String> nomes = new List<String>();
+            for (Account a : contas) nomes.add(a.Name);
+            r.resumo = 'Ha mais do que um cliente com esse nome: ' + String.join(nomes, ', ')
+                     + '. Pergunta ao utilizador qual deles.';
             return r;
         }
         Account c = contas[0];
@@ -113,6 +123,23 @@ public with sharing class MatchImoveis {
             ? 'Nenhum imovel disponivel corresponde aos criterios de ' + c.Name + '.'
             : String.join(linhas, '\n');
         return r;
+    }
+
+    /** Encontra o cliente por Id ou por nome. E SOQL que resolve o nome, nunca o
+     *  modelo: pedir a um modelo o Id de um registo e pedir-lhe que o invente. */
+    private static List<Account> resolverCliente(Pedido p) {
+        if (p.clienteId != null) {
+            return [SELECT Id, Name, Procura_Tipologia__pc, Procura_Zonas__pc,
+                           Orcamento_Min__pc, Orcamento_Max__pc, Notas_Preferencias__pc,
+                           Perfil_Comprador__pc
+                    FROM Account WHERE Id = :p.clienteId LIMIT 1];
+        }
+        if (String.isBlank(p.nomeCliente)) return new List<Account>();
+        String padrao = '%' + p.nomeCliente.trim() + '%';
+        return [SELECT Id, Name, Procura_Tipologia__pc, Procura_Zonas__pc,
+                       Orcamento_Min__pc, Orcamento_Max__pc, Notas_Preferencias__pc,
+                       Perfil_Comprador__pc
+                FROM Account WHERE Name LIKE :padrao LIMIT 5];
     }
 
     /** Um imovel serve a zona se o texto de uma das zonas procuradas aparecer

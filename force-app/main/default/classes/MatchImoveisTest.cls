@@ -127,6 +127,50 @@ private class MatchImoveisTest {
     }
 
     @IsTest
+    static void encontra_cliente_pelo_nome() {
+        criarComprador('Nomeado', 'T3', 'Matosinhos', 150000, 250000, null);
+
+        MatchImoveis.Pedido p = new MatchImoveis.Pedido();
+        p.nomeCliente = 'Nomeado';
+
+        List<MatchImoveis.Resultado> r = MatchImoveis.encontrar(
+            new List<MatchImoveis.Pedido>{ p });
+
+        System.assertEquals(2, r[0].total,
+            'Encontrar pelo nome tem de dar o mesmo que encontrar pelo Id');
+    }
+
+    @IsTest
+    static void nome_ambiguo_pergunta_em_vez_de_adivinhar() {
+        // Dois clientes com o mesmo apelido: escolher um ao acaso daria uma
+        // resposta confiante sobre a pessoa errada. Tem de perguntar.
+        criarComprador('Ambiguo', 'T3', 'Matosinhos', 150000, 250000, null);
+        criarComprador('Ambiguo', 'T2', 'Porto', 100000, 200000, null);
+
+        MatchImoveis.Pedido p = new MatchImoveis.Pedido();
+        p.nomeCliente = 'Ambiguo';
+
+        List<MatchImoveis.Resultado> r = MatchImoveis.encontrar(
+            new List<MatchImoveis.Pedido>{ p });
+
+        System.assertEquals(0, r[0].total, 'Com ambiguidade nao devolve imoveis');
+        System.assert(r[0].resumo.contains('mais do que um'),
+            'Tem de dizer ao agente para perguntar qual dos clientes');
+    }
+
+    @IsTest
+    static void nome_desconhecido_diz_que_nao_encontrou() {
+        MatchImoveis.Pedido p = new MatchImoveis.Pedido();
+        p.nomeCliente = 'Nao Existe Ninguem Assim';
+
+        List<MatchImoveis.Resultado> r = MatchImoveis.encontrar(
+            new List<MatchImoveis.Pedido>{ p });
+
+        System.assertEquals(0, r[0].total);
+        System.assert(r[0].resumo.contains('Nao encontrei'));
+    }
+
+    @IsTest
     static void cliente_inexistente_nao_rebenta() {
         MatchImoveis.Pedido p = new MatchImoveis.Pedido();
         p.clienteId = '001000000000000AAA';
