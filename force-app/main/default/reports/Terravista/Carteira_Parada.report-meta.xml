@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chart>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>VerticalColumn</chartType>
+        <groupingColumn>Imovel__c.Tipo_Imovel__c</groupingColumn>
+        <legendPosition>Right</legendPosition>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <title>Carteira disponível</title>
+    </chart>
+    <columns><field>Imovel__c.Tipologia__c</field></columns>
+    <columns><field>Imovel__c.Localizacao__c</field></columns>
+    <columns><field>Imovel__c.Preco__c</field></columns>
+    <columns><field>Imovel__c.Dias_Disponivel__c</field></columns>
+    <description>O que esta em carteira por vender, e ha quanto tempo. Um imovel parado ha muito tempo ou esta mal avaliado ou esta mal mostrado - qualquer das duas coisas se resolve.</description>
+    <filter>
+        <criteriaItems>
+            <column>Imovel__c.Estado_Comercial__c</column>
+            <operator>equals</operator>
+            <value>Disponivel</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Imovel__c.Tipo_Imovel__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Carteira disponível</name>
+    <reportType>Imovel__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+</Report>

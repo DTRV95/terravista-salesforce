@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chart>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>s!Opportunity.Comissao_Angariador__c</column>
+        </chartSummaries>
+        <chartType>HorizontalBar</chartType>
+        <groupingColumn>Opportunity.Angariador__c</groupingColumn>
+        <legendPosition>Right</legendPosition>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <title>Angariações a pagar</title>
+    </chart>
+    <columns><field>OPPORTUNITY_NAME</field></columns>
+    <columns><field>USERS.NAME</field></columns>
+    <columns><field>CLOSE_DATE</field></columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Opportunity.Comissao_Angariador__c</field>
+    </columns>
+    <description>Quanto se deve a quem angariou. A angariacao so se paga quando o imovel vende, por isso o filtro e a escritura - antes disso o valor e estimativa, nao divida.</description>
+    <filter>
+        <criteriaItems>
+            <column>OPPORTUNITY_STAGE</column>
+            <operator>equals</operator>
+            <value>Escritura Realizada</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Opportunity.Angariador__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Angariações a pagar</name>
+    <reportType>Opportunity</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+</Report>

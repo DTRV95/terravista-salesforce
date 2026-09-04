@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chart>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>s!Opportunity.Comissao_Consultor__c</column>
+        </chartSummaries>
+        <chartType>HorizontalBar</chartType>
+        <groupingColumn>USERS.NAME</groupingColumn>
+        <legendPosition>Right</legendPosition>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <title>Comissões a receber por consultor</title>
+    </chart>
+    <columns><field>OPPORTUNITY_NAME</field></columns>
+    <columns><field>CLOSE_DATE</field></columns>
+    <columns><field>AMOUNT</field></columns>
+    <columns><field>Opportunity.Comissao_Terravista__c</field></columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Opportunity.Comissao_Consultor__c</field>
+    </columns>
+    <description>Quanto cada consultor tem a receber. So conta o que ja fez escritura - uma comissao so se paga quando o negocio fecha.</description>
+    <filter>
+        <criteriaItems>
+            <column>OPPORTUNITY_STAGE</column>
+            <operator>equals</operator>
+            <value>Escritura Realizada</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>USERS.NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Comissões por consultor</name>
+    <reportType>Opportunity</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+</Report>

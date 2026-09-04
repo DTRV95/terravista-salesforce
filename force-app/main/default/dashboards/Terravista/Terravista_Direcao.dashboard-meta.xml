@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dashboard xmlns="http://soap.sforce.com/2006/04/metadata">
+    <backgroundEndColor>#FFFFFF</backgroundEndColor>
+    <backgroundFadeDir>Diagonal</backgroundFadeDir>
+    <backgroundStartColor>#FFFFFF</backgroundStartColor>
+    <!--
+      LoggedInUser: cada pessoa ve o dashboard com os SEUS dados. Um consultor
+      abre e ve as comissoes dele; a direcao abre e ve tudo. E um dashboard so,
+      nao um por pessoa - e ninguem ve quanto ganha o colega.
+    -->
+    <dashboardType>LoggedInUser</dashboardType>
+    <leftSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <componentType>Bar</componentType>
+            <footer>Só conta o que já fez escritura.</footer>
+            <header>Comissões a receber</header>
+            <report>Terravista/Comissoes_por_Consultor</report>
+        </components>
+        <components>
+            <componentType>Donut</componentType>
+            <footer>Dois negócios diferentes com o mesmo nome.</footer>
+            <header>B2B e B2C</header>
+            <report>Terravista/Vendas_por_Linha_Negocio</report>
+        </components>
+    </leftSection>
+    <middleSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <componentType>Column</componentType>
+            <footer>O que sobra depois de pagas as comissões.</footer>
+            <header>Margem mês a mês</header>
+            <report>Terravista/Margem_Mensal</report>
+        </components>
+        <components>
+            <componentType>Bar</componentType>
+            <footer>A angariação só se paga quando o imóvel vende.</footer>
+            <header>Angariações a pagar</header>
+            <report>Terravista/Angariacoes_a_Pagar</report>
+        </components>
+    </middleSection>
+    <rightSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <componentType>Bar</componentType>
+            <footer>Fase avançada e parada há muito tempo é o sinal a seguir.</footer>
+            <header>Pipeline por fase</header>
+            <report>Terravista/Pipeline_por_Fase</report>
+        </components>
+        <components>
+            <componentType>Column</componentType>
+            <footer>Parado há muito: ou mal avaliado, ou mal mostrado.</footer>
+            <header>Carteira disponível</header>
+            <report>Terravista/Carteira_Parada</report>
+        </components>
+    </rightSection>
+    <textColor>#000000</textColor>
+    <title>Terravista — Direção</title>
+    <titleColor>#000000</titleColor>
+    <titleSize>12</titleSize>
+</Dashboard>

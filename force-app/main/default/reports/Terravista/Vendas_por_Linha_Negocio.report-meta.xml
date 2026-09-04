@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chart>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>s!AMOUNT</column>
+        </chartSummaries>
+        <chartType>Donut</chartType>
+        <groupingColumn>Opportunity.Linha_Negocio__c</groupingColumn>
+        <legendPosition>Right</legendPosition>
+        <size>Medium</size>
+        <title>Peso do B2B e do B2C</title>
+    </chart>
+    <columns><field>OPPORTUNITY_NAME</field></columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>AMOUNT</field>
+    </columns>
+    <columns><field>Opportunity.Comissao_Terravista__c</field></columns>
+    <description>Quanto vem de particulares e quanto vem de empreendimentos. Sao dois negocios diferentes com o mesmo nome.</description>
+    <filter>
+        <criteriaItems>
+            <column>OPPORTUNITY_STAGE</column>
+            <operator>equals</operator>
+            <value>Escritura Realizada</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Opportunity.Linha_Negocio__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Vendas por linha de negócio</name>
+    <reportType>Opportunity</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+</Report>

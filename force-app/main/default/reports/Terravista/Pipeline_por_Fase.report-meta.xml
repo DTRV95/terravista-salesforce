@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chart>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>s!AMOUNT</column>
+        </chartSummaries>
+        <chartType>HorizontalBar</chartType>
+        <groupingColumn>OPPORTUNITY_STAGE</groupingColumn>
+        <legendPosition>Right</legendPosition>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <title>Pipeline por fase</title>
+    </chart>
+    <columns><field>OPPORTUNITY_NAME</field></columns>
+    <columns><field>USERS.NAME</field></columns>
+    <columns><field>CLOSE_DATE</field></columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>AMOUNT</field>
+    </columns>
+    <columns><field>Opportunity.Dias_Sem_Atividade__c</field></columns>
+    <description>Onde esta o negocio que ainda nao fechou. Inclui os dias sem atividade: uma fase avancada parada ha muito tempo e o sinal mais util que um pipeline da.</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>OPPORTUNITY_STAGE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Pipeline por fase</name>
+    <reportType>Opportunity</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+</Report>
