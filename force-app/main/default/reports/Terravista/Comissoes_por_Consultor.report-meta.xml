@@ -7,7 +7,7 @@
             <column>Opportunity.Comissao_Consultor__c</column>
         </chartSummaries>
         <chartType>HorizontalBar</chartType>
-        <groupingColumn>USERS.NAME</groupingColumn>
+        <groupingColumn>FULL_NAME</groupingColumn>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
         <title>Comissões a receber por consultor</title>
@@ -23,7 +23,7 @@
     <description>Quanto cada consultor tem a receber. So conta o que ja fez escritura - uma comissao so se paga quando o negocio fecha.</description>
     <filter>
         <criteriaItems>
-            <column>OPPORTUNITY_STAGE</column>
+            <column>STAGE_NAME</column>
             <operator>equals</operator>
             <value>Escritura Realizada</value>
         </criteriaItems>
@@ -31,7 +31,7 @@
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>USERS.NAME</field>
+        <field>FULL_NAME</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Comissões por consultor</name>

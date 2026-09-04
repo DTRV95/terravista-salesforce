@@ -17,52 +17,66 @@
     <leftSection>
         <columnSize>Medium</columnSize>
         <components>
+            <chartAxisRange>Auto</chartAxisRange>
             <componentType>Line</componentType>
             <footer>Meta: 2 horas. A distância até à meta é o problema.</footer>
             <header>Horas até ao 1º contacto, semana a semana</header>
             <report>Terravista/Latencia_Primeiro_Contacto</report>
+            <sortBy>RowLabelAscending</sortBy>
         </components>
         <components>
+            <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
             <footer>Os que se perderam são os que esperaram mais.</footer>
             <header>Perdidos por demora</header>
             <report>Terravista/Perdidos_Por_Demora</report>
+            <sortBy>RowValueDescending</sortBy>
         </components>
     </leftSection>
     <middleSection>
         <columnSize>Medium</columnSize>
         <components>
+            <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
             <footer>Só conta o que já fez escritura.</footer>
             <header>Comissões a receber</header>
             <report>Terravista/Comissoes_por_Consultor</report>
+            <sortBy>RowValueDescending</sortBy>
         </components>
         <components>
+            <chartAxisRange>Auto</chartAxisRange>
             <componentType>Column</componentType>
             <footer>O que sobra depois de pagas as comissões.</footer>
             <header>Margem mês a mês</header>
             <report>Terravista/Margem_Mensal</report>
+            <sortBy>RowValueDescending</sortBy>
         </components>
         <components>
+            <chartAxisRange>Auto</chartAxisRange>
             <componentType>Donut</componentType>
             <footer>Dois negócios diferentes com o mesmo nome.</footer>
             <header>B2B e B2C</header>
             <report>Terravista/Vendas_por_Linha_Negocio</report>
+            <sortBy>RowValueDescending</sortBy>
         </components>
     </middleSection>
     <rightSection>
         <columnSize>Medium</columnSize>
         <components>
+            <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
             <footer>Fase avançada e parada há muito tempo é o sinal a seguir.</footer>
             <header>Pipeline por fase</header>
             <report>Terravista/Pipeline_por_Fase</report>
+            <sortBy>RowValueDescending</sortBy>
         </components>
         <components>
+            <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
             <footer>A angariação só se paga quando o imóvel vende.</footer>
             <header>Angariações a pagar</header>
             <report>Terravista/Angariacoes_a_Pagar</report>
+            <sortBy>RowValueDescending</sortBy>
         </components>
     </rightSection>
     <textColor>#000000</textColor>

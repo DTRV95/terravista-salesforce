@@ -20,7 +20,7 @@
     <description>Quanto vem de particulares e quanto vem de empreendimentos. Sao dois negocios diferentes com o mesmo nome.</description>
     <filter>
         <criteriaItems>
-            <column>OPPORTUNITY_STAGE</column>
+            <column>STAGE_NAME</column>
             <operator>equals</operator>
             <value>Escritura Realizada</value>
         </criteriaItems>

@@ -12,7 +12,7 @@
     <description>Imoveis da carteira, com o contrato de mediacao a que pertencem.</description>
     <label>Imóveis da Carteira</label>
     <sections>
-        <columns><checkedByDefault>true</checkedByDefault><field>NAME</field><table>Imovel__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Name</field><table>Imovel__c</table></columns>
         <columns><checkedByDefault>true</checkedByDefault><field>Tipo_Imovel__c</field><table>Imovel__c</table></columns>
         <columns><checkedByDefault>true</checkedByDefault><field>Tipologia__c</field><table>Imovel__c</table></columns>
         <columns><checkedByDefault>true</checkedByDefault><field>Localizacao__c</field><table>Imovel__c</table></columns>

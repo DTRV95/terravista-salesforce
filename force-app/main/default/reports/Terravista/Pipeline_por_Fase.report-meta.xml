@@ -7,13 +7,13 @@
             <column>AMOUNT</column>
         </chartSummaries>
         <chartType>HorizontalBar</chartType>
-        <groupingColumn>OPPORTUNITY_STAGE</groupingColumn>
+        <groupingColumn>STAGE_NAME</groupingColumn>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
         <title>Pipeline por fase</title>
     </chart>
     <columns><field>OPPORTUNITY_NAME</field></columns>
-    <columns><field>USERS.NAME</field></columns>
+    <columns><field>FULL_NAME</field></columns>
     <columns><field>CLOSE_DATE</field></columns>
     <columns>
         <aggregateTypes>Sum</aggregateTypes>
@@ -24,7 +24,7 @@
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>OPPORTUNITY_STAGE</field>
+        <field>STAGE_NAME</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Pipeline por fase</name>

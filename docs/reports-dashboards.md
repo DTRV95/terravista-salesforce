@@ -123,3 +123,24 @@ Saiu do permission set para não bloquear o deploy, e o `semear_org` passa a
 verificar se consegue escrever o `CreatedDate`. Se não conseguir, **não cria a
 coorte** e escreve porquê no log — uma linha vazia com aviso é melhor do que datas
 erradas sem aviso.
+
+### Segunda ronda de correcções
+
+O primeiro lote não chegou. Uma segunda leitura do metadata real da org deu mais seis:
+
+| O que estava errado | O que é verdade |
+|---|---|
+| `USERS.NAME` | `FULL_NAME` |
+| `OPPORTUNITY_STAGE` | `STAGE_NAME` |
+| `<scope>` em `Ritmo_Empreendimentos` | Não se declara neste report type |
+| `<field>NAME</field>` no report type | `Name` — a capitalização conta |
+| Títulos de gráfico compridos | Há limite de comprimento |
+| Dashboards sem `chartAxisRange` e `sortBy` | Os componentes reais trazem-nos |
+
+Onze erros no primeiro deploy, seis causas; e depois mais seis causas na segunda
+volta. Não é sinal de descuido — é o que custa escrever metadata de reports sem
+documentação acessível.
+
+> Se houver uma terceira volta, a decisão certa deixa de ser corrigir à mão e passa
+> a ser **construir os reports na interface e fazer `retrieve`**. O tempo até à
+> apresentação vale mais do que a elegância de os ter escrito à mão.

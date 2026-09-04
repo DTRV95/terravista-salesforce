@@ -13,7 +13,7 @@
         <title>Angariações a pagar</title>
     </chart>
     <columns><field>OPPORTUNITY_NAME</field></columns>
-    <columns><field>USERS.NAME</field></columns>
+    <columns><field>FULL_NAME</field></columns>
     <columns><field>CLOSE_DATE</field></columns>
     <columns>
         <aggregateTypes>Sum</aggregateTypes>
@@ -22,7 +22,7 @@
     <description>Quanto se deve a quem angariou. A angariacao so se paga quando o imovel vende, por isso o filtro e a escritura - antes disso o valor e estimativa, nao divida.</description>
     <filter>
         <criteriaItems>
-            <column>OPPORTUNITY_STAGE</column>
+            <column>STAGE_NAME</column>
             <operator>equals</operator>
             <value>Escritura Realizada</value>
         </criteriaItems>

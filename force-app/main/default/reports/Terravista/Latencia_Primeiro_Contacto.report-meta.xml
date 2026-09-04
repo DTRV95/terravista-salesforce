@@ -10,7 +10,7 @@
         <groupingColumn>Lead.Data_Atribuicao__c</groupingColumn>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
-        <title>Horas até ao 1º contacto, semana a semana (meta: 2h)</title>
+        <title>Horas até ao 1º contacto (meta: 2h)</title>
     </chart>
     <columns><field>LAST_NAME</field></columns>
     <columns><field>LEAD_SOURCE</field></columns>

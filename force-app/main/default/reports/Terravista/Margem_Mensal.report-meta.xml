@@ -23,7 +23,7 @@
     <description>O que sobra para a empresa depois de pagas as comissoes. A comissao bruta sozinha nao diz nada - o que interessa e a margem.</description>
     <filter>
         <criteriaItems>
-            <column>OPPORTUNITY_STAGE</column>
+            <column>STAGE_NAME</column>
             <operator>equals</operator>
             <value>Escritura Realizada</value>
         </criteriaItems>

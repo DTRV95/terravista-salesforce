@@ -12,28 +12,34 @@
     <leftSection>
         <columnSize>Medium</columnSize>
         <components>
+            <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
             <footer>Prestar contas à construtora sem pedir nada a ninguém.</footer>
             <header>Ritmo dos empreendimentos</header>
             <report>Terravista/Ritmo_Empreendimentos</report>
+            <sortBy>RowValueDescending</sortBy>
         </components>
     </leftSection>
     <middleSection>
         <columnSize>Medium</columnSize>
         <components>
+            <chartAxisRange>Auto</chartAxisRange>
             <componentType>Column</componentType>
             <footer>Parado há muito: ou mal avaliado, ou mal mostrado.</footer>
             <header>Carteira disponível</header>
             <report>Terravista/Carteira_Parada</report>
+            <sortBy>RowValueDescending</sortBy>
         </components>
     </middleSection>
     <rightSection>
         <columnSize>Medium</columnSize>
         <components>
+            <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
             <footer>Inclui os dias sem atividade.</footer>
             <header>Pipeline por fase</header>
             <report>Terravista/Pipeline_por_Fase</report>
+            <sortBy>RowValueDescending</sortBy>
         </components>
     </rightSection>
     <textColor>#000000</textColor>
