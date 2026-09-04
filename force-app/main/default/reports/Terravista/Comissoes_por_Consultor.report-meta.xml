@@ -2,12 +2,12 @@
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <chart>
         <chartSummaries>
+            <aggregate>Sum</aggregate>
             <axisBinding>y</axisBinding>
-            <column>s!Opportunity.Comissao_Consultor__c</column>
+            <column>Opportunity.Comissao_Consultor__c</column>
         </chartSummaries>
         <chartType>HorizontalBar</chartType>
         <groupingColumn>USERS.NAME</groupingColumn>
-        <legendPosition>Right</legendPosition>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
         <title>Comissões a receber por consultor</title>

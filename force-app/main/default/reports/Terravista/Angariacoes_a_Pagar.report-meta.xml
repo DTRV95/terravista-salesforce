@@ -2,12 +2,12 @@
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <chart>
         <chartSummaries>
+            <aggregate>Sum</aggregate>
             <axisBinding>y</axisBinding>
-            <column>s!Opportunity.Comissao_Angariador__c</column>
+            <column>Opportunity.Comissao_Angariador__c</column>
         </chartSummaries>
         <chartType>HorizontalBar</chartType>
         <groupingColumn>Opportunity.Angariador__c</groupingColumn>
-        <legendPosition>Right</legendPosition>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
         <title>Angariações a pagar</title>

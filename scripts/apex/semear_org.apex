@@ -444,6 +444,19 @@ String[] nomes = new String[]{
 // meta de 2 horas. Um -1 e um lead que nunca chegou a ser contactado.
 Integer[] horasPorSemana = new Integer[]{ 26, 31, 18, 22, -1, 14, 9, 12, 5, 7, 3, 4 };
 
+// A permissao SetAuditFields so existe no esquema depois de se ligar
+// Setup > User Interface > Enable "Set Audit Fields upon Record Creation".
+// Enquanto estiver desligada, escrever CreatedDate rebenta a meio do script e
+// deixa a org num estado intermedio. Mais vale nao criar a coorte e dizer
+// porque - uma linha vazia com aviso e melhor do que datas erradas sem aviso.
+Boolean podeDatar = Schema.SObjectType.Lead.fields.CreatedDate.isCreateable();
+if (!podeDatar) {
+    System.debug(LoggingLevel.ERROR,
+        'COORTE DE LATENCIA NAO CRIADA: falta ligar Setup > User Interface > '
+      + 'Enable "Set Audit Fields upon Record Creation". Sem isso os leads nascem '
+      + 'todos agora e os dois graficos de latencia saem vazios.');
+}
+
 List<Lead> coorte = new List<Lead>();
 Integer t3 = 913000400;
 for (Integer i = 0; i < nomes.size(); i++) {
@@ -489,8 +502,10 @@ for (Integer i = 0; i < nomes.size(); i++) {
     }
     coorte.add(ld);
 }
-insert coorte;
-leads.addAll(coorte);
+if (podeDatar) {
+    insert coorte;
+    leads.addAll(coorte);
+}
 
 // Ligar leads as campanhas: e isto que responde a pergunta da Ines
 List<CampaignMember> cms = new List<CampaignMember>();

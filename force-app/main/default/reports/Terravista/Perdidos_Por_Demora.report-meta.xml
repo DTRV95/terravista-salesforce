@@ -7,12 +7,11 @@
         </chartSummaries>
         <chartType>HorizontalBar</chartType>
         <groupingColumn>Lead.Tipo_de_Perda__c</groupingColumn>
-        <legendPosition>Right</legendPosition>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
         <title>Porque é que perdemos</title>
     </chart>
-    <columns><field>LEAD.LAST_NAME</field></columns>
+    <columns><field>LAST_NAME</field></columns>
     <columns><field>LEAD_SOURCE</field></columns>
     <columns><field>Lead.Motivo_Nao_Qualificacao__c</field></columns>
     <columns>
@@ -28,7 +27,7 @@
     </groupingsDown>
     <name>Perdidos por demora</name>
     <reportType>LeadList</reportType>
-    <scope>organization</scope>
+    <scope>team</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>

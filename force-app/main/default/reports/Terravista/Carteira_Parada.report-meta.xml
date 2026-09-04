@@ -7,7 +7,6 @@
         </chartSummaries>
         <chartType>VerticalColumn</chartType>
         <groupingColumn>Imovel__c.Tipo_Imovel__c</groupingColumn>
-        <legendPosition>Right</legendPosition>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
         <title>Carteira disponível</title>
@@ -31,7 +30,7 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Carteira disponível</name>
-    <reportType>Imovel__c</reportType>
+    <reportType>Imoveis_da_Carteira</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

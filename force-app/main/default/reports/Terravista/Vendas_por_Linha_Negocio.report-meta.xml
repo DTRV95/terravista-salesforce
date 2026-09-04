@@ -2,12 +2,12 @@
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <chart>
         <chartSummaries>
+            <aggregate>Sum</aggregate>
             <axisBinding>y</axisBinding>
-            <column>s!AMOUNT</column>
+            <column>AMOUNT</column>
         </chartSummaries>
         <chartType>Donut</chartType>
         <groupingColumn>Opportunity.Linha_Negocio__c</groupingColumn>
-        <legendPosition>Right</legendPosition>
         <size>Medium</size>
         <title>Peso do B2B e do B2C</title>
     </chart>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Imovel__c</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <!--
+      O Imovel__c nao recebe report type automatico porque e o lado detail de uma
+      relacao Master-Detail com o Contract: objetos nessa posicao nao geram um
+      report type proprio. Foi por isso que <reportType>Imovel__c</reportType>
+      nao existia - nao era o nome errado, era o report type que faltava.
+    -->
+    <description>Imoveis da carteira, com o contrato de mediacao a que pertencem.</description>
+    <label>Imóveis da Carteira</label>
+    <sections>
+        <columns><checkedByDefault>true</checkedByDefault><field>NAME</field><table>Imovel__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Tipo_Imovel__c</field><table>Imovel__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Tipologia__c</field><table>Imovel__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Localizacao__c</field><table>Imovel__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Preco__c</field><table>Imovel__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Estado_Comercial__c</field><table>Imovel__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Finalidade__c</field><table>Imovel__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Area_m2__c</field><table>Imovel__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Dias_Disponivel__c</field><table>Imovel__c</table></columns>
+        <columns><checkedByDefault>false</checkedByDefault><field>Elevador__c</field><table>Imovel__c</table></columns>
+        <columns><checkedByDefault>false</checkedByDefault><field>Piso__c</field><table>Imovel__c</table></columns>
+        <masterLabel>Imóveis</masterLabel>
+    </sections>
+</ReportType>

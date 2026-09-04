@@ -84,3 +84,42 @@ O mesmo vale para os nomes dos report types: `Opportunity`, `LeadList`, `Contrac
 
 Vão todos juntos **de propósito**: assim o primeiro deploy devolve todos os nomes
 errados ao mesmo tempo, em vez de um por deploy.
+
+---
+
+## O que o primeiro deploy ensinou
+
+Doze erros, seis causas. Nenhuma delas se adivinhava — a documentação da Salesforce
+estava inacessível, e a verdade foi obtida a construir um report real na UI e a
+descarregar o metadata dele.
+
+| # | O que estava errado | O que é verdade |
+|---|---|---|
+| 1 | `<column>s!Campo</column>` | O prefixo `s!`/`a!` **não existe**. O tipo de agregação é um elemento à parte: `<aggregate>Sum</aggregate>` |
+| 2 | `<legendPosition>Right</legendPosition>` | Não é aceite. Um gráfico real da org nem sequer define este elemento |
+| 3 | `<reportType>Contracts</reportType>` | `ContractList` |
+| 4 | `<field>LEAD.LAST_NAME</field>` | `LAST_NAME` — os reports usam tokens **sem prefixo**, ao contrário das list views |
+| 5 | `<scope>organization</scope>` em Lead | Não é válido. `team` é, e como o admin está no topo da hierarquia vê tudo na prática |
+| 6 | `backgroundFadeDir` | `backgroundFadeDirection` |
+
+> **A lição que fica:** um deploy que passa prova que a sintaxe foi aceite, não que
+> a lógica está certa — já sabíamos. O reverso também é verdade: quando não há
+> documentação, **a org é a documentação**. Constrói-se a coisa na interface, faz-se
+> `retrieve`, e lê-se o que a Salesforce escreveu.
+
+### Os dois que não eram nomes errados
+
+**`Imovel__c` não tinha report type nenhum.** Não era o nome que estava errado — é
+que o `Imovel__c` é o lado *detail* de uma relação Master-Detail com o Contract, e
+objectos nessa posição não recebem report type automático. Criou-se um report type
+custom, `Imoveis_da_Carteira`, que é metadata deployável como tudo o resto.
+
+**`SetAuditFields` não aparecia em lado nenhum** porque a permissão só passa a
+existir no esquema depois de se ligar a preferência da org:
+**Setup → User Interface → Enable "Set Audit Fields upon Record Creation"**.
+Procurá-la antes disso é procurar uma coisa que ainda não foi criada.
+
+Saiu do permission set para não bloquear o deploy, e o `semear_org` passa a
+verificar se consegue escrever o `CreatedDate`. Se não conseguir, **não cria a
+coorte** e escreve porquê no log — uma linha vazia com aviso é melhor do que datas
+erradas sem aviso.

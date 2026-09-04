@@ -2,12 +2,12 @@
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <chart>
         <chartSummaries>
+            <aggregate>Average</aggregate>
             <axisBinding>y</axisBinding>
-            <column>a!Contract.Percentagem_Comercializada__c</column>
+            <column>Contract.Percentagem_Comercializada__c</column>
         </chartSummaries>
         <chartType>HorizontalBar</chartType>
         <groupingColumn>Contract.Nome_Empreendimento__c</groupingColumn>
-        <legendPosition>Right</legendPosition>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
         <title>Ritmo de comercialização</title>
@@ -26,7 +26,7 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Ritmo dos empreendimentos</name>
-    <reportType>Contracts</reportType>
+    <reportType>ContractList</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

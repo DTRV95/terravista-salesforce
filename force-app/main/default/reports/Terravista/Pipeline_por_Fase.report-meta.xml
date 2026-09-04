@@ -2,12 +2,12 @@
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <chart>
         <chartSummaries>
+            <aggregate>Sum</aggregate>
             <axisBinding>y</axisBinding>
-            <column>s!AMOUNT</column>
+            <column>AMOUNT</column>
         </chartSummaries>
         <chartType>HorizontalBar</chartType>
         <groupingColumn>OPPORTUNITY_STAGE</groupingColumn>
-        <legendPosition>Right</legendPosition>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
         <title>Pipeline por fase</title>

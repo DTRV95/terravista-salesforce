@@ -2,19 +2,19 @@
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <chart>
         <chartSummaries>
+            <aggregate>Average</aggregate>
             <axisBinding>y</axisBinding>
-            <column>a!Lead.Horas_Ate_Primeiro_Contacto__c</column>
+            <column>Lead.Horas_Ate_Primeiro_Contacto__c</column>
         </chartSummaries>
         <chartType>Line</chartType>
         <groupingColumn>Lead.Data_Atribuicao__c</groupingColumn>
-        <legendPosition>Right</legendPosition>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
         <title>Horas até ao 1º contacto, semana a semana (meta: 2h)</title>
     </chart>
-    <columns><field>LEAD.LAST_NAME</field></columns>
+    <columns><field>LAST_NAME</field></columns>
     <columns><field>LEAD_SOURCE</field></columns>
-    <columns><field>LEAD.STATUS</field></columns>
+    <columns><field>STATUS</field></columns>
     <columns>
         <aggregateTypes>Average</aggregateTypes>
         <field>Lead.Horas_Ate_Primeiro_Contacto__c</field>
@@ -28,7 +28,7 @@
     </groupingsDown>
     <name>Latência até ao 1º contacto</name>
     <reportType>LeadList</reportType>
-    <scope>organization</scope>
+    <scope>team</scope>
     <showDetails>false</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
