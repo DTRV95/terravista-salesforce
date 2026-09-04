@@ -5,11 +5,31 @@
     <backgroundStartColor>#FFFFFF</backgroundStartColor>
     <!--
       LoggedInUser: cada pessoa ve o dashboard com os SEUS dados. Um consultor
-      abre e ve as comissoes dele; a direcao abre e ve tudo. E um dashboard so,
-      nao um por pessoa - e ninguem ve quanto ganha o colega.
+      abre e ve as comissoes dele; a direcao abre e ve tudo. Um dashboard so, e
+      ninguem ve quanto ganha o colega.
+
+      A coluna da esquerda e a tese do projeto e vem primeiro de proposito: a
+      Terravista nao perde negocios por falta de esforco, perde-os por atraso, e
+      ate hoje ninguem conseguia medir o atraso. Pipeline e comissoes mostra
+      qualquer projeto; a latencia e o que este mostra.
     -->
     <dashboardType>LoggedInUser</dashboardType>
     <leftSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <componentType>Line</componentType>
+            <footer>Meta: 2 horas. A distância até à meta é o problema.</footer>
+            <header>Horas até ao 1º contacto, semana a semana</header>
+            <report>Terravista/Latencia_Primeiro_Contacto</report>
+        </components>
+        <components>
+            <componentType>Bar</componentType>
+            <footer>Os que se perderam são os que esperaram mais.</footer>
+            <header>Perdidos por demora</header>
+            <report>Terravista/Perdidos_Por_Demora</report>
+        </components>
+    </leftSection>
+    <middleSection>
         <columnSize>Medium</columnSize>
         <components>
             <componentType>Bar</componentType>
@@ -18,25 +38,16 @@
             <report>Terravista/Comissoes_por_Consultor</report>
         </components>
         <components>
-            <componentType>Donut</componentType>
-            <footer>Dois negócios diferentes com o mesmo nome.</footer>
-            <header>B2B e B2C</header>
-            <report>Terravista/Vendas_por_Linha_Negocio</report>
-        </components>
-    </leftSection>
-    <middleSection>
-        <columnSize>Medium</columnSize>
-        <components>
             <componentType>Column</componentType>
             <footer>O que sobra depois de pagas as comissões.</footer>
             <header>Margem mês a mês</header>
             <report>Terravista/Margem_Mensal</report>
         </components>
         <components>
-            <componentType>Bar</componentType>
-            <footer>A angariação só se paga quando o imóvel vende.</footer>
-            <header>Angariações a pagar</header>
-            <report>Terravista/Angariacoes_a_Pagar</report>
+            <componentType>Donut</componentType>
+            <footer>Dois negócios diferentes com o mesmo nome.</footer>
+            <header>B2B e B2C</header>
+            <report>Terravista/Vendas_por_Linha_Negocio</report>
         </components>
     </middleSection>
     <rightSection>
@@ -48,10 +59,10 @@
             <report>Terravista/Pipeline_por_Fase</report>
         </components>
         <components>
-            <componentType>Column</componentType>
-            <footer>Parado há muito: ou mal avaliado, ou mal mostrado.</footer>
-            <header>Carteira disponível</header>
-            <report>Terravista/Carteira_Parada</report>
+            <componentType>Bar</componentType>
+            <footer>A angariação só se paga quando o imóvel vende.</footer>
+            <header>Angariações a pagar</header>
+            <report>Terravista/Angariacoes_a_Pagar</report>
         </components>
     </rightSection>
     <textColor>#000000</textColor>

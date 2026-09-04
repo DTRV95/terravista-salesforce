@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chart>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>a!Contract.Percentagem_Comercializada__c</column>
+        </chartSummaries>
+        <chartType>HorizontalBar</chartType>
+        <groupingColumn>Contract.Nome_Empreendimento__c</groupingColumn>
+        <legendPosition>Right</legendPosition>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <title>Ritmo de comercialização</title>
+    </chart>
+    <columns><field>Contract.Imoveis_Total__c</field></columns>
+    <columns><field>Contract.Imoveis_Vendidos__c</field></columns>
+    <columns>
+        <aggregateTypes>Average</aggregateTypes>
+        <field>Contract.Percentagem_Comercializada__c</field>
+    </columns>
+    <description>Quanto de cada empreendimento ja esta colocado. E o relatorio que o Miguel reconstruia a mao, e o que permite prestar contas a construtora sem o pedir a ninguem.</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Contract.Nome_Empreendimento__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Ritmo dos empreendimentos</name>
+    <reportType>Contracts</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+</Report>

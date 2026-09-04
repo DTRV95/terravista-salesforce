@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chart>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>HorizontalBar</chartType>
+        <groupingColumn>Lead.Tipo_de_Perda__c</groupingColumn>
+        <legendPosition>Right</legendPosition>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <title>Porque é que perdemos</title>
+    </chart>
+    <columns><field>LEAD.LAST_NAME</field></columns>
+    <columns><field>LEAD_SOURCE</field></columns>
+    <columns><field>Lead.Motivo_Nao_Qualificacao__c</field></columns>
+    <columns>
+        <aggregateTypes>Average</aggregateTypes>
+        <field>Lead.Horas_Ate_Primeiro_Contacto__c</field>
+    </columns>
+    <description>Separa o que se perdeu por culpa nossa do que nunca foi viavel. A media de horas ao lado prova a ligacao: os que se perderam sao os que esperaram mais.</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Lead.Tipo_de_Perda__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Perdidos por demora</name>
+    <reportType>LeadList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+</Report>

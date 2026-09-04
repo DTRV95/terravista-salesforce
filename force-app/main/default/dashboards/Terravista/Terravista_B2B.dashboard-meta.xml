@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dashboard xmlns="http://soap.sforce.com/2006/04/metadata">
+    <backgroundEndColor>#FFFFFF</backgroundEndColor>
+    <backgroundFadeDir>Diagonal</backgroundFadeDir>
+    <backgroundStartColor>#FFFFFF</backgroundStartColor>
+    <!--
+      A pergunta do Miguel: "onde esta cada negociacao e que fracoes tenho por
+      colocar?". O ritmo dos empreendimentos e o relatorio que ele reconstruia a
+      mao ao fim da tarde.
+    -->
+    <dashboardType>LoggedInUser</dashboardType>
+    <leftSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <componentType>Bar</componentType>
+            <footer>Prestar contas à construtora sem pedir nada a ninguém.</footer>
+            <header>Ritmo dos empreendimentos</header>
+            <report>Terravista/Ritmo_Empreendimentos</report>
+        </components>
+    </leftSection>
+    <middleSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <componentType>Column</componentType>
+            <footer>Parado há muito: ou mal avaliado, ou mal mostrado.</footer>
+            <header>Carteira disponível</header>
+            <report>Terravista/Carteira_Parada</report>
+        </components>
+    </middleSection>
+    <rightSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <componentType>Bar</componentType>
+            <footer>Inclui os dias sem atividade.</footer>
+            <header>Pipeline por fase</header>
+            <report>Terravista/Pipeline_por_Fase</report>
+        </components>
+    </rightSection>
+    <textColor>#000000</textColor>
+    <title>Terravista — B2B</title>
+    <titleColor>#000000</titleColor>
+    <titleSize>12</titleSize>
+</Dashboard>

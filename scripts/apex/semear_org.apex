@@ -415,6 +415,83 @@ leads.add(new Lead(FirstName='Sonia', LastName='Barreto', Company='Promotora Bar
     Data_Conclusao_Prevista__c=HOJE.addMonths(9)));
 insert leads;
 
+// --- Coorte de latencia ---------------------------------------------------
+// As duas metricas que sustentam a tese do projeto - tempo ate atribuir e tempo
+// ate ao primeiro contacto - medem a partir do CreatedDate. Criados todos no
+// mesmo instante, os leads nao tem historia nenhuma para contar e a linha por
+// semana sai vazia.
+//
+// Por isso estes nascem com data de criacao propria, espalhada por 12 semanas.
+// Exige a permissao SetAuditFields (esta no permission set) e o visto em
+// Setup > User Interface > Enable "Set Audit Fields upon Record Creation".
+//
+// A historia que os numeros contam e a do Case Study, e nao e favoravel: a
+// agencia responde tarde. Os leads mais lentos sao os que se perdem, e perdem-se
+// com o motivo "Demora no primeiro contacto" - o que faz a formula
+// Tipo_de_Perda__c classifica-los como "Era viavel - perdemos".
+//
+// Um dashboard que so mostra o que corre bem nao serve para decidir nada.
+String[] nomes = new String[]{
+    'Ines|Ramalho','Tiago|Mendonca','Barbara|Quintas','Andre|Pontes',
+    'Leonor|Sarmento','Bruno|Vilela','Matilde|Aguiar','Diogo|Rebelo',
+    'Catarina|Frade','Simao|Peres','Mariana|Gouveia','Ricardo|Branco',
+    'Alexandra|Lourenco','Vitor|Salgueiro','Ines|Camara','Nuno|Portela',
+    'Sara|Vilar','Goncalo|Trindade','Rita|Esteves','Pedro|Cunha',
+    'Clara|Antunes','Miguel|Ferreirinha','Joana|Prata','Luis|Botelho'
+};
+// Horas ate ao primeiro contacto, semana a semana (12 semanas atras -> a semana
+// passada). O padrao e deliberado: mau no inicio, a melhorar, mas ainda longe da
+// meta de 2 horas. Um -1 e um lead que nunca chegou a ser contactado.
+Integer[] horasPorSemana = new Integer[]{ 26, 31, 18, 22, -1, 14, 9, 12, 5, 7, 3, 4 };
+
+List<Lead> coorte = new List<Lead>();
+Integer t3 = 913000400;
+for (Integer i = 0; i < nomes.size(); i++) {
+    List<String> n = nomes[i].split('\\|');
+    Integer semana = 12 - Math.mod(i, 12);          // 12 semanas atras ate 1
+    Integer horas = horasPorSemana[Math.mod(i, 12)];
+    t3++;
+
+    Datetime criado = Datetime.newInstance(HOJE.addDays(-7 * semana), Time.newInstance(9, 15, 0, 0));
+    Lead ld = new Lead(
+        FirstName = n[0], LastName = n[1],
+        Company = n[0] + ' ' + n[1] + ' (Particular)',
+        Email = n[0].toLowerCase() + '.' + n[1].toLowerCase() + '@exemplo.pt',
+        Phone = String.valueOf(t3),
+        LeadSource = (Math.mod(i, 3) == 0) ? 'Site'
+                   : (Math.mod(i, 3) == 1) ? 'Portal Imobiliario' : 'Campanha',
+        RecordTypeId = rtL.get('Compra'),
+        Procura_Tipologia__c = (Math.mod(i, 2) == 0) ? 'T2' : 'T3',
+        Procura_Zonas__c = (Math.mod(i, 2) == 0) ? 'Matosinhos' : 'Porto',
+        Orcamento_Min__c = 150000, Orcamento_Max__c = 280000,
+        Prazo_Decisao__c = 'Menos de 3 meses',
+        OwnerId = CARLA,
+        CreatedDate = criado);
+
+    // A atribuicao e sempre rapida: a Assignment Rule funciona. O problema nao
+    // esta em distribuir, esta em ligar de volta - e e essa a distincao que o
+    // dashboard torna visivel.
+    ld.Data_Atribuicao__c = criado.addMinutes(2 + Math.mod(i, 4));
+
+    if (horas < 0) {
+        ld.Status = 'Nao Qualificado';
+        ld.Motivo_Nao_Qualificacao__c = 'Sem resposta';
+    } else {
+        ld.Data_Primeiro_Contacto__c = criado.addMinutes(horas * 60);
+        if (horas > 20) {
+            ld.Status = 'Nao Qualificado';
+            ld.Motivo_Nao_Qualificacao__c = 'Demora no primeiro contacto';
+        } else if (horas > 10) {
+            ld.Status = 'Em Contacto';
+        } else {
+            ld.Status = 'Qualificado';
+        }
+    }
+    coorte.add(ld);
+}
+insert coorte;
+leads.addAll(coorte);
+
 // Ligar leads as campanhas: e isto que responde a pergunta da Ines
 List<CampaignMember> cms = new List<CampaignMember>();
 for (Lead l : leads) {

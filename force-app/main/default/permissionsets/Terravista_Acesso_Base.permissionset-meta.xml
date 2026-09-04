@@ -374,4 +374,15 @@
         <tab>Imovel__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <!--
+      Permite escrever CreatedDate ao criar registos. Sem isto, todo o historico
+      de demonstracao nasce no instante em que o script corre, e as duas metricas
+      de latencia - que medem a partir do CreatedDate - ficam sem historia para
+      contar. Nao e um truque: e a permissao que a Salesforce tem exatamente para
+      carregar dados historicos.
+    -->
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>SetAuditFields</name>
+    </userPermissions>
 </PermissionSet>
