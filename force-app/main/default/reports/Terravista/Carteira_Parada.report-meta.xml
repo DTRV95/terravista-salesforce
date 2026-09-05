@@ -6,19 +6,25 @@
             <column>RowCount</column>
         </chartSummaries>
         <chartType>VerticalColumn</chartType>
-        <groupingColumn>Imovel__c.Tipo_Imovel__c</groupingColumn>
+        <groupingColumn>Imovel__c$Tipo_Imovel__c</groupingColumn>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
         <title>Carteira disponível</title>
     </chart>
-    <columns><field>Imovel__c.Tipologia__c</field></columns>
-    <columns><field>Imovel__c.Localizacao__c</field></columns>
-    <columns><field>Imovel__c.Preco__c</field></columns>
-    <columns><field>Imovel__c.Dias_Disponivel__c</field></columns>
+    <columns><field>Imovel__c$Tipologia__c</field></columns>
+    <columns><field>Imovel__c$Localizacao__c</field></columns>
+    <columns><field>Imovel__c$Preco__c</field></columns>
+    <columns><field>Imovel__c$Dias_Disponivel__c</field></columns>
+    <!--
+      Imovel__c$Campo, com cifrao. Num report cuja base e um report type custom, a
+      tabela separa-se do campo por $; o ponto so funciona quando a base e um
+      objeto standard - foi por isso que os reports de Contract, Lead e
+      Opportunity passaram todos a primeira.
+    -->
     <description>O que esta em carteira por vender, e ha quanto tempo. Um imovel parado ha muito tempo ou esta mal avaliado ou esta mal mostrado - qualquer das duas coisas se resolve.</description>
     <filter>
         <criteriaItems>
-            <column>Imovel__c.Estado_Comercial__c</column>
+            <column>Imovel__c$Estado_Comercial__c</column>
             <operator>equals</operator>
             <value>Disponivel</value>
         </criteriaItems>
@@ -26,7 +32,7 @@
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>Imovel__c.Tipo_Imovel__c</field>
+        <field>Imovel__c$Tipo_Imovel__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Carteira disponível</name>

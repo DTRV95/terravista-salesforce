@@ -164,3 +164,20 @@ interface contra esse report type e fazer `retrieve`.
 > que procurar a resposta.
 
 O `Terravista_B2B` falhava por arrasto — não tinha problema nenhum de si.
+
+### Quarta ronda — o cifrão
+
+Debaixo do `__c` estava outro nome escondido:
+
+```
+<field>Imovel__c.Tipologia__c</field>   ← recusado
+<field>Imovel__c$Tipologia__c</field>   ← aceite
+```
+
+Num report cuja base é um **report type custom**, a tabela separa-se do campo por
+`$`. O ponto só funciona quando a base é um objecto standard — e é exactamente por
+isso que os reports de Contract, Lead e Opportunity passaram todos à primeira, com
+`Contract.Nome_Empreendimento__c` e companhia.
+
+O Salesforce só reporta o primeiro campo inválido de cada componente, por isso um
+erro escondia sete.
