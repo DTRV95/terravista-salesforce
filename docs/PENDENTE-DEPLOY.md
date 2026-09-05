@@ -14,26 +14,23 @@ sf project deploy start -o terravista
 
 ---
 
-## Bloco atual — um deploy só
-
-| # | O quê | Bloqueia |
-|---|---|---|
-| 1 | `CAMPAIGN_SOURCE` no report da receita por campanha | **Sim** |
-| 2 | Direção e Marketing correm como utilizador fixo (limite de 3 dinâmicos) | **Sim** |
-| 3 | Record Type `Serviços` + business process + 3 fases | **Sim** — o `semear_produtos` precisa |
-| 4 | `Product2.Categoria__c` + FLS | **Sim** |
-| 5 | Guardas nas fórmulas de comissão contra o Record Type dos serviços | **Sim** |
-| 6 | `Lead.Data_Entrada__c` + as duas fórmulas de latência a medir a partir dela | **Sim** — é o que desbloqueia os gráficos vazios |
+## Bloco atual — um deploy, três scripts
 
 ```
 git pull
 sf project deploy start -d force-app/main/default/objects -d force-app/main/default/standardValueSets -d force-app/main/default/permissionsets -d force-app/main/default/reports -d force-app/main/default/dashboards -o terravista
 sf apex run -f scripts/apex/semear_org.apex -o terravista
+sf apex run -f scripts/apex/semear_leads.apex -o terravista
 sf apex run -f scripts/apex/semear_produtos.apex -o terravista
 ```
 
-O `SetAuditFields` **saiu** do permission set. Já não é preciso: a latência deixou
-de medir a partir do `CreatedDate`.
+**A ordem dos três scripts importa.** O `semear_org` apaga tudo e cria empresas,
+pessoas, contratos, imóveis e negócios. O `semear_leads` liga-se às campanhas que o
+primeiro criou. O `semear_produtos` precisa dos imóveis e dos clientes.
+
+> **Um deploy é atómico.** Se um só componente falhar, *nada* do lote entra na org —
+> mesmo que o relatório mostre 145 de 146 como criados. Esses estados dizem o que
+> teria acontecido, não o que ficou. Já nos enganou uma vez.
 
 ---
 

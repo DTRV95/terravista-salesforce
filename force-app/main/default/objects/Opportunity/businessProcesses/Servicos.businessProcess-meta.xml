@@ -3,7 +3,7 @@
     <fullName>Servicos</fullName>
     <description>Venda de servicos: certificado energetico, avaliacao, fotografia, apoio ao processo. Fases proprias, e nao as da venda de imoveis.</description>
     <isActive>true</isActive>
-    <values><fullName>Servico Proposto</fullName><default>true</default></values>
+    <values><fullName>Servico Proposto</fullName><default>false</default></values>
     <values><fullName>Servico Adjudicado</fullName><default>false</default></values>
     <values><fullName>Servico Entregue</fullName><default>false</default></values>
     <values><fullName>Perdido</fullName><default>false</default></values>

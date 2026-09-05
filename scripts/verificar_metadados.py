@@ -114,6 +114,22 @@ if valores:
                     f"[{campo} = '{valor}' nao existe na picklist. Valores: "
                     f"{', '.join(sorted(valores[campo]))}] {f.relative_to(RAIZ)}")
 
+# --- Tamanho dos scripts de Apex anonimo ----------------------------------
+# O Apex anonimo nao aceita mais de 32.000 caracteres por execucao. O erro que
+# sai - "Script too large" - so aparece na altura de correr, e um script de
+# dados que nao corre na vespera da apresentacao e um problema serio. Avisa aos
+# 28.000 para haver espaco de manobra antes de bater no limite.
+LIMITE_APEX = 32000
+AVISO_APEX = 28000
+for f in sorted(RAIZ.glob("scripts/apex/*.apex")):
+    n = len(texto(f))
+    if n > LIMITE_APEX:
+        erros.append(f"[{n} caracteres, o maximo do Apex anonimo e {LIMITE_APEX}. "
+                     f"Divide o ficheiro] {f.relative_to(RAIZ)}")
+    elif n > AVISO_APEX:
+        erros.append(f"[{n} caracteres, a aproximar-se do limite de {LIMITE_APEX}. "
+                     f"Planeia a divisao antes de crescer mais] {f.relative_to(RAIZ)}")
+
 if erros:
     print("\n".join(erros))
     print(f"\n{len(erros)} problema(s). Corrigir antes do deploy.")
