@@ -7,7 +7,7 @@
             <column>Opportunity.Comissao_Terravista__c</column>
         </chartSummaries>
         <chartType>HorizontalBar</chartType>
-        <groupingColumn>CAMPAIGN.NAME</groupingColumn>
+        <groupingColumn>CAMPAIGN_SOURCE</groupingColumn>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
         <title>Comissão gerada por campanha</title>
@@ -29,7 +29,7 @@
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>CAMPAIGN.NAME</field>
+        <field>CAMPAIGN_SOURCE</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Receita por campanha</name>

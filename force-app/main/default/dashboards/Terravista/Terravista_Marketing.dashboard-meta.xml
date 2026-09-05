@@ -4,11 +4,20 @@
     <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
     <backgroundStartColor>#FFFFFF</backgroundStartColor>
     <!--
-      A pergunta da Ines: "que campanha compensa?". A receita por campanha vem
-      antes do numero de leads de proposito - uma campanha que traz muitos leads
-      maus parece boa em todos os dashboards que contam leads.
+      SpecifiedUser e nao LoggedInUser, por duas razoes que coincidem.
+
+      A primeira e de desenho: este dashboard existe para mostrar a agencia
+      inteira. Corre-lo como quem o abre daria a cada pessoa uma vista parcial -
+      exatamente o contrario do que se quer aqui.
+
+      A segunda e um limite da plataforma: uma Developer Edition permite tres
+      dashboards dinamicos, e os tres estao entregues a quem precisa mesmo de ver
+      so o seu - B2C, B2B e Apoio ao Cliente.
+
+      O username fica escrito, o que torna este ficheiro dependente desta org. E o
+      preco de nao haver forma de o parametrizar em metadata.
     -->
-    <dashboardType>LoggedInUser</dashboardType>
+    <dashboardType>SpecifiedUser</dashboardType>
     <leftSection>
         <columnSize>Medium</columnSize>
         <components>
@@ -58,6 +67,7 @@
             <sortBy>RowValueDescending</sortBy>
         </components>
     </rightSection>
+    <runningUser>terravista.david@agentforce.com</runningUser>
     <textColor>#000000</textColor>
     <title>Terravista — Marketing</title>
     <titleColor>#000000</titleColor>

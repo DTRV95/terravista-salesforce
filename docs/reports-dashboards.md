@@ -223,3 +223,29 @@ vista de três sítios. Um report, três dashboards.
 | Leads sem 1º contacto | Apoio, Marketing |
 | Carga por consultor | Apoio |
 | Pipeline B2C | B2C |
+
+---
+
+## Quem corre cada dashboard
+
+Uma Developer Edition permite **três** dashboards dinâmicos. Nós tínhamos cinco.
+
+O limite obrigou a escolher, e a escolha melhorou o desenho:
+
+| Dashboard | Corre como | Porquê |
+|---|---|---|
+| **Direção** | Utilizador fixo | Existe para mostrar a agência **inteira**. Corrê-lo como quem o abre daria a cada pessoa uma vista parcial — o contrário do que se quer |
+| **Marketing** | Utilizador fixo | Campanhas são da empresa, não de uma pessoa |
+| **B2C** | Quem o abre | A Carla vê os negócios dela |
+| **B2B** | Quem o abre | O Miguel vê os dele |
+| **Apoio ao Cliente** | Quem o abre | A Sofia vê a fila dela |
+
+Os três dinâmicos ficaram entregues a quem precisa mesmo de ver só o seu.
+
+> O `runningUser` fica **escrito no ficheiro**, o que torna estes dois dashboards
+> dependentes desta org. É o preço de não haver forma de o parametrizar em metadata,
+> e está dito no comentário de cada um para quem reconstruir a org saber o que
+> mudar.
+
+E mais um token descoberto por `retrieve`: o campo de campanha numa Opportunity é
+`CAMPAIGN_SOURCE` — sem ponto, sem prefixo, como todos os outros standard.

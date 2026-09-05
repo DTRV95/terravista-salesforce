@@ -4,15 +4,20 @@
     <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
     <backgroundStartColor>#FFFFFF</backgroundStartColor>
     <!--
-      A direcao ve tudo: os quinze componentes, de todos os departamentos. E o
-      unico dashboard onde as fronteiras entre equipas desaparecem, que e
-      precisamente o problema nº4 do Case Study.
+      SpecifiedUser e nao LoggedInUser, por duas razoes que coincidem.
 
-      A latencia vem primeiro, no canto superior esquerdo, de proposito: a
-      Terravista nao perde negocios por falta de esforco, perde-os por atraso.
-      Pipeline e comissoes mostra qualquer projeto.
+      A primeira e de desenho: este dashboard existe para mostrar a agencia
+      inteira. Corre-lo como quem o abre daria a cada pessoa uma vista parcial -
+      exatamente o contrario do que se quer aqui.
+
+      A segunda e um limite da plataforma: uma Developer Edition permite tres
+      dashboards dinamicos, e os tres estao entregues a quem precisa mesmo de ver
+      so o seu - B2C, B2B e Apoio ao Cliente.
+
+      O username fica escrito, o que torna este ficheiro dependente desta org. E o
+      preco de nao haver forma de o parametrizar em metadata.
     -->
-    <dashboardType>LoggedInUser</dashboardType>
+    <dashboardType>SpecifiedUser</dashboardType>
     <leftSection>
         <columnSize>Medium</columnSize>
         <components>
@@ -142,6 +147,7 @@
             <sortBy>RowValueDescending</sortBy>
         </components>
     </rightSection>
+    <runningUser>terravista.david@agentforce.com</runningUser>
     <textColor>#000000</textColor>
     <title>Terravista — Direção</title>
     <titleColor>#000000</titleColor>
