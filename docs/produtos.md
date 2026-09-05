@@ -39,29 +39,28 @@ devolve 0, e `Valor_Estimado_Venda__c` não conta serviços como vendas por fech
 
 ---
 
-## O catálogo
+## O catálogo — três serviços
 
 | | Serviço | Preço |
 |---|---|---|
 | **Obrigatório por lei** | Certificado Energético (SCE) | 175 € |
-| | Ficha Técnica da Habitação | 90 € |
-| | Certidão Permanente e Caderneta Predial | 35 € |
-| | Pedido de Licença de Utilização | 300 € |
-| **Valorização do imóvel** | Reportagem Fotográfica Profissional | 150 € |
-| | Vídeo e Tour Virtual 360º | 320 € |
-| | Planta 2D e 3D | 120 € |
-| | Home Staging | 850 € |
+| **Obrigatório por lei** | Tratamento Documental | 150 € |
 | **Apoio ao processo** | Avaliação Imobiliária | 250 € |
-| | Apoio Jurídico ao Processo | 400 € |
-| | Tratamento do Processo de Escritura | 550 € |
-| | Intermediação de Crédito Habitação | **0 €** |
-| | Mediação de Seguro Multirriscos | 45 € |
-| **Serviços a promotores** | Plano de Marketing de Empreendimento | 2.500 € |
-| | Stand de Vendas no Local | 4.500 € |
 
-O crédito à habitação está a **zero de propósito**: quem paga a intermediação é o
-banco, não o cliente. Pô-lo a cobrar ao cliente descreveria mal o negócio, e é o
-tipo de detalhe que um júri que conheça o sector nota.
+Três, e não quinze. Um catálogo comprido não conta melhor a história — dá mais
+linhas para um júri duvidar de cada uma. Estes três chegam porque cobrem os dois
+casos que interessam:
+
+- **O que não é opcional.** Sem certificado energético o imóvel não pode sequer ser
+  anunciado. É a prova de que a agência vende serviços que o cliente *tem* de
+  comprar, e não extras que pode dispensar.
+- **O que resolve um problema real.** A avaliação é o serviço que acaba a discussão
+  de preço com o proprietário — com um número em vez de uma opinião.
+
+O **Tratamento Documental** junta ficha técnica, certidão permanente e caderneta
+predial num só produto. Não é preguiça a modelar: é assim que são pedidos. Ninguém
+chega à escritura com um só destes documentos, e três produtos de 35 € a 90 € a
+serem sempre vendidos juntos são três linhas para dizer uma coisa só.
 
 A categoria é um campo nosso e não o `Family` standard. O `Family` faria o mesmo,
 mas numa org nova não traz valores nenhuns e defini-los obriga a mexer no value set
@@ -78,8 +77,8 @@ sf apex run -f scripts/apex/semear_produtos.apex -o terravista
 
 Corre **depois** do `semear_org.apex`: precisa dos imóveis e dos clientes.
 
-O script cria 15 produtos, as entradas na tabela de preços e **6 negócios de
-serviços** com linhas reais — dois entregues, um adjudicado, dois propostos e um
+O script cria 3 produtos, as entradas na tabela de preços e **5 negócios de
+serviços** com linhas reais — dois entregues, um adjudicado, um proposto e um
 perdido.
 
 > A tabela de preços standard vem **inativa** numa org nova. O script activa-a. Sem

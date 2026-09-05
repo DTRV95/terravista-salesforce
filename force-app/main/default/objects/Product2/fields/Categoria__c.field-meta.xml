@@ -11,9 +11,7 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value><fullName>Obrigatorio por lei</fullName><default>false</default><label>Obrigatório por lei</label></value>
-            <value><fullName>Valorizacao do imovel</fullName><default>false</default><label>Valorização do imóvel</label></value>
             <value><fullName>Apoio ao processo</fullName><default>false</default><label>Apoio ao processo</label></value>
-            <value><fullName>Servicos a promotores</fullName><default>false</default><label>Serviços a promotores</label></value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
