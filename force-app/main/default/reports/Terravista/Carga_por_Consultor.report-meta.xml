@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chart>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>HorizontalBar</chartType>
+        <groupingColumn>FULL_NAME</groupingColumn>
+        <size>Medium</size>
+        <title>Negócios abertos por consultor</title>
+    </chart>
+    <columns><field>OPPORTUNITY_NAME</field></columns>
+    <columns><field>STAGE_NAME</field></columns>
+    <columns><field>CLOSE_DATE</field></columns>
+    <columns><field>Opportunity.Dias_Sem_Atividade__c</field></columns>
+    <description>Quantos negocios abertos tem cada consultor. Resolve a decisao que se tomava a olho: a quem atribuir sem saber quem esta ocupado.</description>
+    <filter>
+        <criteriaItems>
+            <column>STAGE_NAME</column>
+            <operator>notEqual</operator>
+            <value>Escritura Realizada,Perdido</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>FULL_NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Carga por consultor</name>
+    <reportType>Opportunity</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+</Report>

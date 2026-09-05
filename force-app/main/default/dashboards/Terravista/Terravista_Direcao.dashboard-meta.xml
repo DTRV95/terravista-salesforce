@@ -4,14 +4,13 @@
     <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
     <backgroundStartColor>#FFFFFF</backgroundStartColor>
     <!--
-      LoggedInUser: cada pessoa ve o dashboard com os SEUS dados. Um consultor
-      abre e ve as comissoes dele; a direcao abre e ve tudo. Um dashboard so, e
-      ninguem ve quanto ganha o colega.
+      A direcao ve tudo: os quinze componentes, de todos os departamentos. E o
+      unico dashboard onde as fronteiras entre equipas desaparecem, que e
+      precisamente o problema nº4 do Case Study.
 
-      A coluna da esquerda e a tese do projeto e vem primeiro de proposito: a
-      Terravista nao perde negocios por falta de esforco, perde-os por atraso, e
-      ate hoje ninguem conseguia medir o atraso. Pipeline e comissoes mostra
-      qualquer projeto; a latencia e o que este mostra.
+      A latencia vem primeiro, no canto superior esquerdo, de proposito: a
+      Terravista nao perde negocios por falta de esforco, perde-os por atraso.
+      Pipeline e comissoes mostra qualquer projeto.
     -->
     <dashboardType>LoggedInUser</dashboardType>
     <leftSection>
@@ -20,28 +19,9 @@
             <chartAxisRange>Auto</chartAxisRange>
             <componentType>Line</componentType>
             <footer>Meta: 2 horas. A distância até à meta é o problema.</footer>
-            <header>Horas até ao 1º contacto, semana a semana</header>
+            <header>Horas até ao 1º contacto</header>
             <report>Terravista/Latencia_Primeiro_Contacto</report>
             <sortBy>RowLabelAscending</sortBy>
-        </components>
-        <components>
-            <chartAxisRange>Auto</chartAxisRange>
-            <componentType>Bar</componentType>
-            <footer>Os que se perderam são os que esperaram mais.</footer>
-            <header>Perdidos por demora</header>
-            <report>Terravista/Perdidos_Por_Demora</report>
-            <sortBy>RowValueDescending</sortBy>
-        </components>
-    </leftSection>
-    <middleSection>
-        <columnSize>Medium</columnSize>
-        <components>
-            <chartAxisRange>Auto</chartAxisRange>
-            <componentType>Bar</componentType>
-            <footer>Só conta o que já fez escritura.</footer>
-            <header>Comissões a receber</header>
-            <report>Terravista/Comissoes_por_Consultor</report>
-            <sortBy>RowValueDescending</sortBy>
         </components>
         <components>
             <chartAxisRange>Auto</chartAxisRange>
@@ -53,10 +33,69 @@
         </components>
         <components>
             <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Bar</componentType>
+            <footer>A angariação só se paga quando o imóvel vende.</footer>
+            <header>Angariações a pagar</header>
+            <report>Terravista/Angariacoes_a_Pagar</report>
+            <sortBy>RowValueDescending</sortBy>
+        </components>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Donut</componentType>
+            <footer>O denominador de tudo o resto.</footer>
+            <header>Leads por origem</header>
+            <report>Terravista/Leads_por_Origem</report>
+            <sortBy>RowValueDescending</sortBy>
+        </components>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Bar</componentType>
+            <footer>Fila de trabalho, não indicador.</footer>
+            <header>Leads sem 1º contacto</header>
+            <report>Terravista/Leads_Sem_Contacto</report>
+            <sortBy>RowValueDescending</sortBy>
+        </components>
+    </leftSection>
+    <middleSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Bar</componentType>
+            <footer>Os que se perderam são os que esperaram mais.</footer>
+            <header>Perdidos por demora</header>
+            <report>Terravista/Perdidos_Por_Demora</report>
+            <sortBy>RowValueDescending</sortBy>
+        </components>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
             <componentType>Donut</componentType>
             <footer>Dois negócios diferentes com o mesmo nome.</footer>
             <header>B2B e B2C</header>
             <report>Terravista/Vendas_por_Linha_Negocio</report>
+            <sortBy>RowValueDescending</sortBy>
+        </components>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Bar</componentType>
+            <footer>Prestar contas à construtora sem pedir nada a ninguém.</footer>
+            <header>Ritmo dos empreendimentos</header>
+            <report>Terravista/Ritmo_Empreendimentos</report>
+            <sortBy>RowValueDescending</sortBy>
+        </components>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Bar</componentType>
+            <footer>Volume sem conversão premeia a origem errada.</footer>
+            <header>Conversão por origem</header>
+            <report>Terravista/Conversao_por_Origem</report>
+            <sortBy>RowValueDescending</sortBy>
+        </components>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Bar</componentType>
+            <footer>A quem atribuir sem ser a olho.</footer>
+            <header>Carga por consultor</header>
+            <report>Terravista/Carga_por_Consultor</report>
             <sortBy>RowValueDescending</sortBy>
         </components>
     </middleSection>
@@ -65,17 +104,41 @@
         <components>
             <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
-            <footer>Fase avançada e parada há muito tempo é o sinal a seguir.</footer>
+            <footer>Só conta o que já fez escritura.</footer>
+            <header>Comissões a receber</header>
+            <report>Terravista/Comissoes_por_Consultor</report>
+            <sortBy>RowValueDescending</sortBy>
+        </components>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Bar</componentType>
+            <footer>Fase avançada e parada há muito é o sinal a seguir.</footer>
             <header>Pipeline por fase</header>
             <report>Terravista/Pipeline_por_Fase</report>
             <sortBy>RowValueDescending</sortBy>
         </components>
         <components>
             <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Column</componentType>
+            <footer>Parado há muito: ou mal avaliado, ou mal mostrado.</footer>
+            <header>Carteira disponível</header>
+            <report>Terravista/Carteira_Parada</report>
+            <sortBy>RowValueDescending</sortBy>
+        </components>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
-            <footer>A angariação só se paga quando o imóvel vende.</footer>
-            <header>Angariações a pagar</header>
-            <report>Terravista/Angariacoes_a_Pagar</report>
+            <footer>Comissão gerada, não leads trazidos.</footer>
+            <header>Receita por campanha</header>
+            <report>Terravista/Receita_por_Campanha</report>
+            <sortBy>RowValueDescending</sortBy>
+        </components>
+        <components>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Bar</componentType>
+            <footer>Ciclo de venda diferente do B2B.</footer>
+            <header>Pipeline de particulares</header>
+            <report>Terravista/Pipeline_B2C</report>
             <sortBy>RowValueDescending</sortBy>
         </components>
     </rightSection>

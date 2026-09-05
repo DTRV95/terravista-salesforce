@@ -4,9 +4,9 @@
     <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
     <backgroundStartColor>#FFFFFF</backgroundStartColor>
     <!--
-      A pergunta do Miguel: "onde esta cada negociacao e que fracoes tenho por
-      colocar?". O ritmo dos empreendimentos e o relatorio que ele reconstruia a
-      mao ao fim da tarde.
+      A pergunta da Ines: "que campanha compensa?". A receita por campanha vem
+      antes do numero de leads de proposito - uma campanha que traz muitos leads
+      maus parece boa em todos os dashboards que contam leads.
     -->
     <dashboardType>LoggedInUser</dashboardType>
     <leftSection>
@@ -14,17 +14,17 @@
         <components>
             <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
-            <footer>Prestar contas à construtora sem pedir nada a ninguém.</footer>
-            <header>Ritmo dos empreendimentos</header>
-            <report>Terravista/Ritmo_Empreendimentos</report>
+            <footer>Comissão gerada, não leads trazidos.</footer>
+            <header>Receita por campanha</header>
+            <report>Terravista/Receita_por_Campanha</report>
             <sortBy>RowValueDescending</sortBy>
         </components>
         <components>
             <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
-            <footer>Só conta o que já fez escritura.</footer>
-            <header>Comissões a receber</header>
-            <report>Terravista/Comissoes_por_Consultor</report>
+            <footer>Fila de trabalho, não indicador.</footer>
+            <header>Leads sem 1º contacto</header>
+            <report>Terravista/Leads_Sem_Contacto</report>
             <sortBy>RowValueDescending</sortBy>
         </components>
     </leftSection>
@@ -32,18 +32,18 @@
         <columnSize>Medium</columnSize>
         <components>
             <chartAxisRange>Auto</chartAxisRange>
-            <componentType>Column</componentType>
-            <footer>Parado há muito: ou mal avaliado, ou mal mostrado.</footer>
-            <header>Carteira disponível</header>
-            <report>Terravista/Carteira_Parada</report>
+            <componentType>Donut</componentType>
+            <footer>O denominador de tudo o resto.</footer>
+            <header>Leads por origem</header>
+            <report>Terravista/Leads_por_Origem</report>
             <sortBy>RowValueDescending</sortBy>
         </components>
         <components>
             <chartAxisRange>Auto</chartAxisRange>
-            <componentType>Bar</componentType>
-            <footer>A angariação só se paga quando o imóvel vende.</footer>
-            <header>Angariações a pagar</header>
-            <report>Terravista/Angariacoes_a_Pagar</report>
+            <componentType>Donut</componentType>
+            <footer>Dois negócios diferentes com o mesmo nome.</footer>
+            <header>B2B e B2C</header>
+            <report>Terravista/Vendas_por_Linha_Negocio</report>
             <sortBy>RowValueDescending</sortBy>
         </components>
     </middleSection>
@@ -52,14 +52,14 @@
         <components>
             <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
-            <footer>Fase avançada e parada há muito é o sinal a seguir.</footer>
-            <header>Pipeline por fase</header>
-            <report>Terravista/Pipeline_por_Fase</report>
+            <footer>Volume sem conversão premeia a origem errada.</footer>
+            <header>Conversão por origem</header>
+            <report>Terravista/Conversao_por_Origem</report>
             <sortBy>RowValueDescending</sortBy>
         </components>
     </rightSection>
     <textColor>#000000</textColor>
-    <title>Terravista — B2B</title>
+    <title>Terravista — Marketing</title>
     <titleColor>#000000</titleColor>
     <titleSize>12</titleSize>
 </Dashboard>

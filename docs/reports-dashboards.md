@@ -181,3 +181,45 @@ isso que os reports de Contract, Lead e Opportunity passaram todos à primeira, 
 
 O Salesforce só reporta o primeiro campo inválido de cada componente, por isso um
 erro escondia sete.
+
+---
+
+## Cinco dashboards, um por departamento
+
+| Dashboard | A pergunta que responde | Componentes |
+|---|---|---|
+| **Direção** | *Está a crescer ou a estagnar, e onde estão os gargalos?* | **15 — todos** |
+| **Marketing** | *Que campanha compensa?* | 5 |
+| **B2B** | *Onde está cada negociação e que frações tenho por colocar?* | 5 |
+| **B2C** | *Que negócios tenho em curso e o que tenho para mostrar?* | 5 |
+| **Apoio ao Cliente** | *Quem está a ficar para trás neste momento?* | 5 |
+
+A Direção tem **tudo**, e é o único sítio onde as fronteiras entre equipas
+desaparecem — que é precisamente o problema nº4 do Case Study. Os outros quatro
+mostram só o que aquela pessoa decide com.
+
+Os quinze componentes assentam em **quinze reports**, e vários são partilhados: a
+latência aparece na Direção, no B2C e no Apoio, porque o primeiro contacto é
+trabalho da Carla, fila de trabalho da Sofia e indicador da Rita — a mesma verdade
+vista de três sítios. Um report, três dashboards.
+
+### Decisões de ordem, que não são arbitrárias
+
+- Na **Direção**, a latência ocupa o canto superior esquerdo. É onde o olho cai, e é
+  a tese do projeto.
+- No **Marketing**, a receita por campanha vem **antes** do número de leads. Uma
+  campanha que traz muitos leads maus parece boa em qualquer dashboard que conte
+  leads — e foi assim que se justificou investimento durante anos.
+- No **Apoio**, os dois primeiros são *filas de trabalho*, não indicadores. Abre-se
+  aquele dashboard para agir, não para saber.
+
+### Reports novos
+
+| Report | Para quem |
+|---|---|
+| Leads por origem | Marketing, Apoio |
+| Conversão por origem | Marketing |
+| Receita por campanha | Marketing |
+| Leads sem 1º contacto | Apoio, Marketing |
+| Carga por consultor | Apoio |
+| Pipeline B2C | B2C |

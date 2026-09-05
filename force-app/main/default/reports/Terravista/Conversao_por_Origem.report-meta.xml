@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chart>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>HorizontalBarStacked</chartType>
+        <groupingColumn>LEAD_SOURCE</groupingColumn>
+        <secondaryGroupingColumn>STATUS</secondaryGroupingColumn>
+        <size>Medium</size>
+        <title>Origem e estado do lead</title>
+    </chart>
+    <columns><field>LAST_NAME</field></columns>
+    <description>Quantos leads de cada origem chegam a qualificado e quantos morrem pelo caminho. Contar leads sem contar o que lhes acontece premeia a origem que traz volume mau.</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>LEAD_SOURCE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>STATUS</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Conversão por origem</name>
+    <reportType>LeadList</reportType>
+    <scope>team</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+</Report>
