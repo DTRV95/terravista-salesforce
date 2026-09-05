@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <!--
+      Depois da migracao para Person Accounts, um Contact NUNCA e um comprador -
+      e uma pessoa dentro de uma empresa. O Alberto da Nortagua, a Rita dos
+      Edificios do Norte.
+
+      Por isso saiu daqui o perfil de procura inteiro (tipologia, zonas,
+      orcamento, financiamento). Esses campos continuam a existir no objeto,
+      porque e deles que nascem os campos __pc do Person Account - mas mostra-los
+      numa ficha de contacto empresarial e pedir a alguem que os preencha para
+      nada.
+
+      O que fica e o que interessa num interlocutor: como se lhe chega, que peso
+      tem na decisao, e quando reune.
+    -->
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Identificação</label>
+        <label>Quem é</label>
         <layoutColumns>
                 <layoutItems>
                     <behavior>Required</behavior>
                     <field>Name</field>
                 </layoutItems>
                 <layoutItems>
-                    <behavior>Edit</behavior>
+                    <behavior>Required</behavior>
                     <field>AccountId</field>
                 </layoutItems>
                 <layoutItems>
@@ -22,49 +36,15 @@
         <layoutColumns>
                 <layoutItems>
                     <behavior>Edit</behavior>
-                    <field>Email</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
                     <field>Phone</field>
                 </layoutItems>
                 <layoutItems>
                     <behavior>Edit</behavior>
                     <field>MobilePhone</field>
                 </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Perfil de Procura</label>
-        <layoutColumns>
                 <layoutItems>
                     <behavior>Edit</behavior>
-                    <field>Perfil_Comprador__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Procura_Tipologia__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Procura_Zonas__c</field>
-                </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Orcamento_Min__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Orcamento_Max__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <emptySpace>true</emptySpace>
+                    <field>Email</field>
                 </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -73,7 +53,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Notas e Preferências</label>
+        <label>Como decide</label>
         <layoutColumns>
                 <layoutItems>
                     <behavior>Edit</behavior>
@@ -86,7 +66,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Origem</label>
+        <label>Origem e responsável</label>
         <layoutColumns>
                 <layoutItems>
                     <behavior>Edit</behavior>
@@ -95,7 +75,7 @@
         </layoutColumns>
         <layoutColumns>
                 <layoutItems>
-                    <behavior>Edit</behavior>
+                    <behavior>Required</behavior>
                     <field>OwnerId</field>
                 </layoutItems>
         </layoutColumns>
@@ -120,4 +100,16 @@
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
+    <relatedLists>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.AMOUNT</fields>
+        <relatedList>RelatedOpportunityContactRoles</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>TASK.SUBJECT</fields>
+        <fields>TASK.STATUS</fields>
+        <fields>TASK.DUE_DATE</fields>
+        <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
 </Layout>

@@ -46,6 +46,25 @@
         <recordType>Lead.Angariacao_Empreendimento</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <!--
+      Sem atribuicao por Record Type, uma layout nova nao muda nada no ecra: o
+      Salesforce continua a mostrar a que ja la estava. Foi por isso que a
+      Account-Account Layout servia empresas e pessoas ao mesmo tempo.
+
+      A Empresa fica tambem como omissao, para uma conta criada sem Record Type
+      nao cair num ecra vazio.
+    -->
+    <layoutAssignments>
+        <layout>Account-Empresa</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Empresa</layout>
+        <recordType>Account.Empresa</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Cliente Particular</layout>
+        <recordType>Account.PersonAccount</recordType>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Lead-Lead Compra</layout>
         <recordType>Lead.Compra</recordType>

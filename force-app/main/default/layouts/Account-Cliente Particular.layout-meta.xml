@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <!--
-      Tres coisas mudaram aqui, e a primeira era um bug a serio.
+      A ficha de quem compra casa. Antes havia uma so layout de Account para
+      empresas e pessoas, e um comprador particular via Industria, Website,
+      Empresa-Mae e criterios de procura de TERRENO. Um consultor a ligar a um
+      cliente nao le nada disso, e cada campo que nao se le esconde um que se le.
 
-      1. O Motivo da Perda e exigido por uma validation rule e NAO estava na
-         layout. Quem tentava marcar um negocio como Perdido era impedido de
-         gravar e nao tinha onde escrever o motivo - uma regra que bloqueia sem
-         dar saida nao protege dados, so ensina a contornar o sistema.
-
-      2. A comissao do consultor nao aparecia. So se via a comissao da empresa,
-         que e o numero que interessa a direcao e nao a quem vende. Agora estao
-         as duas, lado a lado com a margem: quem vende ve o que ganha e a empresa
-         ve o que sobra.
-
-      3. Os Dias Sem Atividade passam a estar visiveis no registo, e nao so no
-         dashboard. Um sinal que so existe num relatorio semanal chega tarde.
+      A ordem segue a chamada telefonica: quem e, o que procura, o que sabemos
+      dele, e so depois o que o sistema sugere. A morada vem no fim de proposito
+      - so interessa quando ja ha visita marcada.
     -->
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Negócio</label>
+        <label>Quem é</label>
         <layoutColumns>
                 <layoutItems>
                     <behavior>Required</behavior>
@@ -28,21 +22,21 @@
                 </layoutItems>
                 <layoutItems>
                     <behavior>Edit</behavior>
-                    <field>AccountId</field>
+                    <field>Phone</field>
                 </layoutItems>
                 <layoutItems>
                     <behavior>Edit</behavior>
-                    <field>Imovel__c</field>
+                    <field>PersonMobilePhone</field>
                 </layoutItems>
         </layoutColumns>
         <layoutColumns>
                 <layoutItems>
-                    <behavior>Required</behavior>
-                    <field>RecordTypeId</field>
+                    <behavior>Edit</behavior>
+                    <field>PersonEmail</field>
                 </layoutItems>
                 <layoutItems>
                     <behavior>Edit</behavior>
-                    <field>Linha_Negocio__c</field>
+                    <field>AccountSource</field>
                 </layoutItems>
                 <layoutItems>
                     <behavior>Required</behavior>
@@ -55,60 +49,33 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Fase e valores</label>
+        <label>O que procura</label>
         <layoutColumns>
                 <layoutItems>
-                    <behavior>Required</behavior>
-                    <field>StageName</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Required</behavior>
-                    <field>CloseDate</field>
+                    <behavior>Edit</behavior>
+                    <field>Perfil_Comprador__pc</field>
                 </layoutItems>
                 <layoutItems>
                     <behavior>Edit</behavior>
-                    <field>Amount</field>
+                    <field>Procura_Tipologia__pc</field>
+                </layoutItems>
+                <layoutItems>
+                    <behavior>Edit</behavior>
+                    <field>Procura_Zonas__pc</field>
                 </layoutItems>
         </layoutColumns>
         <layoutColumns>
                 <layoutItems>
                     <behavior>Edit</behavior>
-                    <field>Probability</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>Dias_Sem_Atividade__c</field>
+                    <field>Orcamento_Min__pc</field>
                 </layoutItems>
                 <layoutItems>
                     <behavior>Edit</behavior>
-                    <field>Motivo_Perda__c</field>
+                    <field>Orcamento_Max__pc</field>
                 </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Comissões</label>
-        <layoutColumns>
                 <layoutItems>
                     <behavior>Edit</behavior>
-                    <field>Angariador__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>Comissao_Terravista__c</field>
-                </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>Comissao_Consultor__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>Margem_Terravista__c</field>
+                    <field>Financiamento__pc</field>
                 </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -117,33 +84,51 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Acompanhamento</label>
+        <label>O que sabemos dele</label>
         <layoutColumns>
                 <layoutItems>
                     <behavior>Edit</behavior>
-                    <field>NextStep</field>
-                </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>CampaignId</field>
-                </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Notas</label>
-        <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Description</field>
+                    <field>Notas_Preferencias__pc</field>
                 </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Sugestões do sistema</label>
+        <layoutColumns>
+                <layoutItems>
+                    <behavior>Readonly</behavior>
+                    <field>Sugestoes_Imoveis__c</field>
+                </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+                <layoutItems>
+                    <behavior>Readonly</behavior>
+                    <field>Candidatos_Imoveis__c</field>
+                </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Morada</label>
+        <layoutColumns>
+                <layoutItems>
+                    <behavior>Edit</behavior>
+                    <field>PersonMailingAddress</field>
+                </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+                <layoutItems>
+                    <emptySpace>true</emptySpace>
+                </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -164,6 +149,13 @@
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
+    <relatedLists>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.AMOUNT</fields>
+        <fields>OPPORTUNITY.CLOSE_DATE</fields>
+        <relatedList>RelatedOpportunityList</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.STATUS</fields>
