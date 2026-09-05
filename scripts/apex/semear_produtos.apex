@@ -94,7 +94,12 @@ for (String n : negocios) {
         Name = 'Serviços — ' + i.Name, RecordTypeId = rtServicos,
         AccountId = i.Contrato__r.AccountId, Imovel__c = i.Id,
         StageName = c[1], CloseDate = HOJE.addDays(Integer.valueOf(c[2])),
-        Pricebook2Id = standard.Id, Linha_Negocio__c = 'B2C'));
+        Pricebook2Id = standard.Id, Linha_Negocio__c = 'B2C',
+        // A regra Motivo_obrigatorio_ao_perder aplica-se a TODOS os Record
+        // Types, servicos incluidos: um negocio perdido sem razao registada nao
+        // ensina nada a equipa. O motivo aqui e o preco - certificados e
+        // avaliacoes sao servicos de mercado e o cliente compara.
+        Motivo_Perda__c = (c[1] == 'Perdido') ? 'Preco' : null));
 }
 insert opps;
 
