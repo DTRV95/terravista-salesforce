@@ -170,6 +170,7 @@ for (Lead l : leads) {
 }
 if (!cms.isEmpty()) Database.insert(cms, false);
 
-System.debug('=== SEMEADO ===');
-System.debug('Empresas: ' + emp.size() + ' · Pessoas: ' + pa.size() + ' · Contratos: ' + ct.size());
-System.debug('Imoveis: ' + imv.size() + ' · Negocios: ' + ops.size() + ' · Atividades: ' + tks.size() + ' · Leads: ' + leads.size());
+// O resumo que aqui estava veio agarrado a divisao do ficheiro e falava de
+// variaveis que ficaram no semear_org. Este so conta o que este script cria.
+System.debug('=== LEADS SEMEADOS ===');
+System.debug('Leads: ' + leads.size() + ' · Ligacoes a campanhas: ' + cms.size());

@@ -14,23 +14,22 @@ sf project deploy start -o terravista
 
 ---
 
-## Bloco atual — um deploy, três scripts
+## Bloco atual
+
+Um Record Type novo **não fica visível sozinho** — nem para um System
+Administrator. A visibilidade vive no perfil, e o `Admin.profile-meta.xml` lista
+todos os Record Types da Opportunity um a um. Faltava lá o `Servicos`, e por isso
+o `semear_produtos` não conseguia criar os negócios de serviços.
 
 ```
 git pull
-sf project deploy start -d force-app/main/default/objects -d force-app/main/default/standardValueSets -d force-app/main/default/permissionsets -d force-app/main/default/reports -d force-app/main/default/dashboards -o terravista
-sf apex run -f scripts/apex/semear_org.apex -o terravista
+sf project deploy start -d force-app/main/default/profiles -o terravista
 sf apex run -f scripts/apex/semear_leads.apex -o terravista
 sf apex run -f scripts/apex/semear_produtos.apex -o terravista
 ```
 
-**A ordem dos três scripts importa.** O `semear_org` apaga tudo e cria empresas,
-pessoas, contratos, imóveis e negócios. O `semear_leads` liga-se às campanhas que o
-primeiro criou. O `semear_produtos` precisa dos imóveis e dos clientes.
-
-> **Um deploy é atómico.** Se um só componente falhar, *nada* do lote entra na org —
-> mesmo que o relatório mostre 145 de 146 como criados. Esses estados dizem o que
-> teria acontecido, não o que ficou. Já nos enganou uma vez.
+O `semear_org` já correu e não precisa de repetir. Os outros dois são
+re-executáveis: cada um apaga o que criou antes de recriar.
 
 ---
 
