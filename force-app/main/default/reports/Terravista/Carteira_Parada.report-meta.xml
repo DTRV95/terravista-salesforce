@@ -30,7 +30,13 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Carteira disponível</name>
-    <reportType>Imoveis_da_Carteira</reportType>
+    <!--
+      Leva __c apesar de o fullName do proprio report type nao levar. Duas
+      grafias para a mesma coisa: o componente chama-se Imoveis_da_Carteira, a
+      referencia a partir de um report e Imoveis_da_Carteira__c. Confirmado por
+      retrieve de um report construido na interface.
+    -->
+    <reportType>Imoveis_da_Carteira__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

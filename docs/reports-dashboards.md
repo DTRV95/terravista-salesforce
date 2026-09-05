@@ -144,3 +144,23 @@ documentação acessível.
 > Se houver uma terceira volta, a decisão certa deixa de ser corrigir à mão e passa
 > a ser **construir os reports na interface e fazer `retrieve`**. O tempo até à
 > apresentação vale mais do que a elegância de os ter escrito à mão.
+
+### Terceira ronda — o `__c` que não está em lado nenhum
+
+Onze erros passaram a dois, e os dois eram o mesmo:
+
+```
+<reportType>Imoveis_da_Carteira</reportType>     ← recusado
+<reportType>Imoveis_da_Carteira__c</reportType>  ← aceite
+```
+
+O `fullName` do report type **não** leva sufixo, e o ficheiro dele não o menciona em
+lado nenhum. Mas a **referência** a partir de um report leva `__c`. São duas grafias
+para a mesma coisa, e a única forma de o descobrir foi construir um report na
+interface contra esse report type e fazer `retrieve`.
+
+> É o mesmo padrão de sempre neste projeto: o Salesforce tem nomes que a
+> documentação não expõe, e a org sabe-os todos. Perguntar à org é mais rápido do
+> que procurar a resposta.
+
+O `Terravista_B2B` falhava por arrasto — não tinha problema nenhum de si.
