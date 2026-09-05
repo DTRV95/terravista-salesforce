@@ -367,6 +367,11 @@
         <field>Product2.Categoria__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Data_Entrada__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <applicationVisibilities>
         <application>Terravista</application>
         <visible>true</visible>
@@ -379,16 +384,4 @@
         <tab>Imovel__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
-    <!--
-      Permite escrever o CreatedDate ao criar registos, o que e o que da historia
-      aos leads da coorte de latencia - as duas formulas medem a partir dele.
-      SO E POSSIVEL DEPOIS de ligar, em Setup > User Interface, a caixa
-      Enable "Set Audit Fields upon Record Creation" and "Update Records with
-      Inactive Owners" User Permissions. Antes disso a permissao nao existe no
-      esquema e o deploy deste ficheiro falha com "Unknown user permission".
-    -->
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>SetAuditFields</name>
-    </userPermissions>
 </PermissionSet>

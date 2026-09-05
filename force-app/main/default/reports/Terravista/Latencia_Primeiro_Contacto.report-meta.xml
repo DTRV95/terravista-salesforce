@@ -7,7 +7,7 @@
             <column>Lead.Horas_Ate_Primeiro_Contacto__c</column>
         </chartSummaries>
         <chartType>Line</chartType>
-        <groupingColumn>Lead.Data_Atribuicao__c</groupingColumn>
+        <groupingColumn>Lead.Data_Entrada__c</groupingColumn>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
         <title>Horas até ao 1º contacto (meta: 2h)</title>
@@ -23,7 +23,7 @@
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Week</dateGranularity>
-        <field>Lead.Data_Atribuicao__c</field>
+        <field>Lead.Data_Entrada__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Latência até ao 1º contacto</name>

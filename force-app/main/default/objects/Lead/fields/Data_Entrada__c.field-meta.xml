@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Entrada__c</fullName>
+    <description>Quando o lead entrou. Numa org real coincide com o CreatedDate; num histórico de demonstração, este é o campo que se pode preencher sem permissões especiais. As duas métricas de latência medem a partir daqui.</description>
+    <label>Data de Entrada</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

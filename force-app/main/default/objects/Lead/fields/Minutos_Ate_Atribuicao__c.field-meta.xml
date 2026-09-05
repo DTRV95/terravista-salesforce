@@ -2,8 +2,10 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Minutos_Ate_Atribuicao__c</fullName>
     <description>Latencia entre a entrada do lead e a atribuicao a um agente. Meta: menos de 5 minutos.</description>
-    <formula>IF(ISBLANK(Data_Atribuicao__c), null,
-   (Data_Atribuicao__c - CreatedDate) * 24 * 60)</formula>
+    <formula>IF(
+   OR(ISBLANK(Data_Atribuicao__c), ISBLANK(Data_Entrada__c)),
+   null,
+   (Data_Atribuicao__c - Data_Entrada__c) * 24 * 60)</formula>
     <label>Minutos até Atribuição</label>
     <precision>8</precision><scale>0</scale>
     <required>false</required>

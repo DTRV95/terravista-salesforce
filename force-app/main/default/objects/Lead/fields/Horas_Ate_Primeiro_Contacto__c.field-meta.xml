@@ -2,8 +2,10 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Horas_Ate_Primeiro_Contacto__c</fullName>
     <description>Latencia entre a entrada do lead e o primeiro contacto real. Meta: menos de 2 horas uteis.</description>
-    <formula>IF(ISBLANK(Data_Primeiro_Contacto__c), null,
-   (Data_Primeiro_Contacto__c - CreatedDate) * 24)</formula>
+    <formula>IF(
+   OR(ISBLANK(Data_Primeiro_Contacto__c), ISBLANK(Data_Entrada__c)),
+   null,
+   (Data_Primeiro_Contacto__c - Data_Entrada__c) * 24)</formula>
     <label>Horas até 1º Contacto</label>
     <precision>8</precision><scale>1</scale>
     <required>false</required>

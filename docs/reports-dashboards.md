@@ -249,3 +249,33 @@ Os três dinâmicos ficaram entregues a quem precisa mesmo de ver só o seu.
 
 E mais um token descoberto por `retrieve`: o campo de campanha numa Opportunity é
 `CAMPAIGN_SOURCE` — sem ponto, sem prefixo, como todos os outros standard.
+
+---
+
+## A latência deixou de depender de um interruptor
+
+As duas fórmulas mediam a partir do `CreatedDate`, e escrever o `CreatedDate` exige
+a permissão `SetAuditFields` — que só existe depois de se ligar uma preferência em
+Setup. Essa preferência não gravou ao fim de várias tentativas, e os dois gráficos
+principais ficaram vazios durante dias.
+
+Passa a haver um campo nosso: **`Lead.Data_Entrada__c`**, quando o lead entrou.
+
+```
+Minutos_Ate_Atribuicao__c      = Data_Atribuicao__c      − Data_Entrada__c
+Horas_Ate_Primeiro_Contacto__c = Data_Primeiro_Contacto__c − Data_Entrada__c
+```
+
+| | |
+|---|---|
+| **Recomendação** | Medir a partir de um campo de negócio, não de um campo de sistema |
+| **Alternativa** | Insistir na permissão para poder escrever o `CreatedDate` |
+| **Vantagem** | Não depende de permissão nenhuma, e o histórico de demonstração escreve-se com um `insert` normal |
+| **Desvantagem** | Passa a haver dois campos que numa org real diriam a mesma coisa |
+| **Risco** | Baixo — e o outro caminho já provou custar dias |
+
+> Uma métrica que depende de um interruptor é uma métrica que não se pode
+> demonstrar. E há um argumento honesto a favor desta escolha, que não é só
+> pragmatismo: a hora a que um lead **entrou** é um facto de negócio; a hora a que
+> a linha foi criada na base de dados é um facto do sistema. Numa migração de CRM,
+> só o primeiro sobrevive.
