@@ -119,6 +119,26 @@
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
+    <!--
+      A lista mais importante do projeto inteiro, e vem primeiro por isso.
+
+      Abrir a Construtora Nortagua e ver, sem clicar em nada, quantas fracoes tem
+      cada empreendimento e quantas ja venderam. E exatamente o relatorio que o
+      Miguel reconstruia a mao ao fim da tarde - passa a ser a pagina do cliente.
+    -->
+    <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>Nome_Empreendimento__c</fields>
+        <fields>Imoveis_Total__c</fields>
+        <fields>Imoveis_Vendidos__c</fields>
+        <fields>Percentagem_Comercializada__c</fields>
+        <fields>CONTRACT.STATUS</fields>
+        <relatedList>RelatedContractList</relatedList>
+    </relatedLists>
+    <!--
+      Quem se atende do outro lado. O cargo esta ca porque numa construtora
+      importa saber se se esta a falar com quem decide ou com quem executa.
+    -->
     <relatedLists>
         <fields>CONTACT.NAME</fields>
         <fields>CONTACT.TITLE</fields>
@@ -128,9 +148,25 @@
     </relatedLists>
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
+        <fields>Imovel__c</fields>
         <fields>OPPORTUNITY.STAGE_NAME</fields>
         <fields>OPPORTUNITY.AMOUNT</fields>
+        <fields>Dias_Sem_Atividade__c</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <relatedList>RelatedOpportunityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>TASK.SUBJECT</fields>
+        <fields>TASK.WHO_NAME</fields>
+        <fields>TASK.STATUS</fields>
+        <fields>TASK.DUE_DATE</fields>
+        <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>OBJECT_FIELD</fields>
+        <fields>OLD_VALUE</fields>
+        <fields>NEW_VALUE</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
 </Layout>

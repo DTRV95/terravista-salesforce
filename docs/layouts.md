@@ -102,3 +102,55 @@ A `Account-Account Layout` saiu do repositório. **Continua a existir na org** �
 deploy não apaga o que se remove do source — mas já não está atribuída a nada. Para
 a apagar de vez seria preciso um `destructiveChanges`, e não vale o risco a quatro
 semanas da apresentação.
+
+---
+
+## Related lists — onde se ganha tempo
+
+Um layout bem feito não é só o que se lê no topo. **É o que se consegue decidir sem
+abrir mais nada.** Cada related list foi desenhada com as colunas que permitem agir
+na própria lista.
+
+### A regra que guiou todas
+
+> Se para perceber uma linha é preciso clicar nela, a coluna que falta é o problema.
+
+| Ecrã | Lista | A coluna que faz a diferença |
+|---|---|---|
+| **Empresa** | Contratos de mediação | `% Comercializada`, `Imóveis Vendidos` |
+| **Cliente Particular** | Negócios | `Imóvel`, `Dias Sem Atividade` |
+| **Contrato** | Frações | `Dias Disponível` |
+| **Imóvel** | Negócios | `Dias Sem Atividade` |
+
+### A mais importante de todas
+
+Na ficha de uma construtora, a primeira lista são os **contratos de mediação**, com o
+número de frações, quantas venderam e a percentagem comercializada.
+
+> Abrir a Construtora Nortágua e ver, sem clicar em nada, o ritmo de cada
+> empreendimento. **É exactamente o relatório que o Miguel reconstruía à mão ao fim
+> da tarde** — passa a ser a página do cliente.
+
+### Duas que revelam relações que ninguém via
+
+**Contratos na ficha de um particular.** Um comprador também pode ser
+*proprietário*. Sem esta lista, a herança dos Silva Matos aparece como cliente e não
+se vê que a Terravista lhe está a vender três imóveis.
+
+**Campanhas na ficha do cliente.** É a ligação Marketing → Vendas do Case Study: a
+Sofia deixa de não saber que aquele lead veio da campanha de Matosinhos.
+
+### Onde as colunas de tempo entram
+
+`Dias Sem Atividade` e `Dias Disponível` aparecem em quatro listas diferentes. Não é
+repetição — é a tese do projeto aplicada ao trabalho de todos os dias.
+
+Numa lista de 32 frações, 32 linhas iguais não dizem nada. Com os dias em que cada
+uma está parada, a lista **ordena-se sozinha na cabeça de quem a lê**: as de cima
+estão mal avaliadas ou mal mostradas, e qualquer das duas coisas se resolve.
+
+### A lista que está vazia de propósito
+
+Na Opportunity há uma lista de **produtos**, que só tem conteúdo no Record Type
+*Serviços*. Numa venda de imóvel fica vazia — e tem de ficar: pôr-lhe produtos faria
+o Salesforce recalcular o `Amount` e desfazer a comissão.

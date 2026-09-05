@@ -149,17 +149,57 @@
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
+    <!--
+      O Imovel e os Dias Sem Atividade estao aqui de proposito. Sem eles, um
+      consultor tem de abrir cada negocio para saber DE QUE CASA se trata e se ja
+      arrefeceu. Com eles, decide na lista: e este, esta parado ha 40 dias, ligo
+      hoje.
+    -->
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
+        <fields>Imovel__c</fields>
         <fields>OPPORTUNITY.STAGE_NAME</fields>
         <fields>OPPORTUNITY.AMOUNT</fields>
+        <fields>Dias_Sem_Atividade__c</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <relatedList>RelatedOpportunityList</relatedList>
     </relatedLists>
+    <!--
+      Um particular tambem pode ser PROPRIETARIO, e nesse caso tem contratos de
+      mediacao. Sem esta lista, a heranca dos Silva Matos aparece como cliente e
+      nao se ve que a Terravista lhe esta a vender tres imoveis.
+    -->
+    <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>Regime__c</fields>
+        <fields>Comissao__c</fields>
+        <fields>Imoveis_Total__c</fields>
+        <fields>Imoveis_Vendidos__c</fields>
+        <fields>CONTRACT.STATUS</fields>
+        <relatedList>RelatedContractList</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
+        <fields>TASK.WHO_NAME</fields>
         <fields>TASK.STATUS</fields>
         <fields>TASK.DUE_DATE</fields>
         <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
+    <!--
+      De onde este cliente veio. E a ligacao Marketing -> Vendas do Case Study:
+      a Sofia deixa de nao saber que o lead veio da campanha de Matosinhos.
+    -->
+    <relatedLists>
+        <fields>CAMPAIGN.NAME</fields>
+        <fields>CAMPAIGN.START_DATE</fields>
+        <fields>CAMPAIGN.TYPE</fields>
+        <relatedList>RelatedCampaignList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>OBJECT_FIELD</fields>
+        <fields>OLD_VALUE</fields>
+        <fields>NEW_VALUE</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
 </Layout>

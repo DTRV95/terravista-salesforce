@@ -100,10 +100,16 @@
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
+    <!--
+      Em que negocios esta pessoa esta envolvida. Numa construtora ha varios
+      interlocutores e nem todos entram em todos os negocios - saber quem esteve
+      em qual evita ligar a pessoa errada.
+    -->
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>OPPORTUNITY.STAGE_NAME</fields>
         <fields>OPPORTUNITY.AMOUNT</fields>
+        <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <relatedList>RelatedOpportunityContactRoles</relatedList>
     </relatedLists>
     <relatedLists>
@@ -111,5 +117,11 @@
         <fields>TASK.STATUS</fields>
         <fields>TASK.DUE_DATE</fields>
         <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CAMPAIGN.NAME</fields>
+        <fields>CAMPAIGN.START_DATE</fields>
+        <fields>CAMPAIGN.TYPE</fields>
+        <relatedList>RelatedCampaignList</relatedList>
     </relatedLists>
 </Layout>

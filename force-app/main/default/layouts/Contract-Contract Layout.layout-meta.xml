@@ -216,12 +216,26 @@
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
+    <!--
+      As fracoes do empreendimento. Os Dias Disponivel entram porque sao o que
+      diz onde agir: numa lista de 32 fracoes, as que estao paradas ha mais tempo
+      ou estao mal avaliadas ou estao mal mostradas - e qualquer das duas se
+      resolve. Sem essa coluna, 32 linhas iguais nao dizem nada.
+    -->
     <relatedLists>
         <fields>NAME</fields>
         <fields>Tipologia__c</fields>
         <fields>Piso__c</fields>
+        <fields>Localizacao__c</fields>
         <fields>Preco__c</fields>
         <fields>Estado_Comercial__c</fields>
+        <fields>Dias_Disponivel__c</fields>
         <relatedList>Imovel__c.Contrato__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>TASK.SUBJECT</fields>
+        <fields>TASK.STATUS</fields>
+        <fields>TASK.DUE_DATE</fields>
+        <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
 </Layout>

@@ -164,10 +164,37 @@
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
+    <!--
+      Os servicos vendidos. So tem conteudo no Record Type Servicos - numa venda
+      de imovel esta lista fica vazia de proposito, porque por-lhe produtos faria
+      o Salesforce recalcular o Amount e desfazer a comissao.
+    -->
+    <relatedLists>
+        <fields>PRODUCT.NAME</fields>
+        <fields>LINE_ITEM.QUANTITY</fields>
+        <fields>LINE_ITEM.UNIT_PRICE</fields>
+        <fields>LINE_ITEM.TOTAL_PRICE</fields>
+        <relatedList>RelatedProductList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CONTACT.NAME</fields>
+        <fields>CONTACT.TITLE</fields>
+        <fields>ROLE</fields>
+        <fields>IS_PRIMARY</fields>
+        <relatedList>RelatedOpportunityContactRoles</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
+        <fields>TASK.WHO_NAME</fields>
         <fields>TASK.STATUS</fields>
         <fields>TASK.DUE_DATE</fields>
         <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>OBJECT_FIELD</fields>
+        <fields>OLD_VALUE</fields>
+        <fields>NEW_VALUE</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
 </Layout>
