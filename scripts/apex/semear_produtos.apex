@@ -106,8 +106,13 @@ insert opps;
 List<OpportunityLineItem> linhas = new List<OpportunityLineItem>();
 for (Integer k = 0; k < negocios.size(); k++) {
     for (String codigo : negocios[k].split('\\|')[3].split(',')) {
+        // O UnitPrice tem de ir explicito. Na interface o Salesforce copia-o da
+        // tabela de precos; pela API nao copia, e a linha e recusada sem ele.
+        // Vem do mesmo mapa que serviu para criar as entradas da tabela, por
+        // isso nao ha dois sitios onde o preco possa divergir.
         linhas.add(new OpportunityLineItem(
-            OpportunityId = opps[k].Id, PricebookEntryId = pbe.get(codigo), Quantity = 1));
+            OpportunityId = opps[k].Id, PricebookEntryId = pbe.get(codigo),
+            Quantity = 1, UnitPrice = precos.get(codigo)));
     }
 }
 insert linhas;
