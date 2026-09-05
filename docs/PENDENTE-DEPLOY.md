@@ -18,16 +18,14 @@ sf project deploy start -o terravista
 
 | # | O quê | Bloqueia |
 |---|---|---|
-| 1 | `Tipologia__c = 'T4'` → `'T4+'` no teste novo | **Sim** — o teste falhava |
-| 2 | Procura por nome deixa de tropeçar em acentos (+1 teste) | **Sim** — *Cláudia* não encontrava a `Claudia Marques`, e é assim que um português escreve |
-
-**Um deploy.** Depois:
+| 1 | Record Type `Serviços` + business process + 3 fases novas | **Sim** — sem isto o `semear_produtos.apex` não corre |
+| 2 | `Product2.Categoria__c` + FLS | **Sim** — o script preenche-o |
+| 3 | Guardas nas fórmulas de comissão contra o Record Type novo | **Sim** — sem elas os serviços entram nos números de comissões |
 
 ```
-sf apex run test --class-names MatchImoveisTest --result-format human -o terravista
+sf project deploy start -d force-app/main/default/objects -d force-app/main/default/standardValueSets -d force-app/main/default/permissionsets -o terravista
+sf apex run -f scripts/apex/semear_produtos.apex -o terravista
 ```
-
-Devem passar **10**.
 
 ---
 

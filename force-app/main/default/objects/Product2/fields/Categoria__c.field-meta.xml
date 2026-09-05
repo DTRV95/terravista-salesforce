@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Categoria__c</fullName>
+    <description>Familia do servico. O campo standard Family faria o mesmo, mas numa org nova nao traz valores nenhuns e defini-los obriga a mexer no value set standard; esta picklist e nossa e fica versionada com o vocabulario do negocio.</description>
+    <label>Categoria</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Obrigatorio por lei</fullName><default>false</default><label>Obrigatório por lei</label></value>
+            <value><fullName>Valorizacao do imovel</fullName><default>false</default><label>Valorização do imóvel</label></value>
+            <value><fullName>Apoio ao processo</fullName><default>false</default><label>Apoio ao processo</label></value>
+            <value><fullName>Servicos a promotores</fullName><default>false</default><label>Serviços a promotores</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

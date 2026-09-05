@@ -13,4 +13,7 @@
     <standardValue><fullName>Perdido</fullName><default>false</default><closed>true</closed><forecastCategory>Omitted</forecastCategory><probability>0</probability><won>false</won></standardValue>
     <standardValue><fullName>Visita de Avaliacao</fullName><default>false</default><closed>false</closed><forecastCategory>Pipeline</forecastCategory><probability>35</probability><won>false</won></standardValue>
     <standardValue><fullName>Proposta de Mediacao</fullName><default>false</default><closed>false</closed><forecastCategory>BestCase</forecastCategory><probability>65</probability><won>false</won></standardValue>
+    <standardValue><fullName>Servico Proposto</fullName><default>false</default><closed>false</closed><forecastCategory>BestCase</forecastCategory><probability>50</probability><won>false</won></standardValue>
+    <standardValue><fullName>Servico Adjudicado</fullName><default>false</default><closed>false</closed><forecastCategory>Forecast</forecastCategory><probability>85</probability><won>false</won></standardValue>
+    <standardValue><fullName>Servico Entregue</fullName><default>false</default><closed>true</closed><forecastCategory>Closed</forecastCategory><probability>100</probability><won>true</won></standardValue>
 </StandardValueSet>

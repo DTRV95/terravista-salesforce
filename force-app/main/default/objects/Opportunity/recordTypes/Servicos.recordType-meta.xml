@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Servicos</fullName>
+    <active>true</active>
+    <businessProcess>Servicos</businessProcess>
+    <!--
+      Existe por uma razao concreta: quando uma Opportunity tem produtos, o
+      Salesforce calcula o Amount como a soma das linhas e o campo deixa de ser
+      editavel. Como Comissao_Terravista__c = Amount x comissao do contrato, por
+      um certificado energetico de 180 EUR numa venda de 250.000 EUR a comissao
+      passaria a ser calculada sobre os 180. Os servicos ficam num negocio
+      separado, ligado ao mesmo imovel.
+
+      A fase de fecho tambem e propria - reutilizar "Escritura Realizada" metia
+      os servicos dentro dos quatro reports de comissoes.
+    -->
+    <description>Venda de servicos associados a um imovel. Usa produtos e tabela de precos.</description>
+    <label>Serviços</label>
+</RecordType>
