@@ -39,7 +39,7 @@
                     <field>AccountSource</field>
                 </layoutItems>
                 <layoutItems>
-                    <behavior>Required</behavior>
+                    <behavior>Edit</behavior>
                     <field>OwnerId</field>
                 </layoutItems>
         </layoutColumns>
@@ -125,7 +125,8 @@
         </layoutColumns>
         <layoutColumns>
                 <layoutItems>
-                    <emptySpace>true</emptySpace>
+                    <behavior>Edit</behavior>
+                    <field>ParentId</field>
                 </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

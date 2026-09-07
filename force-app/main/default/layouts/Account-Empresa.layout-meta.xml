@@ -35,7 +35,7 @@
                     <field>Website</field>
                 </layoutItems>
                 <layoutItems>
-                    <behavior>Required</behavior>
+                    <behavior>Edit</behavior>
                     <field>OwnerId</field>
                 </layoutItems>
         </layoutColumns>

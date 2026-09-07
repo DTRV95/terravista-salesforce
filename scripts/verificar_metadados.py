@@ -130,6 +130,23 @@ for f in sorted(RAIZ.glob("scripts/apex/*.apex")):
         erros.append(f"[{n} caracteres, a aproximar-se do limite de {LIMITE_APEX}. "
                      f"Planeia a divisao antes de crescer mais] {f.relative_to(RAIZ)}")
 
+# --- Layouts: campos de sistema nunca podem ser Required -------------------
+# O OwnerId e o RecordTypeId sao geridos pela plataforma. Marca-los como
+# Required num layout nao e uma opcao mais rigorosa - e um deploy recusado.
+for f in FORCE_APP.rglob("layouts/*.layout-meta.xml"):
+    for campo in re.findall(
+            r"<behavior>Required</behavior>\s*<field>(OwnerId|RecordTypeId)</field>",
+            texto(f)):
+        erros.append(f"[{campo} marcado como Required num layout] {f.relative_to(RAIZ)}")
+
+# --- Person Account: o nome em metadata nao e o nome na org ----------------
+# Na org o record type e Account.PersonAccount; em metadata escreve-se
+# PersonAccount.PersonAccount. Ja custou dois deploys, em ficheiros diferentes.
+for f in FORCE_APP.rglob("*-meta.xml"):
+    if re.search(r"(?<!Person)Account\.PersonAccount", texto(f)):
+        erros.append(f"[Account.PersonAccount: em metadata escreve-se "
+                     f"PersonAccount.PersonAccount] {f.relative_to(RAIZ)}")
+
 if erros:
     print("\n".join(erros))
     print(f"\n{len(erros)} problema(s). Corrigir antes do deploy.")

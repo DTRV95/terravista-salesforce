@@ -37,7 +37,7 @@
         </layoutColumns>
         <layoutColumns>
                 <layoutItems>
-                    <behavior>Required</behavior>
+                    <behavior>Edit</behavior>
                     <field>RecordTypeId</field>
                 </layoutItems>
                 <layoutItems>
@@ -45,7 +45,7 @@
                     <field>Linha_Negocio__c</field>
                 </layoutItems>
                 <layoutItems>
-                    <behavior>Required</behavior>
+                    <behavior>Edit</behavior>
                     <field>OwnerId</field>
                 </layoutItems>
         </layoutColumns>

@@ -63,7 +63,7 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account-Cliente Particular</layout>
-        <recordType>Account.PersonAccount</recordType>
+        <recordType>PersonAccount.PersonAccount</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Lead-Lead Compra</layout>
