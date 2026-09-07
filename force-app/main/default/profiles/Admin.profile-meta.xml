@@ -62,10 +62,6 @@
         <recordType>Account.Empresa</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-Cliente Particular</layout>
-        <recordType>PersonAccount.PersonAccount</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Lead-Lead Compra</layout>
         <recordType>Lead.Compra</recordType>
     </layoutAssignments>

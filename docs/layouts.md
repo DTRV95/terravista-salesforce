@@ -187,3 +187,44 @@ agosto. O mesmo em listas de objeto *standard* ainda não está provado.
 | Negócios | Standard | Tokens provados |
 | Actividades | `TASK.*` | Provados na layout de Campaign |
 | Contratos, Contactos, Produtos, Campanhas | **De omissão** | Nomes por confirmar |
+
+---
+
+## A layout do Person Account não se cria em metadata
+
+O deploy recusava `PersonMobilePhone` na `Account-Cliente Particular`. O campo
+**existe e tem dados** — confirmado na org, a Cláudia Marques tem 912000101 lá
+dentro. Não era o campo.
+
+> Uma layout de Account **não pode conter campos de Person Account**. Esses só vivem
+> numa *Person Account layout*, que é um tipo à parte — e que **não se cria a partir
+> de metadata**. Cria-se em Setup e só depois se faz `retrieve`.
+
+É o mesmo limite que já apareceu duas vezes neste projeto, com outra cara: há coisas
+no Salesforce que se **retiram** da org mas não se **põem** nela. A activação dos
+Person Accounts foi a primeira; esta é a segunda.
+
+### O que fazer
+
+1. **Setup → Object Manager → Person Accounts → Page Layouts → New**
+2. Montar as secções conforme o desenho que está neste documento
+3. `sf project retrieve start -m "Layout:Account-<nome>" -o terravista`
+4. Repor a atribuição no perfil, com o nome verdadeiro que vier do retrieve
+
+O desenho fica documentado aqui e o ficheiro guardado fora do deploy até lá — não se
+perde nada, só não vai por este caminho.
+
+### Dois nomes corrigidos, lidos do erro
+
+| Escrito | Verdadeiro |
+|---|---|
+| `RelatedOpportunityContactRoles` (Contact) | `RelatedOpportunityList` |
+| `RelatedProductList` (Opportunity) | `RelatedLineItemList` |
+
+### E um erro que foi meu, de sequência
+
+O `Estado_Aprovacao__c` entrou na layout do Contrato no mesmo commit que criou o
+campo — mas o comando de deploy que eu dei mandava só `layouts` e `profiles`. A
+layout referia um campo que aquele deploy não levava.
+
+**Um layout e o campo que ele mostra têm de ir no mesmo deploy**, ou o campo primeiro.

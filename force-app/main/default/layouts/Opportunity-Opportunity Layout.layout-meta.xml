@@ -170,7 +170,7 @@
       Salesforce recalcular o Amount e desfazer a comissao.
     -->
     <relatedLists>
-        <relatedList>RelatedProductList</relatedList>
+        <relatedList>RelatedLineItemList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
