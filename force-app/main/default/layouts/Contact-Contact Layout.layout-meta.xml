@@ -111,8 +111,13 @@
         <relatedList>RelatedOpportunityList</relatedList>
     </relatedLists>
     <relatedLists>
+        <!--
+          Sem o TASK.WHO_NAME. Aqui o "Who" da tarefa e o proprio contacto, e a
+          coluna seria a mesma pessoa repetida em todas as linhas. O Salesforce
+          recusa-a neste contexto e aceita-a no Account, onde o Who pode ser
+          outra pessoa - o mesmo bloco deploia la sem problema.
+        -->
         <fields>TASK.SUBJECT</fields>
-        <fields>TASK.WHO_NAME</fields>
         <fields>TASK.DUE_DATE</fields>
         <fields>TASK.STATUS</fields>
         <relatedList>RelatedActivityList</relatedList>
