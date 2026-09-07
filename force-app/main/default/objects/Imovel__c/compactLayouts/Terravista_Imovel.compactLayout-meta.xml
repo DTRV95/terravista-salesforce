@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Terravista_Imovel</fullName>
+    <fields>Name</fields>
+    <fields>Finalidade__c</fields>
+    <fields>Tipo_Imovel__c</fields>
+    <fields>Preco__c</fields>
+    <fields>Estado_Comercial__c</fields>
+    <fields>Dias_Disponivel__c</fields>
+    <label>Terravista — Imóvel</label>
+</CompactLayout>

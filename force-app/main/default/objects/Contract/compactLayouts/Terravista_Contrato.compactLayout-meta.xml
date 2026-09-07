@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Terravista_Contrato</fullName>
+    <fields>ContractNumber</fields>
+    <fields>Nome_Empreendimento__c</fields>
+    <fields>Regime__c</fields>
+    <fields>Comissao__c</fields>
+    <fields>Percentagem_Comercializada__c</fields>
+    <label>Terravista — Contrato</label>
+</CompactLayout>

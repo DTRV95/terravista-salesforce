@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Terravista_Negocio</fullName>
+    <fields>Name</fields>
+    <fields>RecordTypeId</fields>
+    <fields>StageName</fields>
+    <fields>Amount</fields>
+    <fields>Dias_Sem_Atividade__c</fields>
+    <label>Terravista — Negócio</label>
+</CompactLayout>
