@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Comissao_Abaixo_do_Minimo</fullName>
+    <!--
+      Qualificado com o objeto, ao contrario dos Record Types e dos business
+      processes: esses vivem em pastas por objeto e levam so o nome local. Os
+      approval processes estao todos na mesma pasta, por isso o objeto tem de ir
+      no proprio nome.
+    -->
+    <fullName>Contract.Comissao_Abaixo_do_Minimo</fullName>
     <active>true</active>
     <allowRecall>true</allowRecall>
     <allowedSubmitters>

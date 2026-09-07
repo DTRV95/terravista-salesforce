@@ -147,6 +147,16 @@ for f in FORCE_APP.rglob("*-meta.xml"):
         erros.append(f"[Account.PersonAccount: em metadata escreve-se "
                      f"PersonAccount.PersonAccount] {f.relative_to(RAIZ)}")
 
+# --- Approval process: o fullName tem de bater com o nome do ficheiro ------
+# Estao todos na mesma pasta, por isso o nome tem de levar o objeto -
+# Contract.Comissao_Abaixo_do_Minimo. Os Record Types levam so o nome local
+# porque vivem em pastas por objeto; e facil trocar as duas convencoes.
+for f in FORCE_APP.rglob("approvalProcesses/*.approvalProcess-meta.xml"):
+    esperado = f.name.replace(".approvalProcess-meta.xml", "")
+    m = re.search(r"<fullName>(.*?)</fullName>", texto(f))
+    if m and m.group(1) != esperado:
+        erros.append(f"[fullName '{m.group(1)}' devia ser '{esperado}'] {f.relative_to(RAIZ)}")
+
 if erros:
     print("\n".join(erros))
     print(f"\n{len(erros)} problema(s). Corrigir antes do deploy.")
