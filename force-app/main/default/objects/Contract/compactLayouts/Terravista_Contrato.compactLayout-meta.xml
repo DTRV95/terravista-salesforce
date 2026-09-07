@@ -5,6 +5,7 @@
     <fields>Nome_Empreendimento__c</fields>
     <fields>Regime__c</fields>
     <fields>Comissao__c</fields>
+    <fields>Estado_Aprovacao__c</fields>
     <fields>Percentagem_Comercializada__c</fields>
     <label>Terravista — Contrato</label>
 </CompactLayout>

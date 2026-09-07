@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Comissao_Abaixo_do_Minimo</fullName>
+    <active>true</active>
+    <allowRecall>true</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>Name</field>
+        <field>AccountId</field>
+        <field>Nome_Empreendimento__c</field>
+        <field>Comissao__c</field>
+        <field>Regime__c</field>
+        <field>Imoveis_Total__c</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>terravista.david@agentforce.com</name>
+                <type>user</type>
+            </approver>
+        </assignedApprover>
+        <description>A direção decide. Um passo só: dois passos numa agência de dois consultores seria burocracia a fingir de governo.</description>
+        <label>Aprovação da Direção</label>
+        <name>Aprovacao_da_Direcao</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <description>Uma comissão abaixo de 4% precisa de segunda assinatura. É o único sítio onde uma pessoa sozinha pode dar dinheiro da empresa: o Comissao__c alimenta a comissão de TODAS as vendas do contrato.</description>
+    <enableMobileDeviceAccess>true</enableMobileDeviceAccess>
+    <entryCriteria>
+        <!--
+          ATENÇÃO: 4% escreve-se 0.04, não 4.
+
+          Um campo Percent, em contexto de fórmula, vale a fração e não o número
+          que se vê no ecrã. Este projeto já teve uma validation rule partida
+          exatamente por isto: comparava Comissao__c > 10 para travar comissões
+          acima de 10%, e só disparava acima de 1000%. Passou despercebida
+          durante dias porque o deploy aceitava-a.
+        -->
+        <formula>AND(
+  NOT(ISBLANK(Comissao__c)),
+  Comissao__c &lt; 0.04
+)</formula>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>Comissao_Aprovada</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>Comissao_Rejeitada</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <initialSubmissionActions>
+        <action>
+            <name>Comissao_Pendente</name>
+            <type>FieldUpdate</type>
+        </action>
+    </initialSubmissionActions>
+    <label>Comissão abaixo do mínimo</label>
+    <processOrder>1</processOrder>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>true</showApprovalHistory>
+</ApprovalProcess>

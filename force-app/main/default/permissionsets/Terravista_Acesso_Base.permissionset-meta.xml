@@ -382,6 +382,11 @@
         <field>Opportunity.Data_Visita__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contract.Estado_Aprovacao__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <applicationVisibilities>
         <application>Terravista</application>
         <visible>true</visible>

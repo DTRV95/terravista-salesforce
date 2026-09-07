@@ -33,6 +33,10 @@
                     <field>Comissao__c</field>
                 </layoutItems>
                 <layoutItems>
+                    <behavior>Readonly</behavior>
+                    <field>Estado_Aprovacao__c</field>
+                </layoutItems>
+                <layoutItems>
                     <behavior>Edit</behavior>
                     <field>Pricebook2Id</field>
                 </layoutItems>
