@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Visita__c</fullName>
+    <description>Carimbado por Flow quando se agenda um Evento no negócio. Mesmo motivo do campo homólogo no Lead: uma validation rule não vê Eventos.</description>
+    <label>Data da Visita</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

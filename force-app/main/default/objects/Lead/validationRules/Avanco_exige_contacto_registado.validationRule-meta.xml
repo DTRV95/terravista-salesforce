@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Avanco_exige_contacto_registado</fullName>
     <active>true</active>
-    <description>Dizer que um lead foi contactado exige prova, nao afirmacao. LastActivityDate e standard e preenche-se sozinho com Tasks concluidas e Events passados. Guardada por ISCHANGED: so age na progressao, nunca bloqueia a edicao de registos antigos.</description>
+    <description>Antes media por LastActivityDate, que nao distingue uma chamada de um email. Passa a exigir a Data do 1o Contacto, carimbada por Flow quando a chamada e dada por CONCLUIDA - uma tarefa aberta que ninguem fez e o problema, nao a prova.</description>
     <errorConditionFormula>AND(
   ISCHANGED(Status),
   OR(ISPICKVAL(Status, "Em Contacto"),
@@ -11,8 +11,8 @@
      ISPICKVAL(Status, "Avaliacao do Imovel"),
      ISPICKVAL(Status, "Analise do Empreendimento"),
      ISPICKVAL(Status, "Proposta de Mediacao")),
-  ISBLANK(LastActivityDate)
+  ISBLANK(Data_Primeiro_Contacto__c)
 )</errorConditionFormula>
     <errorDisplayField>Status</errorDisplayField>
-    <errorMessage>Não há nenhum contacto registado neste lead. Registe a chamada como Tarefa concluída, ou a visita como Evento, antes de avançar a fase.</errorMessage>
+    <errorMessage>Ninguém falou ainda com este lead. Registe a chamada como Tarefa e marque-a como concluída antes de avançar a fase — é isso que carimba a data do primeiro contacto.</errorMessage>
 </ValidationRule>

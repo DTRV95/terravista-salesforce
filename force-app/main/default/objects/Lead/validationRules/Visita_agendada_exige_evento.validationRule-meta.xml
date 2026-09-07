@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Visita_agendada_exige_evento</fullName>
+    <active>true</active>
+    <description>Uma fase chamada Visita Agendada sem visita no calendario e uma mentira que o sistema conta a si proprio. A data e carimbada por Flow: uma validation rule nao ve Eventos, por isso le o campo.</description>
+    <errorConditionFormula>AND(
+  ISCHANGED(Status),
+  ISPICKVAL(Status, "Visita Agendada"),
+  ISBLANK(Data_Visita_Agendada__c)
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>Não há nenhuma visita no calendário. Marque o Evento com o cliente antes de pôr o lead nesta fase.</errorMessage>
+</ValidationRule>

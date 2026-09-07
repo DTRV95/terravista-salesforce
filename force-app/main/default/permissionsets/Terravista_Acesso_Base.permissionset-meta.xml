@@ -372,6 +372,16 @@
         <field>Lead.Data_Entrada__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Data_Visita_Agendada__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Data_Visita__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <applicationVisibilities>
         <application>Terravista</application>
         <visible>true</visible>
