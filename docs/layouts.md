@@ -154,3 +154,36 @@ estão mal avaliadas ou mal mostradas, e qualquer das duas coisas se resolve.
 Na Opportunity há uma lista de **produtos**, que só tem conteúdo no Record Type
 *Serviços*. Numa venda de imóvel fica vazia — e tem de ficar: pôr-lhe produtos faria
 o Salesforce recalcular o `Amount` e desfazer a comissão.
+
+---
+
+## O que se aprendeu a escrever related lists
+
+Seis rondas de deploy. As lições:
+
+**`RelatedHistoryList` não é o histórico de campos.** É o histórico de *actividades*,
+e usa colunas `TASK.*`. Escrevi `OBJECT_FIELD` e `OLD_VALUE`, que pertencem a outra
+coisa.
+
+**Uma layout sem `<relatedLists>` não fica sem listas.** O Salesforce mostra as de
+omissão. Declarar a lista serve para **escolher as colunas** — e enquanto não se
+souberem os tokens certos, declarar a lista sem colunas é melhor do que adivinhar.
+
+**Campos custom em related lists de objeto custom funcionam sem prefixo.** O
+`Imovel__c.Contrato__c` usa `Tipologia__c` e `Dias_Disponivel__c` e deploia desde
+agosto. O mesmo em listas de objeto *standard* ainda não está provado.
+
+> **A decisão que devia ter sido tomada três rondas antes:** parar de escrever
+> metadata de ecrã às cegas. As colunas que faltam — `% Comercializada` nos
+> contratos, `Dias Sem Atividade` nos negócios — entram quando forem **lidas de um
+> `retrieve`**, construindo a lista uma vez na interface. É o mesmo método que
+> resolveu os reports, e teria poupado quatro deploys aqui.
+
+### O estado
+
+| Lista | Colunas | Porquê |
+|---|---|---|
+| Frações do contrato | Escolhidas, com `Dias Disponível` | Padrão provado |
+| Negócios | Standard | Tokens provados |
+| Actividades | `TASK.*` | Provados na layout de Campaign |
+| Contratos, Contactos, Produtos, Campanhas | **De omissão** | Nomes por confirmar |
