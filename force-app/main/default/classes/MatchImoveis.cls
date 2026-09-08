@@ -158,7 +158,9 @@ public with sharing class MatchImoveis {
      *  Funciona porque os nomes na base estao sem acentos. Se um dia passarem a
      *  ter, isto deixa de chegar: seria preciso normalizar os dois lados, e o
      *  SOQL nao normaliza o campo. */
-    private static String semAcentos(String texto) {
+    /** Publico porque o AssistenteTerravista precisa da mesma normalizacao: duas
+     *  copias da mesma regra divergem no dia em que uma delas for corrigida. */
+    public static String semAcentos(String texto) {
         final String acentuadas = '\u00E1\u00E0\u00E2\u00E3\u00E4\u00E9\u00E8\u00EA\u00EB'
             + '\u00ED\u00EC\u00EE\u00EF\u00F3\u00F2\u00F4\u00F5\u00F6'
             + '\u00FA\u00F9\u00FB\u00FC\u00E7';
