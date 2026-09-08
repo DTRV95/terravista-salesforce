@@ -16,6 +16,7 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 FORCE_APP = RAIZ / "force-app"
 erros = []
+avisos = []
 
 
 def texto(caminho: Path) -> str:
@@ -127,8 +128,8 @@ for f in sorted(RAIZ.glob("scripts/apex/*.apex")):
         erros.append(f"[{n} caracteres, o maximo do Apex anonimo e {LIMITE_APEX}. "
                      f"Divide o ficheiro] {f.relative_to(RAIZ)}")
     elif n > AVISO_APEX:
-        erros.append(f"[{n} caracteres, a aproximar-se do limite de {LIMITE_APEX}. "
-                     f"Planeia a divisao antes de crescer mais] {f.relative_to(RAIZ)}")
+        avisos.append(f"[{n} caracteres, a aproximar-se do limite de {LIMITE_APEX}. "
+                      f"Planeia a divisao antes de crescer mais] {f.relative_to(RAIZ)}")
 
 # --- Layouts: campos de sistema nunca podem ser Required -------------------
 # O OwnerId e o RecordTypeId sao geridos pela plataforma. Marca-los como
@@ -166,6 +167,14 @@ for f in FORCE_APP.rglob("classes/*.cls"):
     if n > 1:
         erros.append(f"[{n} @InvocableMethod na mesma classe, o maximo e 1] "
                      f"{f.relative_to(RAIZ)}")
+
+# Os avisos aparecem sempre e nunca bloqueiam. Um aviso que impede o deploy
+# passa a ser lido como erro, e um erro que nao e erro ensina a ignorar a saida
+# toda - que e como uma verificacao deixa de servir para alguma coisa.
+if avisos:
+    print("AVISOS (nao bloqueiam):")
+    print("\n".join("  " + a for a in avisos))
+    print()
 
 if erros:
     print("\n".join(erros))

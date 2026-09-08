@@ -14,22 +14,32 @@ sf project deploy start -o terravista
 
 ---
 
-## Bloco atual
+## Bloco atual — nada pendente de deploy
 
-Um Record Type novo **não fica visível sozinho** — nem para um System
-Administrator. A visibilidade vive no perfil, e o `Admin.profile-meta.xml` lista
-todos os Record Types da Opportunity um a um. Faltava lá o `Servicos`, e por isso
-o `semear_produtos` não conseguia criar os negócios de serviços.
+Só scripts:
 
 ```
 git pull
-sf project deploy start -d force-app/main/default/profiles -o terravista
-sf apex run -f scripts/apex/semear_leads.apex -o terravista
-sf apex run -f scripts/apex/semear_produtos.apex -o terravista
+sf apex run -f scripts/apex/preencher_carteira.apex -o terravista
 ```
 
-O `semear_org` já correu e não precisa de repetir. Os outros dois são
-re-executáveis: cada um apaga o que criou antes de recriar.
+---
+
+## A ordem completa dos scripts de dados
+
+**Quatro, não três.** O `semear_org` apaga e recria os imóveis; quem se esquecer do
+`preencher_carteira` fica com o **Elevador vazio nos 45**, e o caso do Jorge Teixeira
+— o ponto alto da demonstração — deixa de funcionar **em silêncio**.
+
+```
+1. sf apex run -f scripts/apex/semear_org.apex        -o terravista
+2. sf apex run -f scripts/apex/semear_leads.apex      -o terravista
+3. sf apex run -f scripts/apex/preencher_carteira.apex -o terravista
+4. sf apex run -f scripts/apex/semear_produtos.apex   -o terravista
+```
+
+O `semear_org` passa a escrever esta lista no log ao terminar. Estava só na
+documentação, e foi exactamente por isso que falhou.
 
 ---
 

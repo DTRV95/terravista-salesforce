@@ -383,4 +383,11 @@ insert tks;
 System.debug('=== SEMEADO ===');
 System.debug('Empresas: ' + emp.size() + ' · Pessoas: ' + pa.size() + ' · Contratos: ' + ct.size());
 System.debug('Imoveis: ' + imv.size() + ' · Negocios: ' + ops.size() + ' · Atividades: ' + tks.size());
-System.debug('Agora corre semear_leads.apex.');
+// A ordem completa. Esteve escrita so na documentacao e falhou exatamente por
+// isso: o semear_org apaga e recria os imoveis, e quem se esquecer do
+// preencher_carteira fica com o Elevador vazio nos 45 - e o caso do Jorge
+// Teixeira, que e o ponto alto da demonstracao, deixa de funcionar em silencio.
+System.debug(LoggingLevel.ERROR, 'FALTA CORRER, POR ESTA ORDEM:');
+System.debug(LoggingLevel.ERROR, '  1. semear_leads.apex');
+System.debug(LoggingLevel.ERROR, '  2. preencher_carteira.apex  <- sem isto o Elevador fica vazio');
+System.debug(LoggingLevel.ERROR, '  3. semear_produtos.apex');
