@@ -157,6 +157,16 @@ for f in FORCE_APP.rglob("approvalProcesses/*.approvalProcess-meta.xml"):
     if m and m.group(1) != esperado:
         erros.append(f"[fullName '{m.group(1)}' devia ser '{esperado}'] {f.relative_to(RAIZ)}")
 
+# --- Apex: um @InvocableMethod por classe ---------------------------------
+# Limite da plataforma. Tres accoes numa classe compilam na cabeca de quem as
+# escreve e sao recusadas no deploy - e como o erro so aparece la, arrastou com
+# ele o permission set e a classe de testes.
+for f in FORCE_APP.rglob("classes/*.cls"):
+    n = len(re.findall(r"^\s*@InvocableMethod", texto(f), re.M))
+    if n > 1:
+        erros.append(f"[{n} @InvocableMethod na mesma classe, o maximo e 1] "
+                     f"{f.relative_to(RAIZ)}")
+
 if erros:
     print("\n".join(erros))
     print(f"\n{len(erros)} problema(s). Corrigir antes do deploy.")

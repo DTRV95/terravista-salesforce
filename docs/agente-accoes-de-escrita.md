@@ -116,3 +116,30 @@ ganha nada com isso.
 **Criar contratos e negócios.** São decisões com dinheiro. O contrato tem a comissão
 que alimenta tudo, e já tem um processo de aprovação para descer abaixo de 4% —
 deixar um modelo criá-lo seria contradizer essa decisão na frase seguinte.
+
+---
+
+## Porque é que são cinco classes e não uma
+
+**Uma classe Apex só aceita um `@InvocableMethod`.** Escrever as três acções na
+mesma classe compila na cabeça de quem escreve e é recusado no deploy — e, como o
+lote é atómico, arrastou consigo o permission set e a classe de testes.
+
+```
+AssistenteCriarCliente     ← uma acção
+AssistenteMarcarVisita     ← uma acção
+AssistenteCriarTarefa      ← uma acção
+AssistenteResposta         ← o que as três devolvem
+AssistenteUtil             ← o que as três partilham
+```
+
+A resposta e os helpers estão à parte por uma razão que não é o limite: **três
+cópias divergem no dia em que uma delas for corrigida.** O `AssistenteUtil` corre
+`with sharing` como as classes que o chamam — uma classe de apoio sem sharing seria
+uma porta lateral para o agente ver registos que o consultor não vê, e a regra 3 diz
+que o agente não tem privilégios.
+
+A verificação passou a contar as anotações por classe. E apanhou-se a si própria à
+primeira: contava a palavra `@InvocableMethod` **dentro dos comentários**, e o
+comentário que explica o limite fazia a regra acusar a própria classe que o respeita.
+Corrigida para contar só a anotação no início da linha, e testada nos dois sentidos.

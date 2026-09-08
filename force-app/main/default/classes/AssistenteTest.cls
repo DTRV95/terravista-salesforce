@@ -6,7 +6,7 @@
  * escreve, da um registo errado que fica na base de dados.
  */
 @IsTest
-private class AssistenteTerravistaTest {
+private class AssistenteTest {
 
     private static Id rtPessoa {
         get {
@@ -33,8 +33,8 @@ private class AssistenteTerravistaTest {
             Localizacao__c = 'Matosinhos');
     }
 
-    private static AssistenteTerravista.PedidoCliente pedidoBase() {
-        AssistenteTerravista.PedidoCliente p = new AssistenteTerravista.PedidoCliente();
+    private static AssistenteCriarCliente.PedidoCliente pedidoBase() {
+        AssistenteCriarCliente.PedidoCliente p = new AssistenteCriarCliente.PedidoCliente();
         p.primeiroNome = 'Mariana';
         p.apelido = 'Bragança';
         return p;
@@ -44,8 +44,8 @@ private class AssistenteTerravistaTest {
     @IsTest
     static void cria_quando_nao_ha_ninguem_parecido() {
         Test.startTest();
-        List<AssistenteTerravista.Resposta> r =
-            AssistenteTerravista.criarCliente(new List<AssistenteTerravista.PedidoCliente>{ pedidoBase() });
+        List<AssistenteResposta> r =
+            AssistenteCriarCliente.executar(new List<AssistenteCriarCliente.PedidoCliente>{ pedidoBase() });
         Test.stopTest();
 
         System.assertEquals(true, r[0].sucesso);
@@ -56,8 +56,8 @@ private class AssistenteTerravistaTest {
     static void nao_duplica_quando_ja_existe_o_apelido() {
         insert new Account(RecordTypeId = rtPessoa, FirstName = 'Joana', LastName = 'Bragança');
 
-        List<AssistenteTerravista.Resposta> r =
-            AssistenteTerravista.criarCliente(new List<AssistenteTerravista.PedidoCliente>{ pedidoBase() });
+        List<AssistenteResposta> r =
+            AssistenteCriarCliente.executar(new List<AssistenteCriarCliente.PedidoCliente>{ pedidoBase() });
 
         System.assertEquals(false, r[0].sucesso, 'Nao pode criar sem perguntar');
         System.assert(r[0].mensagem.contains('Ja existe'),
@@ -69,7 +69,7 @@ private class AssistenteTerravistaTest {
     // --- Regra 2: nao inventar ------------------------------------------
     @IsTest
     static void o_que_nao_foi_dito_fica_em_branco() {
-        AssistenteTerravista.criarCliente(new List<AssistenteTerravista.PedidoCliente>{ pedidoBase() });
+        AssistenteCriarCliente.executar(new List<AssistenteCriarCliente.PedidoCliente>{ pedidoBase() });
 
         Account a = [SELECT Orcamento_Max__pc, Procura_Zonas__pc, PersonEmail
                      FROM Account WHERE LastName = 'Bragança'];
@@ -80,11 +80,11 @@ private class AssistenteTerravistaTest {
 
     @IsTest
     static void sem_nome_completo_nao_cria() {
-        AssistenteTerravista.PedidoCliente p = new AssistenteTerravista.PedidoCliente();
+        AssistenteCriarCliente.PedidoCliente p = new AssistenteCriarCliente.PedidoCliente();
         p.primeiroNome = 'So o primeiro';
 
-        List<AssistenteTerravista.Resposta> r =
-            AssistenteTerravista.criarCliente(new List<AssistenteTerravista.PedidoCliente>{ p });
+        List<AssistenteResposta> r =
+            AssistenteCriarCliente.executar(new List<AssistenteCriarCliente.PedidoCliente>{ p });
 
         System.assertEquals(false, r[0].sucesso);
         System.assert(r[0].mensagem.contains('nome completo'));
@@ -103,14 +103,14 @@ private class AssistenteTerravistaTest {
             CloseDate = Date.today().addDays(30));
         insert o;
 
-        AssistenteTerravista.PedidoVisita p = new AssistenteTerravista.PedidoVisita();
+        AssistenteMarcarVisita.PedidoVisita p = new AssistenteMarcarVisita.PedidoVisita();
         p.nomeCliente = 'Visitante';
         p.nomeImovel = 'Apartamento de Teste';
         p.quando = Datetime.now().addDays(3);
 
         Test.startTest();
-        List<AssistenteTerravista.Resposta> r =
-            AssistenteTerravista.marcarVisita(new List<AssistenteTerravista.PedidoVisita>{ p });
+        List<AssistenteResposta> r =
+            AssistenteMarcarVisita.executar(new List<AssistenteMarcarVisita.PedidoVisita>{ p });
         Test.stopTest();
 
         System.assertEquals(true, r[0].sucesso);
@@ -123,12 +123,12 @@ private class AssistenteTerravistaTest {
 
     @IsTest
     static void sem_data_pergunta_em_vez_de_assumir() {
-        AssistenteTerravista.PedidoVisita p = new AssistenteTerravista.PedidoVisita();
+        AssistenteMarcarVisita.PedidoVisita p = new AssistenteMarcarVisita.PedidoVisita();
         p.nomeCliente = 'Dono';
         p.nomeImovel = 'Apartamento de Teste';
 
-        List<AssistenteTerravista.Resposta> r =
-            AssistenteTerravista.marcarVisita(new List<AssistenteTerravista.PedidoVisita>{ p });
+        List<AssistenteResposta> r =
+            AssistenteMarcarVisita.executar(new List<AssistenteMarcarVisita.PedidoVisita>{ p });
 
         System.assertEquals(false, r[0].sucesso);
         System.assert(r[0].mensagem.contains('nao inventes'));
@@ -137,13 +137,13 @@ private class AssistenteTerravistaTest {
 
     @IsTest
     static void imovel_desconhecido_nao_marca_nada() {
-        AssistenteTerravista.PedidoVisita p = new AssistenteTerravista.PedidoVisita();
+        AssistenteMarcarVisita.PedidoVisita p = new AssistenteMarcarVisita.PedidoVisita();
         p.nomeCliente = 'Dono';
         p.nomeImovel = 'Palacio Que Nao Existe';
         p.quando = Datetime.now().addDays(1);
 
-        List<AssistenteTerravista.Resposta> r =
-            AssistenteTerravista.marcarVisita(new List<AssistenteTerravista.PedidoVisita>{ p });
+        List<AssistenteResposta> r =
+            AssistenteMarcarVisita.executar(new List<AssistenteMarcarVisita.PedidoVisita>{ p });
 
         System.assertEquals(false, r[0].sucesso);
         System.assertEquals(0, [SELECT COUNT() FROM Event]);
@@ -152,14 +152,14 @@ private class AssistenteTerravistaTest {
     // --- Criar tarefa ----------------------------------------------------
     @IsTest
     static void a_tarefa_nasce_aberta() {
-        AssistenteTerravista.PedidoTarefa p = new AssistenteTerravista.PedidoTarefa();
+        AssistenteCriarTarefa.PedidoTarefa p = new AssistenteCriarTarefa.PedidoTarefa();
         p.nomeCliente = 'Dono';
         p.assunto = 'Ligar a confirmar';
         p.urgente = true;
 
         Test.startTest();
-        List<AssistenteTerravista.Resposta> r =
-            AssistenteTerravista.criarTarefa(new List<AssistenteTerravista.PedidoTarefa>{ p });
+        List<AssistenteResposta> r =
+            AssistenteCriarTarefa.executar(new List<AssistenteCriarTarefa.PedidoTarefa>{ p });
         Test.stopTest();
 
         System.assertEquals(true, r[0].sucesso);
@@ -177,12 +177,12 @@ private class AssistenteTerravistaTest {
             new Account(RecordTypeId = rtPessoa, FirstName = 'Rita', LastName = 'Ambigua')
         };
 
-        AssistenteTerravista.PedidoTarefa p = new AssistenteTerravista.PedidoTarefa();
+        AssistenteCriarTarefa.PedidoTarefa p = new AssistenteCriarTarefa.PedidoTarefa();
         p.nomeCliente = 'Ambigua';
         p.assunto = 'Ligar';
 
-        List<AssistenteTerravista.Resposta> r =
-            AssistenteTerravista.criarTarefa(new List<AssistenteTerravista.PedidoTarefa>{ p });
+        List<AssistenteResposta> r =
+            AssistenteCriarTarefa.executar(new List<AssistenteCriarTarefa.PedidoTarefa>{ p });
 
         System.assertEquals(false, r[0].sucesso);
         System.assert(r[0].mensagem.contains('mais do que um'));

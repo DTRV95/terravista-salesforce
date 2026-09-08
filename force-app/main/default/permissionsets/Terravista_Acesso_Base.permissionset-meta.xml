@@ -4,7 +4,23 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Terravista — Acesso Base</label>
     <classAccesses>
-        <apexClass>AssistenteTerravista</apexClass>
+        <apexClass>AssistenteCriarCliente</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AssistenteCriarTarefa</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AssistenteMarcarVisita</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AssistenteResposta</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AssistenteUtil</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
