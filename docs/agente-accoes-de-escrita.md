@@ -143,3 +143,45 @@ A verificação passou a contar as anotações por classe. E apanhou-se a si pr�
 primeira: contava a palavra `@InvocableMethod` **dentro dos comentários**, e o
 comentário que explica o limite fazia a regra acusar a própria classe que o respeita.
 Corrigida para contar só a anotação no início da linha, e testada nos dois sentidos.
+
+---
+
+## O bug que as acções de escrita revelaram
+
+O teste `nao_duplica_quando_ja_existe_o_apelido` falhou: criou uma segunda ficha
+*Bragança* com uma já lá. E a causa não era o teste.
+
+**A normalização de acentos só funcionava num sentido.** Tirava-se o acento ao termo
+procurado e comparava-se contra dados que podiam ter acento:
+
+```
+Termo "Bragança"  →  "%Braganca%"  →  não encontra  "Bragança"
+```
+
+Isto esteve certo enquanto foi verdade a premissa escrita no próprio comentário:
+
+> *"Funciona porque os nomes na base estão sem acentos. Se um dia passarem a ter,
+> isto deixa de chegar."*
+
+**As acções de escrita são esse dia.** Até aqui todos os nomes vinham do script, sem
+acentos por construção. Desde que o agente cria fichas com o que o consultor ditar,
+há acentos na base — e a premissa caiu sem ninguém dar por isso.
+
+### A correcção
+
+Normalizar **os dois lados**, em Apex, nas duas classes que procuram por nome.
+
+O preço é trazer os clientes para memória — 200 chegam para esta agência e para a
+demonstração. Numa carteira maior, a resposta certa seria guardar o nome já
+normalizado num campo: **o SOQL não normaliza, mas nós podemos normalizar uma vez,
+no momento em que se escreve.** Está dito no código, com o limite explícito.
+
+### O que isto ensina
+
+> Um comentário que documenta uma premissa é uma dívida com data por marcar. Este
+> tinha a data escrita — *"se um dia passarem a ter"* — e ninguém a foi verificar
+> quando o dia chegou.
+
+E vale a pena notar **como** apareceu: não foi ninguém a ler o código. Foi um teste
+que exercitava um caso que o desenho não cobria — escrito com um nome português a
+sério, `Bragança`, em vez de um nome de teste sem acentos.

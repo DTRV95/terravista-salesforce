@@ -145,6 +145,9 @@ private class MatchImoveisTest {
         // O LIKE do SOQL e sensivel a acentos. Sem normalizar, quem escrever
         // 'Claudia' com acento agudo ouve 'nao encontrei nenhum cliente' - e e
         // assim que um portugues escreve o nome.
+        // Os dois sentidos. Procurar com acento dados sem acento era metade do
+        // problema; desde que o agente cria fichas, ha nomes COM acento na base
+        // e procurar sem acento tem de os encontrar na mesma.
         criarComprador('Claudia', 'T3', 'Matosinhos', 150000, 250000, null);
 
         MatchImoveis.Pedido p = new MatchImoveis.Pedido();
@@ -154,7 +157,18 @@ private class MatchImoveisTest {
             new List<MatchImoveis.Pedido>{ p });
 
         System.assertEquals(2, r[0].total,
-            'O acento nao pode impedir de encontrar o cliente');
+            'Procurar COM acento tem de encontrar dados SEM acento');
+
+        criarComprador('Bragan\u00E7a', 'T3', 'Matosinhos', 150000, 250000, null);
+
+        MatchImoveis.Pedido p2 = new MatchImoveis.Pedido();
+        p2.nomeCliente = 'Braganca';
+
+        List<MatchImoveis.Resultado> r2 = MatchImoveis.encontrar(
+            new List<MatchImoveis.Pedido>{ p2 });
+
+        System.assertEquals(2, r2[0].total,
+            'Procurar SEM acento tem de encontrar dados COM acento');
     }
 
     @IsTest

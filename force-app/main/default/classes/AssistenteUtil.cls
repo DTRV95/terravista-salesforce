@@ -12,13 +12,38 @@ public with sharing class AssistenteUtil {
                 WHERE SobjectType = 'Account' AND IsPersonType = true LIMIT 1].Id;
     }
 
-    /** Mesma resolucao por nome do matching, incluindo tirar acentos: o LIKE do
-     *  SOQL e sensivel a eles e quem escreve portugues escreve com acentos. */
+    /**
+     * Encontra clientes por nome, sem se deixar enganar por acentos.
+     *
+     * PORQUE E QUE NAO E UM LIKE
+     * O LIKE do SOQL e sensivel a acentos, e nao ha forma de o mandar normalizar
+     * o campo. Tirar o acento so ao termo procurado resolve metade: encontra
+     * "Braganca" escrito com acento contra dados sem acento, mas nao encontra
+     * dados COM acento - e desde que o agente cria fichas com o que o consultor
+     * ditar, passa a haver acentos na base.
+     *
+     * Numa verificacao de duplicados, meia solucao e pior do que nenhuma: cria
+     * a segunda ficha e ninguem repara.
+     *
+     * Por isso normaliza-se dos DOIS lados, em Apex. O preco e trazer os
+     * clientes para memoria: 200 chegam para esta agencia e para a
+     * demonstracao. Numa carteira maior, a resposta certa seria guardar o nome
+     * ja normalizado num campo e procurar por ele - o SOQL nao normaliza, mas
+     * nos podemos normalizar uma vez, no momento em que se escreve.
+     */
     public static List<Account> clientesPorNome(String nome) {
-        if (String.isBlank(nome)) return new List<Account>();
-        String padrao = '%' + MatchImoveis.semAcentos(nome.trim()) + '%';
-        return [SELECT Id, Name, OwnerId, PersonContactId FROM Account
-                WHERE IsPersonAccount = true AND Name LIKE :padrao LIMIT 5];
+        List<Account> encontrados = new List<Account>();
+        if (String.isBlank(nome)) return encontrados;
+
+        String alvo = MatchImoveis.semAcentos(nome.trim()).toLowerCase();
+        for (Account a : [SELECT Id, Name, OwnerId, PersonContactId FROM Account
+                          WHERE IsPersonAccount = true LIMIT 200]) {
+            if (MatchImoveis.semAcentos(a.Name).toLowerCase().contains(alvo)) {
+                encontrados.add(a);
+                if (encontrados.size() == 5) break;
+            }
+        }
+        return encontrados;
     }
 
     public static List<Imovel__c> imoveisPorNome(String nome) {

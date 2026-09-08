@@ -143,11 +143,24 @@ public with sharing class MatchImoveis {
                     FROM Account WHERE Id = :p.clienteId LIMIT 1];
         }
         if (String.isBlank(p.nomeCliente)) return new List<Account>();
-        String padrao = '%' + semAcentos(p.nomeCliente.trim()) + '%';
-        return [SELECT Id, Name, Procura_Tipologia__pc, Procura_Zonas__pc,
-                       Orcamento_Min__pc, Orcamento_Max__pc, Notas_Preferencias__pc,
-                       Perfil_Comprador__pc
-                FROM Account WHERE Name LIKE :padrao LIMIT 5];
+
+        // Normaliza os DOIS lados. Tirar o acento so ao termo procurado resolvia
+        // metade: encontrava dados sem acento, nao encontrava dados com acento.
+        // Desde que o agente cria fichas com o que o consultor ditar, ha acentos
+        // na base - e um cliente que existe e nao e encontrado le-se como um
+        // cliente que nao existe.
+        String alvo = semAcentos(p.nomeCliente.trim()).toLowerCase();
+        List<Account> encontrados = new List<Account>();
+        for (Account a : [SELECT Id, Name, Procura_Tipologia__pc, Procura_Zonas__pc,
+                                 Orcamento_Min__pc, Orcamento_Max__pc,
+                                 Notas_Preferencias__pc, Perfil_Comprador__pc
+                          FROM Account WHERE IsPersonAccount = true LIMIT 200]) {
+            if (semAcentos(a.Name).toLowerCase().contains(alvo)) {
+                encontrados.add(a);
+                if (encontrados.size() == 5) break;
+            }
+        }
+        return encontrados;
     }
 
     /** O LIKE do SOQL e sensivel a acentos: '%Claudia%' encontra a Claudia
