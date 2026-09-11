@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Classes orfas: a primeira tentativa de dividir o assistente, feita em
+  paralelo com nomes diferentes. Ficaram na org porque apagar um ficheiro do
+  repositorio NAO apaga o componente da org - so um deploy destrutivo o faz.
+
+  Nao e arrumacao. Cada uma tem um @InvocableMethod, o que faz o Agentforce
+  mostrar cada accao duas vezes na lista, e a versao antiga ainda tem o bug dos
+  acentos na verificacao de duplicados.
+-->
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>AssistenteTerravistaCriarCliente</members>
+        <members>AssistenteTerravistaCriarTarefa</members>
+        <members>AssistenteTerravistaMarcarVisita</members>
+        <members>AssistenteTerravistaResposta</members>
+        <members>AssistenteTerravistaTest</members>
+        <members>AssistenteTerravistaUtil</members>
+        <name>ApexClass</name>
+    </types>
+    <version>62.0</version>
+</Package>
