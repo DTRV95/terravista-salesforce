@@ -6,24 +6,28 @@
         <editHeading>true</editHeading>
         <label>Identificação</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Required</behavior>
-                    <field>Name</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Required</behavior>
-                    <field>Contrato__c</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Finalidade__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Name</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Contrato__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Required</behavior>
-                    <field>Tipo_Imovel__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Required</behavior>
-                    <field>Estado_Comercial__c</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Tipo_Imovel__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Estado_Comercial__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -33,28 +37,28 @@
         <editHeading>true</editHeading>
         <label>Caracterização</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Tipologia__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Required</behavior>
-                    <field>Area_m2__c</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tipologia__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Area_m2__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Piso__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Localizacao__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Elevador__c</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Piso__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Localizacao__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Elevador__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -64,16 +68,16 @@
         <editHeading>true</editHeading>
         <label>Terreno — viabilidade construtiva</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Tipo_Solo__c</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tipo_Solo__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Area_Bruta_Construcao_m2__c</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Area_Bruta_Construcao_m2__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -83,15 +87,15 @@
         <editHeading>true</editHeading>
         <label>Comercial</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Required</behavior>
-                    <field>Preco__c</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Preco__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-                <layoutItems>
-                    <emptySpace>true</emptySpace>
-                </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -101,16 +105,16 @@
         <editHeading>false</editHeading>
         <label>Fotografia</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>Foto__c</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Foto__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Foto_URL__c</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Foto_URL__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -120,23 +124,29 @@
         <editHeading>true</editHeading>
         <label>Informação de Sistema</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>CreatedById</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CreatedById</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>LastModifiedById</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LastModifiedById</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
-    <!--
-      Quem esta interessado neste imovel e em que ponto. Um imovel com tres
-      propostas negoceia-se de outra maneira do que um sem nenhuma.
-    -->
+    <layoutSections>
+        <customLabel>false</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>false</editHeading>
+        <layoutColumns/>
+        <style>CustomLinks</style>
+    </layoutSections>
+    <miniLayout>
+        <fields>Finalidade__c</fields>
+    </miniLayout>
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>OPPORTUNITY.STAGE_NAME</fields>
@@ -151,4 +161,9 @@
         <fields>TASK.STATUS</fields>
         <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
+    <showEmailCheckbox>false</showEmailCheckbox>
+    <showHighlightsPanel>false</showHighlightsPanel>
+    <showInteractionLogPanel>false</showInteractionLogPanel>
+    <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
+    <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
 </Layout>
