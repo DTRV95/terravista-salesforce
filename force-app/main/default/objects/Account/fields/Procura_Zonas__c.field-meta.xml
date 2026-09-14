@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Procura_Zonas__c</fullName>
-    <label>Zonas Procuradas</label>
+    <description>Zonas onde esta construtora procura terreno. NAO confundir com o campo homonimo do Contact (Procura_Zonas__pc), que serve o cliente particular. Os dois tinham a mesma etiqueta e trocaram-se no layout de Person Account.</description>
+    <label>Zonas Procuradas (Construtora)</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

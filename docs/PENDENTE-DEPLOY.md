@@ -14,14 +14,20 @@ sf project deploy start -o terravista
 
 ---
 
-## Bloco atual — nada pendente de deploy
+## Bloco atual — duas etiquetas de campo
 
-Só scripts:
+**Bloqueia o passo seguinte?** Sim. Enquanto as etiquetas forem iguais, quem
+mexer no layout de Person Account volta a arrastar o campo errado.
 
 ```
 git pull
-sf apex run -f scripts/apex/preencher_carteira.apex -o terravista
+python scripts/verificar_metadados.py
+sf project deploy start -m "CustomField:Account.Procura_Zonas__c" \
+                        -m "CustomField:Account.Orcamento_Max__c" -o terravista
 ```
+
+Deploy dirigido, não o projeto inteiro: há ajustes feitos à mão na org
+(list views afixadas, ícone do tab dos Imóveis) que um deploy largo desfaz.
 
 ---
 

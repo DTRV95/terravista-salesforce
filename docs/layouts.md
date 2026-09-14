@@ -228,3 +228,41 @@ campo — mas o comando de deploy que eu dei mandava só `layouts` e `profiles`.
 layout referia um campo que aquele deploy não levava.
 
 **Um layout e o campo que ele mostra têm de ir no mesmo deploy**, ou o campo primeiro.
+
+---
+
+## O layout de Person Account tinha os campos do B2B (14/09)
+
+A ficha da Beatriz Nogueira mostrava `Zonas Procuradas` e `Orçamento Máximo`
+vazios. Pela API os mesmos campos vinham preenchidos: `Porto, Matosinhos` e
+250.000. Um campo da mesma secção — `Notas e Preferências` — aparecia bem.
+
+Não era FLS nem dados em falta. Eram **campos diferentes com a mesma etiqueta**:
+
+| Objecto | API | Etiqueta (antes) | Para quem |
+|---|---|---|---|
+| Contact | `Procura_Zonas__c` → `__pc` | Zonas Procuradas | cliente particular |
+| Account | `Procura_Zonas__c` | Zonas Procuradas | construtora |
+| Contact | `Orcamento_Max__c` → `__pc` | Orçamento Máximo | cliente particular |
+| Account | `Orcamento_Max__c` | Orçamento Máximo | construtora |
+
+Numa org com Person Accounts, a paleta do editor de layouts mostra os campos do
+Account e os do Contact lado a lado. Com a etiqueta igual são indistinguíveis —
+escolher o certo era uma moeda ao ar. Foram os do Account que ficaram no layout
+do particular, e esses estão sempre vazios porque os dados do particular vivem
+nos do Contact.
+
+**Porque é que isto durou tanto tempo:** nenhum deploy o apanha. As duas
+etiquetas são válidas, os dois campos existem, o layout é legítimo. Só se vê
+comparando o ecrã com a API — e enquanto ninguém comparou, o sintoma lia-se ao
+contrário: parecia que os dados estavam em falta, quando o que faltava era o
+campo certo no ecrã.
+
+**Correcção de fundo:** os campos do Account passaram a `Zonas Procuradas
+(Construtora)` e `Orçamento Máximo (Construtora)`, e o
+`verificar_metadados.py` passa a recusar qualquer etiqueta que exista nos dois
+objectos ao mesmo tempo.
+
+**A lição:** um ecrã vazio não prova que o dado falta. Prova que aquele campo
+está vazio — e num modelo com campos homónimos, "aquele campo" pode não ser o
+campo que se julga.

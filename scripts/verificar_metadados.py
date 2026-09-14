@@ -5,6 +5,7 @@ Apanha os erros que ja nos custaram ciclos:
   1. <description> acima de 255 caracteres
   2. API names com acentos ou caracteres invalidos
   3. fieldPermissions declaradas para campos obrigatorios
+  4. etiquetas iguais entre campos do Account e do Contact
 
 Correr a partir da raiz do projeto:
     python scripts/verificar_metadados.py
@@ -167,6 +168,33 @@ for f in FORCE_APP.rglob("classes/*.cls"):
     if n > 1:
         erros.append(f"[{n} @InvocableMethod na mesma classe, o maximo e 1] "
                      f"{f.relative_to(RAIZ)}")
+
+# --- Etiquetas iguais entre Account e Contact -----------------------------
+# Numa org com Person Accounts, os campos do Contact aparecem na ficha do
+# cliente particular como __pc, lado a lado com os campos do Account. Se dois
+# campos tiverem a MESMA etiqueta, na paleta do editor de layouts sao
+# indistinguiveis - e o que se arrasta para o layout e uma moeda ao ar.
+# Aconteceu com "Zonas Procuradas" e "Orcamento Maximo": o layout de Person
+# Account ficou com os campos B2B, que estao sempre vazios porque os dados do
+# particular vivem nos do Contact. O ecra mostrava vazio, os dados estavam la,
+# e o agente parecia estar a inventar aquilo que na verdade lia bem.
+# Nenhum deploy apanha isto: as duas etiquetas sao validas.
+def _etiquetas(objeto: str) -> dict:
+    fora = {}
+    pasta = FORCE_APP / "main" / "default" / "objects" / objeto / "fields"
+    for f in pasta.glob("*.field-meta.xml"):
+        m = re.search(r"<label>([^<]*)</label>", texto(f))
+        if m:
+            fora[m.group(1).strip()] = f
+    return fora
+
+_conta = _etiquetas("Account")
+_contacto = _etiquetas("Contact")
+for _lbl in sorted(set(_conta) & set(_contacto)):
+    erros.append(
+        f'[etiqueta "{_lbl}" existe no Account e no Contact: indistinguiveis '
+        f"no layout de Person Account] {_conta[_lbl].relative_to(RAIZ)} "
+        f"e {_contacto[_lbl].relative_to(RAIZ)}")
 
 # Os avisos aparecem sempre e nunca bloqueiam. Um aviso que impede o deploy
 # passa a ser lido como erro, e um erro que nao e erro ensina a ignorar a saida
