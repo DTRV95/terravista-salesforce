@@ -12,25 +12,21 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Type</field>
+                <field>PersonEmail</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Industry</field>
+                <field>PersonMobilePhone</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Phone</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Website</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>OwnerId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Phone</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -52,25 +48,33 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Critérios de Procura</label>
+        <label>Perfil de Procura</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Procura_Tipo_Solo__c</field>
+                <field>Procura_Tipologia__pc</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Procura_Zonas__c</field>
+                <field>Orcamento_Min__pc</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Perfil_Comprador__pc</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Procura_ABC_Minima_m2__c</field>
+                <field>Procura_Zonas__pc</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Orcamento_Max__c</field>
+                <field>Orcamento_Max__pc</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Financiamento__pc</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -79,11 +83,11 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Notas e Critérios</label>
+        <label>Notas do Consultor</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Notas_Criterios__c</field>
+                <field>Notas_Preferencias__pc</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -114,6 +118,27 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.AMOUNT</fields>
+        <fields>OPPORTUNITY.CLOSE_DATE</fields>
+        <relatedList>RelatedOpportunityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>TASK.SUBJECT</fields>
+        <fields>TASK.WHO_NAME</fields>
+        <fields>TASK.DUE_DATE</fields>
+        <fields>TASK.STATUS</fields>
+        <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>CONTRACT.START_DATE</fields>
+        <fields>CONTRACT.END_DATE</fields>
+        <fields>CONTRACT.STATUS</fields>
+        <relatedList>RelatedContractList</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

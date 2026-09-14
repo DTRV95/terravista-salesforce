@@ -14,27 +14,35 @@ sf project deploy start -o terravista
 
 ---
 
-## Bloco atual — duas etiquetas de campo
+## Bloco atual — layout de Person Account
 
-**Bloqueia o passo seguinte?** Sim. Enquanto as etiquetas forem iguais, quem
-mexer no layout de Person Account volta a arrastar o campo errado.
+**Bloqueia o passo seguinte?** Sim. A ficha do cliente particular mostra os
+campos da construtora, que estao sempre vazios. Enquanto assim for, qualquer
+teste ao agente parece errado mesmo com o codigo certo.
+
+Feito em 14/09 (etiquetas + matching em Leads, 15/15 testes verdes):
+`CustomField:Account.Procura_Zonas__c`, `CustomField:Account.Orcamento_Max__c`,
+`ApexClass:MatchImoveis`, `ApexClass:MatchImoveisTest`.
+
+Falta:
 
 ```
 git pull
 python scripts/verificar_metadados.py
-sf project deploy start -m "CustomField:Account.Procura_Zonas__c" \
-                        -m "CustomField:Account.Orcamento_Max__c" \
-                        -m "ApexClass:MatchImoveis" \
-                        -m "ApexClass:MatchImoveisTest" -o terravista
-
-sf apex run test -n MatchImoveisTest -o terravista -r human -w 10
+sf project deploy start -m "Layout:PersonAccount-Person Account Layout" -o terravista
 ```
 
-Os quatro testes novos da Lead **nunca correram** — esta sessao nao tem org
-autenticada. Corre-os logo a seguir ao deploy, antes de testares o agente.
+**Se falhar**, o mais provavel e um destes tres, por esta ordem:
 
-Deploy dirigido, não o projeto inteiro: há ajustes feitos à mão na org
-(list views afixadas, ícone do tab dos Imóveis) que um deploy largo desfaz.
+1. Um token de related list recusado. Apagar os tres blocos `<relatedLists>`
+   e repetir: as seccoes de campos sao o que interessa.
+2. `PersonEmail` ou `PersonMobilePhone` nao disponiveis nesta org. Apagar
+   esses dois `<layoutItems>`.
+3. A plataforma recusar alterar layouts de Person Account por metadata. Nesse
+   caso o ficheiro serve na mesma: diz exactamente que campos por em que
+   seccao, e faz-se o mesmo a mao em Setup em tres minutos.
+
+Um deploy e atomico: se falhar, nada entrou e nao ficaste a meio.
 
 ---
 
