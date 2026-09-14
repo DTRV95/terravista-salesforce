@@ -14,11 +14,20 @@
  * registos, e um imovel inventado a frente de um cliente e o fim da confianca
  * no sistema.
  *
+ * LEAD E PERSON ACCOUNT, NAO SO PERSON ACCOUNT
+ * Um perfil de procura existe dos dois lados: a Lead tem exactamente os mesmos
+ * sete campos que o Contact (Procura_Tipologia, Procura_Zonas, Orcamento_Min,
+ * Orcamento_Max, Notas_Preferencias, Perfil_Comprador, Financiamento).
+ * Procurar so em Person Accounts deixava de fora quem esta em "Visita
+ * Agendada" - precisamente o estado em que saber que imovel mostrar e mais
+ * urgente. Por isso a classe trabalha sobre um Perfil, e e o SOQL que decide
+ * de que objecto o enche.
+ *
  * PORQUE E APEX E NAO UM FLOW
  * O projeto usa configuracao antes de codigo, e esta e a unica excecao com
  * logica de negocio. A razao e concreta: o perfil de procura vive em campos de
- * texto - Procura_Tipologia__pc e um multi-select separado por ponto e virgula,
- * Procura_Zonas__pc e texto livre separado por virgulas. Um Flow nao parte
+ * texto - Procura_Tipologia e um multi-select separado por ponto e virgula,
+ * Procura_Zonas e texto livre separado por virgulas. Um Flow nao parte
  * strings. Forcar isso em Flow daria um matching pior e ilegivel.
  * Como Invocable, serve na mesma um Flow, um Prompt Template ou uma Agent Action.
  */
@@ -33,12 +42,14 @@ public with sharing class MatchImoveis {
     // aviso. Foi esse o bug: a comparacao do limite de resultados passou a usar
     // o orcamento do cliente. Por isso os nomes sao deliberadamente distintos.
     private static final Integer LIMITE_RESULTADOS = 5;
+    private static final Integer LIMITE_HOMONIMOS = 5;
+    private static final Integer LIMITE_VARRIMENTO = 200;
 
     public class Pedido {
-        @InvocableVariable(label='Id do Cliente' description='Id da conta do cliente. Usa este quando estas na pagina de um cliente. Se so souberes o nome, deixa vazio e preenche o Nome do Cliente.')
+        @InvocableVariable(label='Id do Cliente ou da Lead' description='Id da Person Account ou da Lead. Usa este quando estas na pagina do registo. Se so souberes o nome, deixa vazio e preenche o Nome.')
         public Id clienteId;
 
-        @InvocableVariable(label='Nome do Cliente' description='Nome ou apelido do cliente, para quando nao se tem o Id. Exemplo: Jorge Teixeira, ou apenas Teixeira.')
+        @InvocableVariable(label='Nome do Cliente ou da Lead' description='Nome ou apelido, para quando nao se tem o Id. Procura em clientes e em leads. Exemplo: Jorge Teixeira, ou apenas Teixeira.')
         public String nomeCliente;
 
         @InvocableVariable(label='Finalidade' description='Venda ou Arrendamento. Por omissao, Venda')
@@ -59,48 +70,66 @@ public with sharing class MatchImoveis {
         @InvocableVariable(label='Total encontrado') @AuraEnabled public Integer total;
     }
 
+    /**
+     * Um perfil de procura, venha ele de uma Person Account ou de uma Lead.
+     * Existe para que o filtro seja escrito uma vez so: duas copias da mesma
+     * regra divergem no dia em que uma delas for corrigida.
+     */
+    private class Perfil {
+        Id registoId;
+        String nome;
+        String origem;      // 'Cliente' ou 'Lead' - vai para o resumo
+        String tipologias;
+        String zonas;
+        Decimal orcMin;
+        Decimal orcMax;
+        String notas;
+    }
+
     @InvocableMethod(
         label='Encontrar imóveis para um cliente'
-        description='Filtra a carteira disponivel pelos criterios de procura do cliente e devolve os imoveis reais que servem.'
+        description='Filtra a carteira disponivel pelos criterios de procura de um cliente ou de uma lead e devolve os imoveis reais que servem.'
         category='Terravista')
     public static List<Resultado> encontrar(List<Pedido> pedidos) {
         List<Resultado> saida = new List<Resultado>();
-        for (Pedido p : pedidos) saida.add(paraUmCliente(p));
+        for (Pedido p : pedidos) saida.add(paraUmPerfil(p));
         return saida;
     }
 
-    private static Resultado paraUmCliente(Pedido p) {
+    private static Resultado paraUmPerfil(Pedido p) {
         Resultado r = new Resultado();
         r.imoveis = new List<Imovel__c>();
         r.total = 0;
 
-        List<Account> contas = resolverCliente(p);
-        if (contas.isEmpty()) {
+        List<Perfil> perfis = resolverPerfis(p);
+        if (perfis.isEmpty()) {
             r.resumo = String.isBlank(p.nomeCliente)
                 ? 'Cliente nao encontrado.'
-                : 'Nao encontrei nenhum cliente com o nome "' + p.nomeCliente + '".';
+                : 'Nao encontrei nenhum cliente nem nenhuma lead com o nome "'
+                  + p.nomeCliente + '".';
             return r;
         }
-        if (contas.size() > 1) {
+        if (perfis.size() > 1) {
             // Ambiguidade resolve-se PERGUNTANDO, nunca adivinhando. Escolher um
             // ao acaso daria uma resposta confiante sobre o cliente errado.
+            // A origem vai no nome porque a mesma pessoa pode existir como lead
+            // por qualificar e como cliente ja qualificado - e nesse caso o
+            // consultor tem mesmo de ser ele a dizer qual e que interessa.
             List<String> nomes = new List<String>();
-            for (Account a : contas) nomes.add(a.Name);
-            r.resumo = 'Ha mais do que um cliente com esse nome: ' + String.join(nomes, ', ')
+            for (Perfil pf : perfis) nomes.add(pf.nome + ' (' + pf.origem + ')');
+            r.resumo = 'Ha mais do que um registo com esse nome: ' + String.join(nomes, ', ')
                      + '. Pergunta ao utilizador qual deles.';
             return r;
         }
-        Account c = contas[0];
-        r.notasCliente = String.isBlank(c.Notas_Preferencias__pc)
-            ? 'Sem notas registadas.' : c.Notas_Preferencias__pc;
+        Perfil pf = perfis[0];
+        r.notasCliente = String.isBlank(pf.notas) ? 'Sem notas registadas.' : pf.notas;
 
         String finalidade = String.isBlank(p.finalidade) ? 'Venda' : p.finalidade;
-        Decimal minimo = (c.Orcamento_Min__pc == null) ? 0 : c.Orcamento_Min__pc;
-        Decimal orcamentoMax = (c.Orcamento_Max__pc == null) ? null
-                                                       : c.Orcamento_Max__pc * TOLERANCIA_ORCAMENTO;
+        Decimal minimo = (pf.orcMin == null) ? 0 : pf.orcMin;
+        Decimal orcamentoMax = (pf.orcMax == null) ? null : pf.orcMax * TOLERANCIA_ORCAMENTO;
 
-        Set<String> tipologias = separar(c.Procura_Tipologia__pc, ';');
-        Set<String> zonas = separar(c.Procura_Zonas__pc, ',');
+        Set<String> tipologias = separar(pf.tipologias, ';');
+        Set<String> zonas = separar(pf.zonas, ',');
 
         // Ordena por preco decrescente: dentro do orcamento, o melhor imovel que
         // o cliente consegue pagar. E uma ordem defensavel por omissao - quem a
@@ -122,27 +151,48 @@ public with sharing class MatchImoveis {
             if (!zonas.isEmpty() && !zonaServe(i.Localizacao__c, zonas)) continue;
 
             r.imoveis.add(i);
-            linhas.add(descrever(i, c));
+            linhas.add(descrever(i, pf));
             if (r.imoveis.size() == LIMITE_RESULTADOS) break;
         }
 
         r.total = r.imoveis.size();
+        // A origem vai sempre no resumo, mesmo quando nao ha ambiguidade: o
+        // consultor precisa de saber se esta a falar de um cliente qualificado
+        // ou de alguem que ainda e uma lead, porque o passo seguinte nao e o
+        // mesmo nos dois casos.
+        String cabecalho = pf.origem + ': ' + pf.nome;
         r.resumo = (r.total == 0)
-            ? 'Nenhum imovel disponivel corresponde aos criterios de ' + c.Name + '.'
-            : String.join(linhas, '\n');
+            ? cabecalho + '. Nenhum imovel disponivel corresponde aos criterios.'
+            : cabecalho + '\n' + String.join(linhas, '\n');
         return r;
     }
 
-    /** Encontra o cliente por Id ou por nome. E SOQL que resolve o nome, nunca o
-     *  modelo: pedir a um modelo o Id de um registo e pedir-lhe que o invente. */
-    private static List<Account> resolverCliente(Pedido p) {
+    /** Encontra o perfil por Id ou por nome, em Person Accounts e em Leads.
+     *  E SOQL que resolve o nome, nunca o modelo: pedir a um modelo o Id de um
+     *  registo e pedir-lhe que o invente. */
+    private static List<Perfil> resolverPerfis(Pedido p) {
         if (p.clienteId != null) {
-            return [SELECT Id, Name, Procura_Tipologia__pc, Procura_Zonas__pc,
-                           Orcamento_Min__pc, Orcamento_Max__pc, Notas_Preferencias__pc,
-                           Perfil_Comprador__pc
-                    FROM Account WHERE Id = :p.clienteId LIMIT 1];
+            // O Id pode vir do contexto da pagina, nao do utilizador. Numa
+            // pagina que nao seja de uma Account nem de uma Lead vem o Id desse
+            // outro registo - e a query devolvia zero, que se le como "esta
+            // pessoa nao existe". Validar o prefixo antes de confiar nele, e
+            // cair para o nome quando nao serve.
+            String prefixo = String.valueOf(p.clienteId).substring(0, 3);
+            if (prefixo == '001') {
+                List<Perfil> achados = dePersonAccounts(
+                    [SELECT Id, Name, Procura_Tipologia__pc, Procura_Zonas__pc,
+                            Orcamento_Min__pc, Orcamento_Max__pc, Notas_Preferencias__pc
+                     FROM Account WHERE Id = :p.clienteId LIMIT 1]);
+                if (!achados.isEmpty()) return achados;
+            } else if (prefixo == '00Q') {
+                List<Perfil> achados = deLeads(
+                    [SELECT Id, Name, Procura_Tipologia__c, Procura_Zonas__c,
+                            Orcamento_Min__c, Orcamento_Max__c, Notas_Preferencias__c
+                     FROM Lead WHERE Id = :p.clienteId AND IsConverted = false LIMIT 1]);
+                if (!achados.isEmpty()) return achados;
+            }
         }
-        if (String.isBlank(p.nomeCliente)) return new List<Account>();
+        if (String.isBlank(p.nomeCliente)) return new List<Perfil>();
 
         // Normaliza os DOIS lados. Tirar o acento so ao termo procurado resolvia
         // metade: encontrava dados sem acento, nao encontrava dados com acento.
@@ -150,33 +200,76 @@ public with sharing class MatchImoveis {
         // na base - e um cliente que existe e nao e encontrado le-se como um
         // cliente que nao existe.
         String alvo = semAcentos(p.nomeCliente.trim()).toLowerCase();
-        List<Account> encontrados = new List<Account>();
-        for (Account a : [SELECT Id, Name, Procura_Tipologia__pc, Procura_Zonas__pc,
-                                 Orcamento_Min__pc, Orcamento_Max__pc,
-                                 Notas_Preferencias__pc, Perfil_Comprador__pc
-                          FROM Account WHERE IsPersonAccount = true LIMIT 200]) {
-            if (semAcentos(a.Name).toLowerCase().contains(alvo)) {
-                encontrados.add(a);
-                if (encontrados.size() == 5) break;
-            }
+        List<Perfil> encontrados = new List<Perfil>();
+
+        for (Perfil pf : dePersonAccounts(
+                [SELECT Id, Name, Procura_Tipologia__pc, Procura_Zonas__pc,
+                        Orcamento_Min__pc, Orcamento_Max__pc, Notas_Preferencias__pc
+                 FROM Account WHERE IsPersonAccount = true LIMIT :LIMITE_VARRIMENTO])) {
+            if (semAcentos(pf.nome).toLowerCase().contains(alvo)) encontrados.add(pf);
+            if (encontrados.size() == LIMITE_HOMONIMOS) return encontrados;
+        }
+
+        // IsConverted = false nao e detalhe: uma lead convertida deu origem a
+        // uma Person Account com o mesmo nome. Sem este filtro, a mesma pessoa
+        // aparecia duas vezes e a classe perguntava qual das duas - uma
+        // ambiguidade inventada por nos, sobre um registo que ja nao se usa.
+        for (Perfil pf : deLeads(
+                [SELECT Id, Name, Procura_Tipologia__c, Procura_Zonas__c,
+                        Orcamento_Min__c, Orcamento_Max__c, Notas_Preferencias__c
+                 FROM Lead WHERE IsConverted = false LIMIT :LIMITE_VARRIMENTO])) {
+            if (semAcentos(pf.nome).toLowerCase().contains(alvo)) encontrados.add(pf);
+            if (encontrados.size() == LIMITE_HOMONIMOS) break;
         }
         return encontrados;
+    }
+
+    private static List<Perfil> dePersonAccounts(List<Account> contas) {
+        List<Perfil> fora = new List<Perfil>();
+        for (Account a : contas) {
+            Perfil pf = new Perfil();
+            pf.registoId  = a.Id;
+            pf.nome       = a.Name;
+            pf.origem     = 'Cliente';
+            pf.tipologias = a.Procura_Tipologia__pc;
+            pf.zonas      = a.Procura_Zonas__pc;
+            pf.orcMin     = a.Orcamento_Min__pc;
+            pf.orcMax     = a.Orcamento_Max__pc;
+            pf.notas      = a.Notas_Preferencias__pc;
+            fora.add(pf);
+        }
+        return fora;
+    }
+
+    private static List<Perfil> deLeads(List<Lead> leads) {
+        List<Perfil> fora = new List<Perfil>();
+        for (Lead l : leads) {
+            Perfil pf = new Perfil();
+            pf.registoId  = l.Id;
+            pf.nome       = l.Name;
+            pf.origem     = 'Lead';
+            pf.tipologias = l.Procura_Tipologia__c;
+            pf.zonas      = l.Procura_Zonas__c;
+            pf.orcMin     = l.Orcamento_Min__c;
+            pf.orcMax     = l.Orcamento_Max__c;
+            pf.notas      = l.Notas_Preferencias__c;
+            fora.add(pf);
+        }
+        return fora;
     }
 
     /** O LIKE do SOQL e sensivel a acentos: '%Claudia%' encontra a Claudia
      *  Marques, '%Claudia%' com acento agudo nao encontra nada. Quem escreve
      *  portugues a serio escreve com acentos, e o agente passa a pergunta tal e
-     *  qual - por isso e aqui que se tira o acento, antes de ir para o SOQL.
+     *  qual - por isso normalizamos os dois lados em Apex, ja que o SOQL nao
+     *  normaliza o campo.
      *
-     *  Funciona porque os nomes na base estao sem acentos. Se um dia passarem a
-     *  ter, isto deixa de chegar: seria preciso normalizar os dois lados, e o
-     *  SOQL nao normaliza o campo. */
-    /** Publico porque o AssistenteTerravista precisa da mesma normalizacao: duas
+     *  Publico porque as accoes de escrita precisam da mesma normalizacao: duas
      *  copias da mesma regra divergem no dia em que uma delas for corrigida. */
     public static String semAcentos(String texto) {
-        final String acentuadas = '\u00E1\u00E0\u00E2\u00E3\u00E4\u00E9\u00E8\u00EA\u00EB'
-            + '\u00ED\u00EC\u00EE\u00EF\u00F3\u00F2\u00F4\u00F5\u00F6'
-            + '\u00FA\u00F9\u00FB\u00FC\u00E7';
+        final String acentuadas = 'áàâãäéèêë'
+            + 'íìîïóòôõö'
+            + 'úùûüç';
         final String simples = 'aaaaaeeeeiiiiooooouuuuc';
         String r = texto;
         for (Integer i = 0; i < acentuadas.length(); i++) {
@@ -211,7 +304,7 @@ public with sharing class MatchImoveis {
     /** Linha legivel por uma pessoa e utilizavel por um modelo. Inclui o que o
      *  modelo precisa para julgar: preco face ao orcamento e ha quanto tempo
      *  esta parado - um imovel parado ha muito negoceia-se melhor. */
-    private static String descrever(Imovel__c i, Account c) {
+    private static String descrever(Imovel__c i, Perfil pf) {
         String s = '- ' + i.Name + ' | ' + i.Tipologia__c + ' | ' + i.Localizacao__c
                  + ' | ' + i.Area_m2__c + ' m2 | ' + i.Preco__c + ' EUR';
         if (String.isNotBlank(i.Piso__c)) s += ' | piso ' + i.Piso__c;
@@ -221,7 +314,7 @@ public with sharing class MatchImoveis {
         if (i.Contrato__r != null && String.isNotBlank(i.Contrato__r.Nome_Empreendimento__c)) {
             s += ' | empreendimento ' + i.Contrato__r.Nome_Empreendimento__c;
         }
-        if (c.Orcamento_Max__pc != null && i.Preco__c > c.Orcamento_Max__pc) {
+        if (pf.orcMax != null && i.Preco__c > pf.orcMax) {
             s += ' | ACIMA do orcamento maximo';
         }
         if (i.Dias_Disponivel__c != null && i.Dias_Disponivel__c > 60) {

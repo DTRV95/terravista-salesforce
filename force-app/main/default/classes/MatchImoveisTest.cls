@@ -36,6 +36,18 @@ private class MatchImoveisTest {
             Localizacao__c = zona);
     }
 
+    private static Lead criarLead(String apelido, String tipologias, String zonas,
+                                  Decimal minimo, Decimal maximo, String notas) {
+        Lead l = new Lead(
+            FirstName = 'Teste', LastName = apelido,
+            Company = 'Teste ' + apelido + ' (Particular)', Status = 'Novo',
+            Procura_Tipologia__c = tipologias, Procura_Zonas__c = zonas,
+            Orcamento_Min__c = minimo, Orcamento_Max__c = maximo,
+            Notas_Preferencias__c = notas);
+        insert l;
+        return l;
+    }
+
     @TestSetup
     static void dados() {
         Account proprietario = new Account(RecordTypeId = rtPessoa,
@@ -232,5 +244,80 @@ private class MatchImoveisTest {
 
         System.assertEquals(0, r[0].total);
         System.assert(r[0].resumo.contains('nao encontrado'));
+    }
+
+    @IsTest
+    static void lead_com_perfil_tambem_entra_no_matching() {
+        // Uma lead em "Visita Agendada" tem visita marcada a um imovel. Se o
+        // matching so olhasse para Person Accounts, o consultor nao conseguia
+        // saber que imovel mostrar precisamente quando mais precisa.
+        criarLead('Interessada', 'T3', 'Matosinhos', 150000, 250000,
+                  'Quer andar alto.');
+
+        MatchImoveis.Pedido p = new MatchImoveis.Pedido();
+        p.nomeCliente = 'Interessada';
+
+        List<MatchImoveis.Resultado> r = MatchImoveis.encontrar(
+            new List<MatchImoveis.Pedido>{ p });
+
+        System.assert(r[0].total > 0, 'Uma lead com perfil tem de dar imoveis');
+        System.assert(r[0].resumo.startsWith('Lead:'),
+            'O resumo tem de dizer que e uma lead: o passo seguinte nao e o mesmo');
+        System.assertEquals('Quer andar alto.', r[0].notasCliente,
+            'As notas da lead tem de chegar ao modelo, como as do cliente');
+    }
+
+    @IsTest
+    static void id_de_lead_resolve_a_lead() {
+        Lead l = criarLead('PorId', 'T3', 'Matosinhos', 150000, 250000, null);
+
+        MatchImoveis.Pedido p = new MatchImoveis.Pedido();
+        p.clienteId = l.Id;
+
+        List<MatchImoveis.Resultado> r = MatchImoveis.encontrar(
+            new List<MatchImoveis.Pedido>{ p });
+
+        System.assert(r[0].total > 0, 'O Id 00Q tem de ser resolvido como Lead');
+        System.assert(r[0].resumo.startsWith('Lead:'));
+    }
+
+    @IsTest
+    static void cliente_e_lead_com_o_mesmo_nome_pergunta() {
+        // A mesma pessoa pode existir como lead por qualificar e como cliente
+        // ja qualificado. Escolher um dos dois em silencio e decidir pelo
+        // consultor uma coisa que so ele sabe.
+        criarComprador('Duplicado', 'T3', 'Matosinhos', 150000, 250000, null);
+        criarLead('Duplicado', 'T3', 'Matosinhos', 150000, 250000, null);
+
+        MatchImoveis.Pedido p = new MatchImoveis.Pedido();
+        p.nomeCliente = 'Duplicado';
+
+        List<MatchImoveis.Resultado> r = MatchImoveis.encontrar(
+            new List<MatchImoveis.Pedido>{ p });
+
+        System.assertEquals(0, r[0].total, 'Com ambiguidade nao devolve imoveis');
+        System.assert(r[0].resumo.contains('(Cliente)')
+                   && r[0].resumo.contains('(Lead)'),
+            'Tem de dizer qual e cliente e qual e lead, ou a pergunta nao ajuda');
+    }
+
+    @IsTest
+    static void id_que_nao_e_de_pessoa_cai_para_o_nome() {
+        // O Id vem do contexto da pagina, nao do utilizador. Na pagina de um
+        // imovel vem o Id do imovel - e a query devolvia zero, que se lia como
+        // "este cliente nao existe", mesmo tendo o consultor dito o nome.
+        Imovel__c qualquer = [SELECT Id FROM Imovel__c LIMIT 1];
+        criarComprador('Salvo', 'T3', 'Matosinhos', 150000, 250000, null);
+
+        MatchImoveis.Pedido p = new MatchImoveis.Pedido();
+        p.clienteId = qualquer.Id;
+        p.nomeCliente = 'Salvo';
+
+        List<MatchImoveis.Resultado> r = MatchImoveis.encontrar(
+            new List<MatchImoveis.Pedido>{ p });
+
+        System.assert(r[0].total > 0,
+            'Um Id que nao e de pessoa tem de ser ignorado e valer o nome');
+        System.assert(r[0].resumo.startsWith('Cliente:'));
     }
 }

@@ -23,8 +23,15 @@ mexer no layout de Person Account volta a arrastar o campo errado.
 git pull
 python scripts/verificar_metadados.py
 sf project deploy start -m "CustomField:Account.Procura_Zonas__c" \
-                        -m "CustomField:Account.Orcamento_Max__c" -o terravista
+                        -m "CustomField:Account.Orcamento_Max__c" \
+                        -m "ApexClass:MatchImoveis" \
+                        -m "ApexClass:MatchImoveisTest" -o terravista
+
+sf apex run test -n MatchImoveisTest -o terravista -r human -w 10
 ```
+
+Os quatro testes novos da Lead **nunca correram** — esta sessao nao tem org
+autenticada. Corre-os logo a seguir ao deploy, antes de testares o agente.
 
 Deploy dirigido, não o projeto inteiro: há ajustes feitos à mão na org
 (list views afixadas, ícone do tab dos Imóveis) que um deploy largo desfaz.
