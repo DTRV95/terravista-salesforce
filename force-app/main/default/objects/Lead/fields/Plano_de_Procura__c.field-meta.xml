@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Plano_de_Procura__c</fullName>
+    <description>Plano de procura fora da carteira, gerado pelo Prompt Template a partir do perfil da lead. Serve a partilha de angariacao. NAO leva links: o Prompt Builder nao navega na internet e um modelo sem pesquisa inventa URLs plausiveis e inexistentes.</description>
+    <externalId>false</externalId>
+    <label>Plano de Procura</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>15</visibleLines>
+</CustomField>
