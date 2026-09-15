@@ -6,6 +6,7 @@ Apanha os erros que ja nos custaram ciclos:
   2. API names com acentos ou caracteres invalidos
   3. fieldPermissions declaradas para campos obrigatorios
   4. etiquetas iguais entre campos do Account e do Contact
+  5. SOQL a filtrar por LongTextArea ou Rich Text
 
 Correr a partir da raiz do projeto:
     python scripts/verificar_metadados.py
@@ -195,6 +196,40 @@ for _lbl in sorted(set(_conta) & set(_contacto)):
         f'[etiqueta "{_lbl}" existe no Account e no Contact: indistinguiveis '
         f"no layout de Person Account] {_conta[_lbl].relative_to(RAIZ)} "
         f"e {_contacto[_lbl].relative_to(RAIZ)}")
+
+# --- SOQL a filtrar por campos que nao sao filtraveis ---------------------
+# LongTextArea e Rich Text nao podem aparecer num WHERE: a plataforma responde
+# "field X can not be filtered in a query call" e a classe nem chega a compilar.
+# Nao ha aviso no editor, nao ha erro no deploy dos metadados - so rebenta na
+# execucao, e num script de dados isso significa que nada foi gravado.
+# Bati neste erro a ler a org e escrevi o mesmo padrao num script duas horas
+# depois. Uma regra que so custa isto vale mais do que a memoria de quem a
+# escreveu.
+_NAO_FILTRAVEIS = {"LongTextArea", "Html", "EncryptedText"}
+
+_campos_proibidos = {}
+for f in FORCE_APP.rglob("fields/*.field-meta.xml"):
+    s_campo = texto(f)
+    m_tipo = re.search(r"<type>([^<]*)</type>", s_campo)
+    m_nome = re.search(r"<fullName>([^<]*)</fullName>", s_campo)
+    if m_tipo and m_nome and m_tipo.group(1) in _NAO_FILTRAVEIS:
+        _campos_proibidos[m_nome.group(1)] = m_tipo.group(1)
+
+if _campos_proibidos:
+    _alvos = list(FORCE_APP.rglob("classes/*.cls")) + list((RAIZ / "scripts").rglob("*.apex"))
+    for f in _alvos:
+        for consulta in re.findall(r"\[\s*SELECT.*?\]", texto(f), re.S | re.I):
+            partes = re.split(r"\bWHERE\b", consulta, flags=re.I)
+            if len(partes) < 2:
+                continue
+            filtro = " ".join(partes[1:])
+            for campo, tipo in _campos_proibidos.items():
+                # O sufixo __c aparece tambem como __pc nas Person Accounts.
+                raiz_campo = campo[:-3] if campo.endswith("__c") else campo
+                if re.search(r"\b" + re.escape(raiz_campo) + r"(__c|__pc)?\b", filtro):
+                    erros.append(
+                        f"[{campo} e {tipo} e nao pode ser filtrado num WHERE] "
+                        f"{f.relative_to(RAIZ)}")
 
 # Os avisos aparecem sempre e nunca bloqueiam. Um aviso que impede o deploy
 # passa a ser lido como erro, e um erro que nao e erro ensina a ignorar a saida
