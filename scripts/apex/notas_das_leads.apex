@@ -183,7 +183,12 @@ if (!naoEncontradas.isEmpty()) {
     System.debug(LoggingLevel.ERROR, 'NAO ENCONTRADAS NA ORG (nome mudou?): '
         + String.join(new List<String>(naoEncontradas), ', '));
 }
-Integer semNotas = [SELECT COUNT() FROM Lead
-                    WHERE IsConverted = false AND Notas_Preferencias__c = null];
+// Notas_Preferencias__c e LongTextArea e NAO pode ser filtrado num WHERE: a
+// plataforma recusa a query e a classe nem compila - o script inteiro nao
+// corre e nao grava nada. Conta-se em memoria sobre as leads em aberto.
+Integer semNotas = 0;
+for (Lead l : [SELECT Notas_Preferencias__c FROM Lead WHERE IsConverted = false]) {
+    if (String.isBlank(l.Notas_Preferencias__c)) semNotas++;
+}
 System.debug(LoggingLevel.ERROR, 'Leads ainda sem notas: ' + semNotas
     + ' (esperado 2: as duas de angariacao)');
