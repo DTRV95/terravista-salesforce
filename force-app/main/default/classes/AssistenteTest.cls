@@ -170,6 +170,22 @@ private class AssistenteTest {
         System.assertEquals(Date.today(), t.ActivityDate, 'Sem prazo dito, e para hoje');
     }
 
+    // --- Normalizacao de acentos (AssistenteUtil) ------------------------
+    @IsTest
+    static void encontra_imovel_com_acento_no_nome_mesmo_sem_o_dizer() {
+        Contract c = [SELECT Id FROM Contract LIMIT 1];
+        insert new Imovel__c(
+            Contrato__c = c.Id, Name = 'Apartamento T2 - Rua da Póvoa', Tipo_Imovel__c = 'Apartamento',
+            Finalidade__c = 'Venda', Estado_Comercial__c = 'Disponivel',
+            Preco__c = 180000, Area_m2__c = 80, Tipologia__c = 'T2',
+            Localizacao__c = 'Povoa de Varzim');
+
+        List<Imovel__c> encontrados = AssistenteUtil.imoveisPorNome('Povoa');
+
+        System.assertEquals(1, encontrados.size(),
+            'O nome tem acento na base; o termo procurado, nao - tem de encontrar na mesma');
+    }
+
     @IsTest
     static void cliente_ambiguo_pergunta_qual() {
         insert new List<Account>{

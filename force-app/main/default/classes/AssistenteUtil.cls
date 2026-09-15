@@ -46,10 +46,23 @@ public with sharing class AssistenteUtil {
         return encontrados;
     }
 
+    /**
+     * Mesma normalizacao dos dois lados que a clientesPorNome, e pela mesma
+     * razao: o LIKE do SOQL e sensivel a acentos, e o nome do imovel chega
+     * aqui tal como o consultor o disser.
+     */
     public static List<Imovel__c> imoveisPorNome(String nome) {
-        if (String.isBlank(nome)) return new List<Imovel__c>();
-        String padrao = '%' + MatchImoveis.semAcentos(nome.trim()) + '%';
-        return [SELECT Id, Name FROM Imovel__c WHERE Name LIKE :padrao LIMIT 5];
+        List<Imovel__c> encontrados = new List<Imovel__c>();
+        if (String.isBlank(nome)) return encontrados;
+
+        String alvo = MatchImoveis.semAcentos(nome.trim()).toLowerCase();
+        for (Imovel__c i : [SELECT Id, Name FROM Imovel__c LIMIT 200]) {
+            if (MatchImoveis.semAcentos(i.Name).toLowerCase().contains(alvo)) {
+                encontrados.add(i);
+                if (encontrados.size() == 5) break;
+            }
+        }
+        return encontrados;
     }
 
     public static String nomesDe(List<Account> contas) {
