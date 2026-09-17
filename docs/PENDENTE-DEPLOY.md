@@ -14,35 +14,46 @@ sf project deploy start -o terravista
 
 ---
 
-## Bloco atual — layout de Person Account
+## Bloco atual — approval process e campo da Lead
 
-**Bloqueia o passo seguinte?** Sim. A ficha do cliente particular mostra os
-campos da construtora, que estao sempre vazios. Enquanto assim for, qualquer
-teste ao agente parece errado mesmo com o codigo certo.
+Duas coisas que estao no repositorio e NAO estao na org. Confirmado por SOQL em
+17/09: ProcessDefinition devolve zero registos.
 
-Feito em 14/09 (etiquetas + matching em Leads, 15/15 testes verdes):
-`CustomField:Account.Procura_Zonas__c`, `CustomField:Account.Orcamento_Max__c`,
-`ApexClass:MatchImoveis`, `ApexClass:MatchImoveisTest`.
-
-Falta:
+E o preco dos deploys dirigidos, que fazemos para nao desfazer os ajustes
+manuais na org (list views afixadas, icone do tab dos Imoveis). Nada entra
+sozinho: um ficheiro commitado nao esta na org ate um deploy o levar la.
 
 ```
 git pull
 python scripts/verificar_metadados.py
-sf project deploy start -m "Layout:PersonAccount-Person Account Layout" -o terravista
+
+sf project deploy start -m "Workflow:Contract" \
+                        -m "ApprovalProcess:Contract.Comissao_Abaixo_do_Minimo" -o terravista
+
+sf project deploy start -m "CustomField:Lead.Plano_de_Procura__c" \
+                        -m "Layout:Lead-Lead Compra" \
+                        -m "Layout:Lead-Lead Arrendamento" -o terravista
 ```
 
-**Se falhar**, o mais provavel e um destes tres, por esta ordem:
+O Workflow vai no mesmo deploy que o approval process, nao a seguir: o approval
+referencia tres field updates que vivem la (Comissao_Aprovada, Comissao_Pendente,
+Comissao_Rejeitada). Separados, o primeiro deploy referencia accoes que a org
+ainda nao conhece e falha inteiro.
 
-1. Um token de related list recusado. Apagar os tres blocos `<relatedLists>`
-   e repetir: as seccoes de campos sao o que interessa.
-2. `PersonEmail` ou `PersonMobilePhone` nao disponiveis nesta org. Apagar
-   esses dois `<layoutItems>`.
-3. A plataforma recusar alterar layouts de Person Account por metadata. Nesse
-   caso o ficheiro serve na mesma: diz exactamente que campos por em que
-   seccao, e faz-se o mesmo a mao em Setup em tres minutos.
+Dependencias ja verificadas na org: Estado_Aprovacao__c existe no Contract, o
+aprovador terravista.david@agentforce.com existe e esta activo, e os campos da
+pagina de aprovacao existem todos.
 
-Um deploy e atomico: se falhar, nada entrou e nao ficaste a meio.
+**A seguir ao deploy:** abrir um contrato e procurar o botao Submit for
+Approval. Se nao aparecer, falta a related list Approval History no layout do
+Contrato - hoje so tem Imovel__c.Contrato__c e RelatedActivityList. Acrescenta-se
+em Setup e faz-se retrieve; o token de metadata dessa related list nao esta
+provado neste projeto.
+
+**Antes da apresentacao:** correr uma verificacao de ponta a ponta do que esta
+no repositorio e nao esta na org. Ja aconteceu duas vezes no mesmo dia - o
+Plano_de_Procura__c e este approval process. Descobrir isto a meio da
+demonstracao custa mais do que a meia hora que a verificacao leva.
 
 ---
 
