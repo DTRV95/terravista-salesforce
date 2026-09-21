@@ -14,46 +14,43 @@ sf project deploy start -o terravista
 
 ---
 
-## Bloco atual — approval process e campo da Lead
+## Bloco atual — falta TRAZER da org, nao levar
 
-Duas coisas que estao no repositorio e NAO estao na org. Confirmado por SOQL em
-17/09: ProcessDefinition devolve zero registos.
+A org tem quatro coisas que o repositorio nao tem. Nada disto se deploya: faz-se
+retrieve, ao contrario do habitual.
 
-E o preco dos deploys dirigidos, que fazemos para nao desfazer os ajustes
-manuais na org (list views afixadas, icone do tab dos Imoveis). Nada entra
-sozinho: um ficheiro commitado nao esta na org ate um deploy o levar la.
+- `Lead.Sem_Imoveis__c` — checkbox criada a mao
+- `Gerar Plano de Procura - Criacao` — Flow
+- `Gerar Plano de Procura - Alteracao` — Flow
+- O prompt template de Field Generation
 
 ```
 git pull
-python scripts/verificar_metadados.py
+sf project retrieve start -m "CustomField:Lead.Sem_Imoveis__c" -m "Flow" -o terravista
+git status
+```
 
+Ve o que apareceu, confirma que os dois Flows novos estao la, e faz commit.
+
+O prompt template tem um tipo de metadata proprio que nao esta provado neste
+projeto. Procura-o com `sf project list metadata --metadata-type` ou pelo
+Metadata Coverage Report antes de o tentares trazer.
+
+Continua pendente de LEVAR, de blocos anteriores:
+
+```
 sf project deploy start -m "Workflow:Contract" \
                         -m "ApprovalProcess:Contract.Comissao_Abaixo_do_Minimo" -o terravista
 
 sf project deploy start -m "CustomField:Lead.Plano_de_Procura__c" \
+                        -m "PermissionSet:Terravista_Acesso_Base" \
                         -m "Layout:Lead-Lead Compra" \
                         -m "Layout:Lead-Lead Arrendamento" -o terravista
 ```
 
-O Workflow vai no mesmo deploy que o approval process, nao a seguir: o approval
-referencia tres field updates que vivem la (Comissao_Aprovada, Comissao_Pendente,
-Comissao_Rejeitada). Separados, o primeiro deploy referencia accoes que a org
-ainda nao conhece e falha inteiro.
-
-Dependencias ja verificadas na org: Estado_Aprovacao__c existe no Contract, o
-aprovador terravista.david@agentforce.com existe e esta activo, e os campos da
-pagina de aprovacao existem todos.
-
-**A seguir ao deploy:** abrir um contrato e procurar o botao Submit for
-Approval. Se nao aparecer, falta a related list Approval History no layout do
-Contrato - hoje so tem Imovel__c.Contrato__c e RelatedActivityList. Acrescenta-se
-em Setup e faz-se retrieve; o token de metadata dessa related list nao esta
-provado neste projeto.
-
-**Antes da apresentacao:** correr uma verificacao de ponta a ponta do que esta
-no repositorio e nao esta na org. Ja aconteceu duas vezes no mesmo dia - o
-Plano_de_Procura__c e este approval process. Descobrir isto a meio da
-demonstracao custa mais do que a meia hora que a verificacao leva.
+O ApprovalProcess continua ausente da org — confirmado por SOQL, ProcessDefinition
+devolve zero. O contrato 00000138 tem comissao a 3% e e o caso perfeito para o
+demonstrar.
 
 ---
 
