@@ -5,7 +5,8 @@
 public with sharing class AssistenteMarcarVisita {
 
     public class PedidoVisita {
-        @InvocableVariable(label='Nome do cliente' required=true)
+        @InvocableVariable(label='Nome do cliente ou lead' required=true
+            description='Nome da pessoa, seja ela cliente ou lead por qualificar.')
         public String nomeCliente;
         @InvocableVariable(label='Nome do imovel' required=true
             description='Nome do imovel a visitar, como aparece na carteira.')
@@ -37,17 +38,17 @@ public with sharing class AssistenteMarcarVisita {
             return r;
         }
 
-        List<Account> contas = AssistenteUtil.clientesPorNome(p.nomeCliente);
-        if (contas.isEmpty()) {
-            r.mensagem = 'Nao encontrei nenhum cliente com o nome "' + p.nomeCliente + '".';
+        List<AssistenteUtil.Pessoa> pessoas = AssistenteUtil.pessoasPorNome(p.nomeCliente);
+        if (pessoas.isEmpty()) {
+            r.mensagem = 'Nao encontrei nenhum cliente nem lead com o nome "' + p.nomeCliente + '".';
             return r;
         }
-        if (contas.size() > 1) {
-            r.mensagem = 'Ha mais do que um cliente com esse nome: ' + AssistenteUtil.nomesDe(contas)
+        if (pessoas.size() > 1) {
+            r.mensagem = 'Ha mais do que uma pessoa com esse nome: ' + AssistenteUtil.etiquetasDe(pessoas)
                 + '. Pergunta qual antes de marcar.';
             return r;
         }
-        Account c = contas[0];
+        AssistenteUtil.Pessoa quem = pessoas[0];
 
         List<Imovel__c> imoveis = AssistenteUtil.imoveisPorNome(p.nomeImovel);
         if (imoveis.isEmpty()) {
@@ -68,15 +69,26 @@ public with sharing class AssistenteMarcarVisita {
         // e o que a validation rule exige para avancar para "Visita Realizada".
         // Ligar ao imovel registava a visita na mesma, mas nao desbloqueava a
         // fase - e a corrente ficava a meio.
-        List<Opportunity> negocios = [
-            SELECT Id FROM Opportunity
-            WHERE AccountId = :c.Id AND Imovel__c = :im.Id AND IsClosed = false
-            ORDER BY LastModifiedDate DESC LIMIT 1];
+        //
+        // NUMA LEAD NAO HA ESCOLHA A FAZER. A plataforma recusa um Evento que
+        // tenha ao mesmo tempo WhoId de Lead e WhatId: uma lead ainda nao esta
+        // ligada a negocio nenhum. O WhatId fica nulo, e e o mesmo Flow que
+        // carimba - pelo lado da Lead, na Data da Visita Agendada.
+        Id alvo = null;
+        Boolean temNegocio = false;
+        if (!quem.eLead()) {
+            List<Opportunity> negocios = [
+                SELECT Id FROM Opportunity
+                WHERE AccountId = :quem.registoId AND Imovel__c = :im.Id AND IsClosed = false
+                ORDER BY LastModifiedDate DESC LIMIT 1];
+            temNegocio = !negocios.isEmpty();
+            alvo = temNegocio ? negocios[0].Id : im.Id;
+        }
 
         Event visita = new Event(
             Subject = 'Visita — ' + im.Name,
-            WhoId = c.PersonContactId,
-            WhatId = negocios.isEmpty() ? im.Id : negocios[0].Id,
+            WhoId = quem.whoId,
+            WhatId = alvo,
             StartDateTime = p.quando,
             EndDateTime = p.quando.addMinutes(p.duracao == null ? 45 : p.duracao),
             Description = 'Marcada pelo assistente a pedido do consultor.');
@@ -91,11 +103,13 @@ public with sharing class AssistenteMarcarVisita {
         r.sucesso = true;
         r.visitas = [SELECT Id, Subject, StartDateTime, EndDateTime, WhoId, WhatId
                      FROM Event WHERE Id = :visita.Id];
-        r.mensagem = 'Visita marcada com ' + c.Name + ' ao ' + im.Name
+        r.mensagem = 'Visita marcada com ' + quem.etiqueta() + ' ao ' + im.Name
             + ' em ' + p.quando.format('dd/MM/yyyy \'as\' HH:mm') + '.'
-            + (negocios.isEmpty()
-               ? ' Nao ha negocio em curso para este imovel - a visita ficou ligada ao imovel.'
-               : '');
+            + (quem.eLead()
+               ? ' E uma lead, por isso a visita ficou ligada a ela e nao a um negocio.'
+               : (temNegocio
+                  ? ''
+                  : ' Nao ha negocio em curso para este imovel - a visita ficou ligada ao imovel.'));
         return r;
     }
 }

@@ -76,6 +76,19 @@ public with sharing class AssistenteCriarCliente {
             return r;
         }
 
+        // A mesma regra 1, do outro lado do modelo. Uma pessoa por qualificar
+        // vive como Lead; criar-lhe uma ficha de cliente ao lado nao a promove
+        // - duplica-a, e as duas passam a ter historico separado. O caminho
+        // certo e converter a lead, e e isso que o agente tem de dizer.
+        List<Lead> leads = AssistenteUtil.leadsPorNome(p.apelido);
+        if (!leads.isEmpty()) {
+            List<String> n = new List<String>();
+            for (Lead l : leads) n.add(l.Name);
+            r.mensagem = 'Ja existe lead com esse apelido: ' + String.join(n, ', ')
+                + '. Se for a mesma pessoa, converte a lead em vez de criar ficha nova.';
+            return r;
+        }
+
         Account novo = new Account(
             RecordTypeId = AssistenteUtil.idPessoa(),
             FirstName = p.primeiroNome.trim(),

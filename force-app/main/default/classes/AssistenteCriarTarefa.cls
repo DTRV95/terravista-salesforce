@@ -5,7 +5,8 @@
 public with sharing class AssistenteCriarTarefa {
 
     public class PedidoTarefa {
-        @InvocableVariable(label='Nome do cliente' required=true)
+        @InvocableVariable(label='Nome do cliente ou lead' required=true
+            description='Nome da pessoa, seja ela cliente ou lead por qualificar.')
         public String nomeCliente;
         @InvocableVariable(label='O que fazer' required=true
             description='Assunto da tarefa, curto. Exemplo: Ligar a confirmar a visita.')
@@ -36,25 +37,29 @@ public with sharing class AssistenteCriarTarefa {
             return r;
         }
 
-        List<Account> contas = AssistenteUtil.clientesPorNome(p.nomeCliente);
-        if (contas.isEmpty()) {
-            r.mensagem = 'Nao encontrei nenhum cliente com o nome "' + p.nomeCliente + '".';
+        List<AssistenteUtil.Pessoa> pessoas = AssistenteUtil.pessoasPorNome(p.nomeCliente);
+        if (pessoas.isEmpty()) {
+            r.mensagem = 'Nao encontrei nenhum cliente nem lead com o nome "' + p.nomeCliente + '".';
             return r;
         }
-        if (contas.size() > 1) {
-            r.mensagem = 'Ha mais do que um cliente com esse nome: ' + AssistenteUtil.nomesDe(contas)
+        if (pessoas.size() > 1) {
+            r.mensagem = 'Ha mais do que uma pessoa com esse nome: ' + AssistenteUtil.etiquetasDe(pessoas)
                 + '. Pergunta qual.';
             return r;
         }
-        Account c = contas[0];
+        AssistenteUtil.Pessoa quem = pessoas[0];
 
         // Nasce ABERTA, sempre. Uma tarefa criada ja concluida diria que o
         // trabalho foi feito quando ainda nem comecou, e dispararia os carimbos
         // de latencia com uma data falsa.
+        //
+        // O WhoId aponta para a Lead ou para o Contacto escondido da Person
+        // Account, conforme o caso - e e o mesmo campo, por isso o Flow que
+        // carimba o primeiro contacto continua a ver a tarefa nos dois cenarios.
         Task t = new Task(
             Subject = p.assunto.trim(),
-            WhoId = c.PersonContactId,
-            OwnerId = c.OwnerId,
+            WhoId = quem.whoId,
+            OwnerId = quem.ownerId,
             ActivityDate = (p.prazo == null) ? Date.today() : p.prazo,
             Status = 'Not Started',
             Priority = (p.urgente == true) ? 'High' : 'Normal');
@@ -69,7 +74,7 @@ public with sharing class AssistenteCriarTarefa {
         r.sucesso = true;
         r.tarefas = [SELECT Id, Subject, ActivityDate, Status, Priority, WhoId
                      FROM Task WHERE Id = :t.Id];
-        r.mensagem = 'Tarefa criada para ' + c.Name + ': ' + t.Subject + '.';
+        r.mensagem = 'Tarefa criada para ' + quem.etiqueta() + ': ' + t.Subject + '.';
         return r;
     }
 }

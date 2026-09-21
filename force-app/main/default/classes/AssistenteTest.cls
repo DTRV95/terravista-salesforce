@@ -204,4 +204,91 @@ private class AssistenteTest {
         System.assert(r[0].mensagem.contains('mais do que um'));
         System.assertEquals(0, [SELECT COUNT() FROM Task]);
     }
+
+    // --- Leads: a mesma pessoa, do outro lado do modelo -------------------
+    //
+    // Estes quatro testes existem por causa de um erro real: o agente respondia
+    // que a Vera Antunes nao existia. Existia - era uma Lead, e as accoes de
+    // escrita so olhavam para Person Accounts.
+
+    private static Lead novaLead(String primeiro, String apelido) {
+        Lead l = new Lead(FirstName = primeiro, LastName = apelido,
+                          Company = apelido + ' (Particular)');
+        insert l;
+        return l;
+    }
+
+    @IsTest
+    static void marca_a_visita_com_uma_lead_sem_lhe_por_negocio() {
+        Lead l = novaLead('Vera', 'Antunes');
+
+        AssistenteMarcarVisita.PedidoVisita p = new AssistenteMarcarVisita.PedidoVisita();
+        p.nomeCliente = 'Antunes';
+        p.nomeImovel = 'Apartamento de Teste';
+        p.quando = Datetime.now().addDays(2);
+
+        Test.startTest();
+        List<AssistenteResposta> r =
+            AssistenteMarcarVisita.executar(new List<AssistenteMarcarVisita.PedidoVisita>{ p });
+        Test.stopTest();
+
+        System.assertEquals(true, r[0].sucesso, r[0].mensagem);
+        Event e = [SELECT WhoId, WhatId FROM Event LIMIT 1];
+        System.assertEquals(l.Id, e.WhoId, 'A visita tem de ficar ligada a lead');
+        System.assertEquals(null, e.WhatId,
+            'A plataforma recusa um Evento com WhoId de Lead e WhatId ao mesmo tempo');
+    }
+
+    @IsTest
+    static void a_tarefa_de_uma_lead_fica_na_lead_e_com_o_dono_dela() {
+        Lead l = novaLead('Vera', 'Antunes');
+
+        AssistenteCriarTarefa.PedidoTarefa p = new AssistenteCriarTarefa.PedidoTarefa();
+        p.nomeCliente = 'Antunes';
+        p.assunto = 'Ligar a qualificar';
+
+        Test.startTest();
+        List<AssistenteResposta> r =
+            AssistenteCriarTarefa.executar(new List<AssistenteCriarTarefa.PedidoTarefa>{ p });
+        Test.stopTest();
+
+        System.assertEquals(true, r[0].sucesso, r[0].mensagem);
+        Task t = [SELECT WhoId, OwnerId, Status FROM Task LIMIT 1];
+        System.assertEquals(l.Id, t.WhoId);
+        System.assertEquals([SELECT OwnerId FROM Lead WHERE Id = :l.Id].OwnerId, t.OwnerId,
+            'A tarefa e do consultor que tem a lead, nao de quem falou com o agente');
+        System.assertEquals('Not Started', t.Status);
+    }
+
+    @IsTest
+    static void cliente_e_lead_com_o_mesmo_nome_pergunta_qual_e_diz_a_origem() {
+        insert new Account(RecordTypeId = rtPessoa, FirstName = 'Vera', LastName = 'Antunes');
+        novaLead('Vera', 'Antunes');
+
+        AssistenteCriarTarefa.PedidoTarefa p = new AssistenteCriarTarefa.PedidoTarefa();
+        p.nomeCliente = 'Antunes';
+        p.assunto = 'Ligar';
+
+        List<AssistenteResposta> r =
+            AssistenteCriarTarefa.executar(new List<AssistenteCriarTarefa.PedidoTarefa>{ p });
+
+        System.assertEquals(false, r[0].sucesso);
+        System.assert(r[0].mensagem.contains('(Cliente)') && r[0].mensagem.contains('(Lead)'),
+            'Sem a origem, a pergunta "qual delas" nao tem resposta possivel: ' + r[0].mensagem);
+        System.assertEquals(0, [SELECT COUNT() FROM Task]);
+    }
+
+    @IsTest
+    static void nao_cria_ficha_nova_quando_a_pessoa_ja_e_uma_lead() {
+        novaLead('Mariana', 'Bragança');
+
+        List<AssistenteResposta> r =
+            AssistenteCriarCliente.executar(new List<AssistenteCriarCliente.PedidoCliente>{ pedidoBase() });
+
+        System.assertEquals(false, r[0].sucesso);
+        System.assert(r[0].mensagem.contains('converte a lead'),
+            'Criar a ficha ao lado da lead nao a promove - duplica-a: ' + r[0].mensagem);
+        System.assertEquals(0, [SELECT COUNT() FROM Account WHERE LastName = 'Bragança'
+                                AND IsPersonAccount = true AND FirstName = 'Mariana']);
+    }
 }
