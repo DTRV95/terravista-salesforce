@@ -29,6 +29,16 @@
     </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Lead.Plano_Gerado__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Plano_de_Procura__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Imovel__c.Tipologia__c</field>
         <readable>true</readable>
     </fieldPermissions>
