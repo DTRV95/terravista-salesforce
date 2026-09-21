@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Imoveis_Sugeridos__c</fullName>
+    <description>Resumo devolvido pelo MatchImoveis: os imoveis REAIS da carteira que correspondem ao perfil desta lead. Escrito por Flow, nunca a mao. O Prompt Template Flex le daqui - o modelo nunca procura imoveis, so apresenta os que o SOQL encontrou.</description>
+    <externalId>false</externalId>
+    <label>Imóveis Sugeridos</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>10</visibleLines>
+</CustomField>

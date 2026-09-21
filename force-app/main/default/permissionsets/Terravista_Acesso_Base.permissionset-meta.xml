@@ -29,6 +29,11 @@
     </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Lead.Imoveis_Sugeridos__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Lead.Plano_de_Procura__c</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -127,6 +127,10 @@
                 <behavior>Edit</behavior>
                 <field>Plano_de_Procura__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Imoveis_Sugeridos__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
