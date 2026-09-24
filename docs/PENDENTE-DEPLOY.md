@@ -14,6 +14,33 @@ sf project deploy start -o terravista
 
 ---
 
+## Bloco 24/09 — Imovel_Interesse__c (LEVAR, e tem de ir tudo junto)
+
+Um deploy e atomico, e este e o caso em que isso importa: o Flow carimba pela
+linha de interesse, e o Apex poe o WhatId nela. Se um for sem o outro, a
+validation rule que exige a Data da Visita bloqueia todas as oportunidades.
+
+```
+git pull
+python scripts/verificar_metadados.py
+sf project deploy start \
+  -m "CustomObject:Imovel_Interesse__c" \
+  -m "CustomField:Opportunity.Imoveis_Mostrados__c" \
+  -m "CustomField:Opportunity.Imoveis_Recusados__c" \
+  -m "PermissionSet:Terravista_Acesso_Base" \
+  -m "Flow:Carimbar_Visita" \
+  -m "ApexClass:AssistenteMarcarVisita" \
+  -m "ApexClass:AssistenteTest" \
+  --test-level RunSpecifiedTests --tests AssistenteTest --tests MatchImoveisTest \
+  -o terravista
+```
+
+Depois do deploy, na org e a mao (o repositorio nao toca na UI):
+- related list "Imoveis de Interesse" na pagina da Opportunity
+- campos "Imoveis Mostrados" e "Imoveis Recusados" na mesma pagina
+
+---
+
 ## Bloco atual — falta TRAZER da org, nao levar
 
 A org tem quatro coisas que o repositorio nao tem. Nada disto se deploya: faz-se

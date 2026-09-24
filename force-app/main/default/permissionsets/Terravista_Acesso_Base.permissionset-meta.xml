@@ -29,6 +29,21 @@
     </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Imovel_Interesse__c.Motivo_Recusa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Imoveis_Mostrados__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Imoveis_Recusados__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Lead.Imoveis_Sugeridos__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -417,6 +432,15 @@
         <field>Contract.Estado_Aprovacao__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Imovel_Interesse__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <applicationVisibilities>
         <application>Terravista</application>
         <visible>true</visible>

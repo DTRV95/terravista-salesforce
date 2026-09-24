@@ -74,15 +74,35 @@ public with sharing class AssistenteMarcarVisita {
         // tenha ao mesmo tempo WhoId de Lead e WhatId: uma lead ainda nao esta
         // ligada a negocio nenhum. O WhatId fica nulo, e e o mesmo Flow que
         // carimba - pelo lado da Lead, na Data da Visita Agendada.
+        //
+        // O QUE MUDOU COM O Imovel_Interesse__c
+        // O Evento deixou de apontar para o negocio e passa a apontar para a
+        // LINHA DE INTERESSE daquele imovel naquele negocio. Sem isso, mostrar
+        // tres imoveis ao mesmo cliente escrevia tres vezes no mesmo
+        // Opportunity.Data_Visita__c e sobrava a ultima: o negocio sabia que
+        // houve visita, mas nao a que imovel.
+        //
+        // O carimbo nao se perde - o Flow "Carimbar Visita" passou a dar o
+        // salto WhatId -> linha de interesse -> negocio.
         Id alvo = null;
         Boolean temNegocio = false;
         if (!quem.eLead()) {
             List<Opportunity> negocios = [
                 SELECT Id FROM Opportunity
-                WHERE AccountId = :quem.registoId AND Imovel__c = :im.Id AND IsClosed = false
+                WHERE AccountId = :quem.registoId AND IsClosed = false
                 ORDER BY LastModifiedDate DESC LIMIT 1];
             temNegocio = !negocios.isEmpty();
-            alvo = temNegocio ? negocios[0].Id : im.Id;
+            if (temNegocio) {
+                try {
+                    alvo = linhaDeInteresse(negocios[0].Id, im.Id);
+                } catch (DmlException e) {
+                    r.mensagem = 'Nao foi possivel registar o interesse neste imovel: '
+                        + e.getDmlMessage(0);
+                    return r;
+                }
+            } else {
+                alvo = im.Id;
+            }
         }
 
         Event visita = new Event(
@@ -108,8 +128,39 @@ public with sharing class AssistenteMarcarVisita {
             + (quem.eLead()
                ? ' E uma lead, por isso a visita ficou ligada a ela e nao a um negocio.'
                : (temNegocio
-                  ? ''
-                  : ' Nao ha negocio em curso para este imovel - a visita ficou ligada ao imovel.'));
+                  ? ' Ficou registada na lista de imoveis de interesse do negocio.'
+                  : ' Nao ha negocio em curso com este cliente - a visita ficou ligada ao imovel.'));
         return r;
+    }
+
+    /**
+     * A linha de interesse daquele imovel naquele negocio, criada se ainda nao
+     * existir. UMA linha por imovel, nunca uma por visita: o estado ("Recusado",
+     * "Proposta feita") tem de ter uma verdade unica. As varias visitas ao mesmo
+     * imovel sao os Eventos pendurados nesta linha.
+     */
+    private static Id linhaDeInteresse(Id negocioId, Id imovelId) {
+        List<Imovel_Interesse__c> linhas = [
+            SELECT Id, Estado__c FROM Imovel_Interesse__c
+            WHERE Oportunidade__c = :negocioId AND Imovel__c = :imovelId LIMIT 1];
+
+        if (linhas.isEmpty()) {
+            Imovel_Interesse__c nova = new Imovel_Interesse__c(
+                Oportunidade__c = negocioId,
+                Imovel__c = imovelId,
+                Estado__c = 'Visitado');
+            insert nova;
+            return nova.Id;
+        }
+
+        // So se promove a partir de "Sugerido". Escrever "Visitado" por cima de
+        // "Recusado" apagava a conclusao com o meio do caminho: uma segunda
+        // visita a um imovel recusado nao o torna menos recusado.
+        Imovel_Interesse__c linha = linhas[0];
+        if (linha.Estado__c == 'Sugerido') {
+            linha.Estado__c = 'Visitado';
+            update linha;
+        }
+        return linha.Id;
     }
 }

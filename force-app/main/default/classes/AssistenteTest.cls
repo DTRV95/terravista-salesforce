@@ -115,8 +115,13 @@ private class AssistenteTest {
 
         System.assertEquals(true, r[0].sucesso);
         Event e = [SELECT WhatId, WhoId, EndDateTime, StartDateTime FROM Event LIMIT 1];
-        System.assertEquals(o.Id, e.WhatId,
-            'Tem de ligar ao negocio: e isso que faz o Flow carimbar a Data da Visita');
+        Imovel_Interesse__c linha = [SELECT Id, Oportunidade__c, Imovel__c, Estado__c
+                                     FROM Imovel_Interesse__c];
+        System.assertEquals(linha.Id, e.WhatId,
+            'O Evento liga-se a linha de interesse, nao ao negocio: e o que permite '
+            + 'mostrar varios imoveis sem que as visitas se sobreponham');
+        System.assertEquals(o.Id, linha.Oportunidade__c);
+        System.assertEquals('Visitado', linha.Estado__c);
         System.assertEquals(45, (e.EndDateTime.getTime() - e.StartDateTime.getTime()) / 60000,
             'Sem duracao dita, 45 minutos');
     }
@@ -290,5 +295,93 @@ private class AssistenteTest {
             'Criar a ficha ao lado da lead nao a promove - duplica-a: ' + r[0].mensagem);
         System.assertEquals(0, [SELECT COUNT() FROM Account WHERE LastName = 'Bragança'
                                 AND IsPersonAccount = true AND FirstName = 'Mariana']);
+    }
+
+    // --- Varios imoveis no mesmo negocio (Imovel_Interesse__c) ------------
+
+    private static Imovel__c outroImovel(String nome) {
+        Contract c = [SELECT Id FROM Contract LIMIT 1];
+        Imovel__c i = new Imovel__c(
+            Contrato__c = c.Id, Name = nome, Tipo_Imovel__c = 'Apartamento',
+            Finalidade__c = 'Venda', Estado_Comercial__c = 'Disponivel',
+            Preco__c = 250000, Area_m2__c = 100, Tipologia__c = 'T3',
+            Localizacao__c = 'Foz');
+        insert i;
+        return i;
+    }
+
+    private static Opportunity negocioDe(Account cliente) {
+        Opportunity o = new Opportunity(Name = 'Negocio de teste', AccountId = cliente.Id,
+            StageName = 'Interesse Registado', CloseDate = Date.today().addDays(30));
+        insert o;
+        return o;
+    }
+
+    private static void marcar(String cliente, String imovel, Integer daqui) {
+        AssistenteMarcarVisita.PedidoVisita p = new AssistenteMarcarVisita.PedidoVisita();
+        p.nomeCliente = cliente;
+        p.nomeImovel = imovel;
+        p.quando = Datetime.now().addDays(daqui);
+        AssistenteMarcarVisita.executar(new List<AssistenteMarcarVisita.PedidoVisita>{ p });
+    }
+
+    @IsTest
+    static void dois_imoveis_ao_mesmo_cliente_dao_duas_linhas() {
+        Account cliente = new Account(RecordTypeId = rtPessoa,
+            FirstName = 'Rui', LastName = 'Comprador');
+        insert cliente;
+        Opportunity o = negocioDe(cliente);
+        outroImovel('Moradia da Foz');
+
+        Test.startTest();
+        marcar('Comprador', 'Apartamento de Teste', 2);
+        marcar('Comprador', 'Moradia da Foz', 5);
+        Test.stopTest();
+
+        System.assertEquals(2, [SELECT COUNT() FROM Imovel_Interesse__c
+                                WHERE Oportunidade__c = :o.Id],
+            'Dois imoveis mostrados sao duas linhas - era isto que o lookup unico perdia');
+        System.assertEquals(2, [SELECT COUNT() FROM Event]);
+        System.assertEquals(2, [SELECT Imoveis_Mostrados__c FROM Opportunity
+                                WHERE Id = :o.Id].Imoveis_Mostrados__c,
+            'O Roll-Up conta sozinho, sem automacao a manter');
+    }
+
+    @IsTest
+    static void segunda_visita_ao_mesmo_imovel_nao_duplica_a_linha() {
+        Account cliente = new Account(RecordTypeId = rtPessoa,
+            FirstName = 'Rui', LastName = 'Comprador');
+        insert cliente;
+        Opportunity o = negocioDe(cliente);
+
+        Test.startTest();
+        marcar('Comprador', 'Apartamento de Teste', 2);
+        marcar('Comprador', 'Apartamento de Teste', 9);
+        Test.stopTest();
+
+        System.assertEquals(1, [SELECT COUNT() FROM Imovel_Interesse__c],
+            'O estado do imovel tem de ter uma verdade unica: uma linha, nao duas');
+        System.assertEquals(2, [SELECT COUNT() FROM Event],
+            'As duas visitas ficam nos Eventos pendurados nessa linha');
+    }
+
+    @IsTest
+    static void uma_nova_visita_nao_rebaixa_um_imovel_ja_recusado() {
+        Account cliente = new Account(RecordTypeId = rtPessoa,
+            FirstName = 'Rui', LastName = 'Comprador');
+        insert cliente;
+        Opportunity o = negocioDe(cliente);
+        Imovel__c im = [SELECT Id FROM Imovel__c LIMIT 1];
+
+        insert new Imovel_Interesse__c(Oportunidade__c = o.Id, Imovel__c = im.Id,
+            Estado__c = 'Recusado', Motivo_Recusa__c = 'Achou o 3o andar sem elevador impossivel');
+
+        Test.startTest();
+        marcar('Comprador', 'Apartamento de Teste', 3);
+        Test.stopTest();
+
+        System.assertEquals('Recusado',
+            [SELECT Estado__c FROM Imovel_Interesse__c].Estado__c,
+            'Uma segunda visita a um imovel recusado nao o torna menos recusado');
     }
 }

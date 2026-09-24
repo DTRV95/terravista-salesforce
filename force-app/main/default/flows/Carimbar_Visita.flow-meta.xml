@@ -1,11 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
+    <decisions>
+        <name>Ha_linha_de_interesse</name>
+        <label>Há linha de interesse?</label>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
+        <defaultConnectorLabel>Nao</defaultConnectorLabel>
+        <rules>
+            <name>Sim_ha_interesse</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Obter_o_interesse</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Carimbar_o_negocio_pelo_interesse</targetReference>
+            </connector>
+            <label>Sim</label>
+        </rules>
+    </decisions>
     <description>Quando se agenda um Evento, carimba a data da visita no lead e no negocio. Sem isto nenhuma validation rule consegue exigir uma visita, porque uma formula nao ve Eventos.</description>
     <environments>Default</environments>
     <interviewLabel>Carimbar Visita {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Carimbar Visita</label>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Obter_o_interesse</name>
+        <label>Obter o imóvel de interesse</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Ha_linha_de_interesse</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Imovel_Interesse__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Oportunidade__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Carimbar_o_lead</name>
         <label>Carimbar o lead</label>
@@ -35,12 +80,36 @@
         <label>Carimbar o negócio</label>
         <locationX>176</locationX>
         <locationY>278</locationY>
+        <connector>
+            <targetReference>Obter_o_interesse</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.WhatId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Data_Visita__c</field>
+            <value>
+                <elementReference>$Record.StartDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Carimbar_o_negocio_pelo_interesse</name>
+        <label>Carimbar o negócio pelo interesse</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Obter_o_interesse.Oportunidade__c</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -62,6 +131,20 @@
           e as duas atualizacoes correm sempre: a que nao encontrar registo nao
           faz nada. E mais simples e mais barato do que decidir antes qual delas
           se aplica.
+
+          O TERCEIRO CAMINHO, E PORQUE E QUE EXISTE
+          Desde que ha Imovel_Interesse__c, o WhatId de uma visita marcada pelo
+          assistente aponta para a LINHA DE INTERESSE e nao para o negocio - e
+          preciso para que tres visitas a tres imoveis nao se sobreponham no
+          mesmo campo. O "Carimbar o negocio" deixava entao de encontrar
+          registo, e a validation rule que exige a Data da Visita para avancar
+          para "Visita Realizada" passava a bloquear sempre.
+
+          Por isso o Flow da um salto a mais: WhatId -> linha de interesse ->
+          negocio. A decisao no meio existe porque a maioria dos Eventos nao
+          tem linha de interesse nenhuma (uma visita a uma lead, por exemplo),
+          e ler um campo de um registo que nao veio rebentaria o Flow - e um
+          Flow que rebenta depois do save impede o Evento de ser criado.
         -->
         <object>Event</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>

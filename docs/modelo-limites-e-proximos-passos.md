@@ -8,59 +8,68 @@ Saber nomear o limite do próprio modelo vale mais do que não o ter.
 
 ---
 
-## 1. Um negócio guarda um imóvel, não os que foram mostrados
+## 1. ~~Um negócio guarda um imóvel, não os que foram mostrados~~ — RESOLVIDO
 
-### O que está hoje
+Implementado a 24/09 com o objecto de junção `Imovel_Interesse__c`. A razão
+pela qual se parou aqui durante semanas, e o desenho, ficam registados porque
+a decisão que se rejeitou vale tanto como a que se tomou.
 
-`Opportunity.Imovel__c` é um lookup único. Guarda o imóvel em que o negócio
-**aterrou**, não os que se mostraram pelo caminho.
+### O que estava
 
-Verificado na org em 21/09: existe **1 Event** em toda a base de dados,
-`Subject = "Visita"`, com `WhatId = null`. Não há registo, em lado nenhum, de
-que imóveis foram apresentados a que clientes.
+`Opportunity.Imovel__c` é um lookup único: guardava o imóvel em que o negócio
+**aterrou**, não os que se mostraram pelo caminho. E o `Carimbar_Visita`
+escrevia `Opportunity.Data_Visita__c` sem verificar se já estava preenchido —
+segunda visita apagava a data da primeira. Ganhava sempre a última.
 
-E há um segundo ponto, no `AssistenteMarcarVisita`:
+### O que se rejeitou, e porquê
 
-```apex
-WhatId = negocios.isEmpty() ? im.Id : negocios[0].Id
-```
-
-Quando já existe negócio aberto, o Event liga-se **ao negócio** e o imóvel
-visitado sobrevive apenas no texto do assunto (`'Visita — ' + im.Name`). Texto
-não se reporta, não se filtra, não se conta.
-
-### Porque não se fez uma Opportunity por imóvel
-
-Seria a solução óbvia e está errada: inflaciona o pipeline de forma grave. Um
-comprador a quem se mostram cinco casas de 495 mil apareceria com 2,5 milhões
-de pipeline para comprar **uma** casa. Qualquer previsão de vendas passaria a
-ser ficção.
+Uma Opportunity por imóvel. É a solução óbvia e está errada: inflaciona o
+pipeline de forma grave. Um comprador a quem se mostram cinco casas de 495 mil
+apareceria com 2,5 milhões de pipeline para comprar **uma** casa. Qualquer
+previsão de vendas passaria a ser ficção.
 
 Um comprador é um negócio. Isso mantém-se.
 
-### O passo seguinte: `Imovel_Interesse__c`
+### O que ficou
 
-Objecto de junção entre `Opportunity` e `Imovel__c`:
+| | |
+|---|---|
+| `Imovel_Interesse__c` | uma linha por imóvel mostrado, dentro de um negócio |
+| `Oportunidade__c` | Master-Detail → Opportunity (permite Roll-Up, e as linhas morrem com o negócio) |
+| `Imovel__c` | Lookup com `deleteConstraint=Restrict` — apagar um imóvel não pode apagar o histórico |
+| `Estado__c` | Sugerido / Visitado / Em espera / Proposta feita / Recusado |
+| `Motivo_Recusa__c` | texto livre: a razão real raramente cabe numa picklist |
+| `Opportunity.Imoveis_Mostrados__c` | Roll-Up count |
+| `Opportunity.Imoveis_Recusados__c` | Roll-Up count filtrado |
 
-| Campo | Tipo | Para quê |
-|---|---|---|
-| `Oportunidade__c` | Master-Detail → Opportunity | o negócio |
-| `Imovel__c` | Lookup → Imovel__c | o imóvel candidato |
-| `Estado__c` | Picklist | Sugerido / Visitado / Recusado / Proposta feita / Em espera |
-| `Motivo_Recusa__c` | Text | porque é que o cliente disse que não |
-| `Data_Visita__c` | DateTime | quando foi visto |
+**Uma linha por imóvel, nunca uma por visita.** O estado tem de ter uma verdade
+única: um imóvel visitado três vezes e recusado no fim está *Recusado*, não
+*Visitado* três vezes. As várias visitas ao mesmo imóvel são os **Eventos**
+pendurados nessa linha — por isso o objecto tem `enableActivities`.
 
-**O que isto responde, e que hoje se perde:** que imóveis são muito visitados
-e nunca comprados. Esse imóvel está mal posicionado no preço, e é o sinal para
-renegociar com o proprietário antes de queimar a relação.
+### O que isto obrigou a mudar
 
-Pipeline honesto **e** histórico completo, sem escolher entre os dois.
+1. `AssistenteMarcarVisita` deixou de exigir que o negócio já estivesse preso
+   àquele imóvel (`AND Imovel__c = :im.Id` saiu do WHERE). Era essa condição
+   que impedia o segundo imóvel.
+2. O `WhatId` do Evento passou a ser a linha de interesse e não o negócio.
+3. O `Carimbar_Visita` ganhou um salto: `WhatId → linha de interesse → negócio`,
+   com uma decisão pelo meio porque a maioria dos Eventos não tem linha
+   nenhuma. Sem esse salto, a validation rule que exige a Data da Visita para
+   avançar para "Visita Realizada" passaria a bloquear sempre.
 
-### Correcção barata, independente deste objecto
+### O que continua por responder
 
-No `AssistenteMarcarVisita`, pôr `WhatId = im.Id` em vez do negócio. Perde-se a
-visita na timeline do negócio, ganha-se na do imóvel — e é no imóvel que a
-informação é reutilizável. É uma linha.
+- **O imóvel não tem contador.** `Imovel__c` é lookup e não master, por isso
+  não há Roll-Up do lado dele: "quantos clientes viram este imóvel" é um
+  relatório, não um campo. Foi deliberado — master-detail no imóvel fazia as
+  linhas morrerem com ele.
+- **As leads não têm linha de interesse**, porque não têm negócio. Uma visita
+  a uma lead continua a carimbar só `Lead.Data_Visita_Agendada__c`.
+- **O `MatchImoveis` não cria linhas `Sugerido`.** Podia — e aí sim responderia
+  a "que imóveis são muito sugeridos e nunca visitados". Não se fez porque o
+  `MatchImoveis` lê, e uma classe que lê não deve começar a escrever sem que
+  isso seja uma decisão própria.
 
 ---
 
