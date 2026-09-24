@@ -115,8 +115,13 @@ private class AssistenteTest {
 
         System.assertEquals(true, r[0].sucesso);
         Event e = [SELECT WhatId, WhoId, EndDateTime, StartDateTime FROM Event LIMIT 1];
-        System.assertEquals(o.Id, e.WhatId,
-            'Tem de ligar ao negocio: e isso que faz o Flow carimbar a Data da Visita');
+        Imovel_Interesse__c linha = [SELECT Id, Oportunidade__c, Imovel__c, Estado__c
+                                     FROM Imovel_Interesse__c];
+        System.assertEquals(linha.Id, e.WhatId,
+            'O Evento liga-se a linha de interesse, nao ao negocio: e o que permite '
+            + 'mostrar varios imoveis sem que as visitas se sobreponham');
+        System.assertEquals(o.Id, linha.Oportunidade__c);
+        System.assertEquals('Visitado', linha.Estado__c);
         System.assertEquals(45, (e.EndDateTime.getTime() - e.StartDateTime.getTime()) / 60000,
             'Sem duracao dita, 45 minutos');
     }
@@ -170,6 +175,22 @@ private class AssistenteTest {
         System.assertEquals(Date.today(), t.ActivityDate, 'Sem prazo dito, e para hoje');
     }
 
+    // --- Normalizacao de acentos (AssistenteUtil) ------------------------
+    @IsTest
+    static void encontra_imovel_com_acento_no_nome_mesmo_sem_o_dizer() {
+        Contract c = [SELECT Id FROM Contract LIMIT 1];
+        insert new Imovel__c(
+            Contrato__c = c.Id, Name = 'Apartamento T2 - Rua da Póvoa', Tipo_Imovel__c = 'Apartamento',
+            Finalidade__c = 'Venda', Estado_Comercial__c = 'Disponivel',
+            Preco__c = 180000, Area_m2__c = 80, Tipologia__c = 'T2',
+            Localizacao__c = 'Povoa de Varzim');
+
+        List<Imovel__c> encontrados = AssistenteUtil.imoveisPorNome('Povoa');
+
+        System.assertEquals(1, encontrados.size(),
+            'O nome tem acento na base; o termo procurado, nao - tem de encontrar na mesma');
+    }
+
     @IsTest
     static void cliente_ambiguo_pergunta_qual() {
         insert new List<Account>{
@@ -187,5 +208,180 @@ private class AssistenteTest {
         System.assertEquals(false, r[0].sucesso);
         System.assert(r[0].mensagem.contains('mais do que um'));
         System.assertEquals(0, [SELECT COUNT() FROM Task]);
+    }
+
+    // --- Leads: a mesma pessoa, do outro lado do modelo -------------------
+    //
+    // Estes quatro testes existem por causa de um erro real: o agente respondia
+    // que a Vera Antunes nao existia. Existia - era uma Lead, e as accoes de
+    // escrita so olhavam para Person Accounts.
+
+    private static Lead novaLead(String primeiro, String apelido) {
+        Lead l = new Lead(FirstName = primeiro, LastName = apelido,
+                          Company = apelido + ' (Particular)');
+        insert l;
+        return l;
+    }
+
+    @IsTest
+    static void marca_a_visita_com_uma_lead_sem_lhe_por_negocio() {
+        Lead l = novaLead('Vera', 'Antunes');
+
+        AssistenteMarcarVisita.PedidoVisita p = new AssistenteMarcarVisita.PedidoVisita();
+        p.nomeCliente = 'Antunes';
+        p.nomeImovel = 'Apartamento de Teste';
+        p.quando = Datetime.now().addDays(2);
+
+        Test.startTest();
+        List<AssistenteResposta> r =
+            AssistenteMarcarVisita.executar(new List<AssistenteMarcarVisita.PedidoVisita>{ p });
+        Test.stopTest();
+
+        System.assertEquals(true, r[0].sucesso, r[0].mensagem);
+        Event e = [SELECT WhoId, WhatId FROM Event LIMIT 1];
+        System.assertEquals(l.Id, e.WhoId, 'A visita tem de ficar ligada a lead');
+        System.assertEquals(null, e.WhatId,
+            'A plataforma recusa um Evento com WhoId de Lead e WhatId ao mesmo tempo');
+    }
+
+    @IsTest
+    static void a_tarefa_de_uma_lead_fica_na_lead_e_com_o_dono_dela() {
+        Lead l = novaLead('Vera', 'Antunes');
+
+        AssistenteCriarTarefa.PedidoTarefa p = new AssistenteCriarTarefa.PedidoTarefa();
+        p.nomeCliente = 'Antunes';
+        p.assunto = 'Ligar a qualificar';
+
+        Test.startTest();
+        List<AssistenteResposta> r =
+            AssistenteCriarTarefa.executar(new List<AssistenteCriarTarefa.PedidoTarefa>{ p });
+        Test.stopTest();
+
+        System.assertEquals(true, r[0].sucesso, r[0].mensagem);
+        Task t = [SELECT WhoId, OwnerId, Status FROM Task LIMIT 1];
+        System.assertEquals(l.Id, t.WhoId);
+        System.assertEquals([SELECT OwnerId FROM Lead WHERE Id = :l.Id].OwnerId, t.OwnerId,
+            'A tarefa e do consultor que tem a lead, nao de quem falou com o agente');
+        System.assertEquals('Not Started', t.Status);
+    }
+
+    @IsTest
+    static void cliente_e_lead_com_o_mesmo_nome_pergunta_qual_e_diz_a_origem() {
+        insert new Account(RecordTypeId = rtPessoa, FirstName = 'Vera', LastName = 'Antunes');
+        novaLead('Vera', 'Antunes');
+
+        AssistenteCriarTarefa.PedidoTarefa p = new AssistenteCriarTarefa.PedidoTarefa();
+        p.nomeCliente = 'Antunes';
+        p.assunto = 'Ligar';
+
+        List<AssistenteResposta> r =
+            AssistenteCriarTarefa.executar(new List<AssistenteCriarTarefa.PedidoTarefa>{ p });
+
+        System.assertEquals(false, r[0].sucesso);
+        System.assert(r[0].mensagem.contains('(Cliente)') && r[0].mensagem.contains('(Lead)'),
+            'Sem a origem, a pergunta "qual delas" nao tem resposta possivel: ' + r[0].mensagem);
+        System.assertEquals(0, [SELECT COUNT() FROM Task]);
+    }
+
+    @IsTest
+    static void nao_cria_ficha_nova_quando_a_pessoa_ja_e_uma_lead() {
+        novaLead('Mariana', 'Bragança');
+
+        List<AssistenteResposta> r =
+            AssistenteCriarCliente.executar(new List<AssistenteCriarCliente.PedidoCliente>{ pedidoBase() });
+
+        System.assertEquals(false, r[0].sucesso);
+        System.assert(r[0].mensagem.contains('converte a lead'),
+            'Criar a ficha ao lado da lead nao a promove - duplica-a: ' + r[0].mensagem);
+        System.assertEquals(0, [SELECT COUNT() FROM Account WHERE LastName = 'Bragança'
+                                AND IsPersonAccount = true AND FirstName = 'Mariana']);
+    }
+
+    // --- Varios imoveis no mesmo negocio (Imovel_Interesse__c) ------------
+
+    private static Imovel__c outroImovel(String nome) {
+        Contract c = [SELECT Id FROM Contract LIMIT 1];
+        Imovel__c i = new Imovel__c(
+            Contrato__c = c.Id, Name = nome, Tipo_Imovel__c = 'Apartamento',
+            Finalidade__c = 'Venda', Estado_Comercial__c = 'Disponivel',
+            Preco__c = 250000, Area_m2__c = 100, Tipologia__c = 'T3',
+            Localizacao__c = 'Foz');
+        insert i;
+        return i;
+    }
+
+    private static Opportunity negocioDe(Account cliente) {
+        Opportunity o = new Opportunity(Name = 'Negocio de teste', AccountId = cliente.Id,
+            StageName = 'Interesse Registado', CloseDate = Date.today().addDays(30));
+        insert o;
+        return o;
+    }
+
+    private static void marcar(String cliente, String imovel, Integer daqui) {
+        AssistenteMarcarVisita.PedidoVisita p = new AssistenteMarcarVisita.PedidoVisita();
+        p.nomeCliente = cliente;
+        p.nomeImovel = imovel;
+        p.quando = Datetime.now().addDays(daqui);
+        AssistenteMarcarVisita.executar(new List<AssistenteMarcarVisita.PedidoVisita>{ p });
+    }
+
+    @IsTest
+    static void dois_imoveis_ao_mesmo_cliente_dao_duas_linhas() {
+        Account cliente = new Account(RecordTypeId = rtPessoa,
+            FirstName = 'Rui', LastName = 'Comprador');
+        insert cliente;
+        Opportunity o = negocioDe(cliente);
+        outroImovel('Moradia da Foz');
+
+        Test.startTest();
+        marcar('Comprador', 'Apartamento de Teste', 2);
+        marcar('Comprador', 'Moradia da Foz', 5);
+        Test.stopTest();
+
+        System.assertEquals(2, [SELECT COUNT() FROM Imovel_Interesse__c
+                                WHERE Oportunidade__c = :o.Id],
+            'Dois imoveis mostrados sao duas linhas - era isto que o lookup unico perdia');
+        System.assertEquals(2, [SELECT COUNT() FROM Event]);
+        System.assertEquals(2, [SELECT Imoveis_Mostrados__c FROM Opportunity
+                                WHERE Id = :o.Id].Imoveis_Mostrados__c,
+            'O Roll-Up conta sozinho, sem automacao a manter');
+    }
+
+    @IsTest
+    static void segunda_visita_ao_mesmo_imovel_nao_duplica_a_linha() {
+        Account cliente = new Account(RecordTypeId = rtPessoa,
+            FirstName = 'Rui', LastName = 'Comprador');
+        insert cliente;
+        Opportunity o = negocioDe(cliente);
+
+        Test.startTest();
+        marcar('Comprador', 'Apartamento de Teste', 2);
+        marcar('Comprador', 'Apartamento de Teste', 9);
+        Test.stopTest();
+
+        System.assertEquals(1, [SELECT COUNT() FROM Imovel_Interesse__c],
+            'O estado do imovel tem de ter uma verdade unica: uma linha, nao duas');
+        System.assertEquals(2, [SELECT COUNT() FROM Event],
+            'As duas visitas ficam nos Eventos pendurados nessa linha');
+    }
+
+    @IsTest
+    static void uma_nova_visita_nao_rebaixa_um_imovel_ja_recusado() {
+        Account cliente = new Account(RecordTypeId = rtPessoa,
+            FirstName = 'Rui', LastName = 'Comprador');
+        insert cliente;
+        Opportunity o = negocioDe(cliente);
+        Imovel__c im = [SELECT Id FROM Imovel__c LIMIT 1];
+
+        insert new Imovel_Interesse__c(Oportunidade__c = o.Id, Imovel__c = im.Id,
+            Estado__c = 'Recusado', Motivo_Recusa__c = 'Achou o 3o andar sem elevador impossivel');
+
+        Test.startTest();
+        marcar('Comprador', 'Apartamento de Teste', 3);
+        Test.stopTest();
+
+        System.assertEquals('Recusado',
+            [SELECT Estado__c FROM Imovel_Interesse__c].Estado__c,
+            'Uma segunda visita a um imovel recusado nao o torna menos recusado');
     }
 }

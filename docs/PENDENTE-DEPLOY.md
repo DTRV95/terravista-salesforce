@@ -14,14 +14,70 @@ sf project deploy start -o terravista
 
 ---
 
-## Bloco atual — nada pendente de deploy
+## Bloco 24/09 — Imovel_Interesse__c (LEVAR, e tem de ir tudo junto)
 
-Só scripts:
+Um deploy e atomico, e este e o caso em que isso importa: o Flow carimba pela
+linha de interesse, e o Apex poe o WhatId nela. Se um for sem o outro, a
+validation rule que exige a Data da Visita bloqueia todas as oportunidades.
 
 ```
 git pull
-sf apex run -f scripts/apex/preencher_carteira.apex -o terravista
+python scripts/verificar_metadados.py
+sf project deploy start \
+  -m "CustomObject:Imovel_Interesse__c" \
+  -m "CustomField:Opportunity.Imoveis_Mostrados__c" \
+  -m "CustomField:Opportunity.Imoveis_Recusados__c" \
+  -m "PermissionSet:Terravista_Acesso_Base" \
+  -m "Flow:Carimbar_Visita" \
+  -m "ApexClass:AssistenteMarcarVisita" \
+  -m "ApexClass:AssistenteTest" \
+  --test-level RunSpecifiedTests --tests AssistenteTest --tests MatchImoveisTest \
+  -o terravista
 ```
+
+Depois do deploy, na org e a mao (o repositorio nao toca na UI):
+- related list "Imoveis de Interesse" na pagina da Opportunity
+- campos "Imoveis Mostrados" e "Imoveis Recusados" na mesma pagina
+
+---
+
+## Bloco atual — falta TRAZER da org, nao levar
+
+A org tem quatro coisas que o repositorio nao tem. Nada disto se deploya: faz-se
+retrieve, ao contrario do habitual.
+
+- `Lead.Sem_Imoveis__c` — checkbox criada a mao
+- `Gerar Plano de Procura - Criacao` — Flow
+- `Gerar Plano de Procura - Alteracao` — Flow
+- O prompt template de Field Generation
+
+```
+git pull
+sf project retrieve start -m "CustomField:Lead.Sem_Imoveis__c" -m "Flow" -o terravista
+git status
+```
+
+Ve o que apareceu, confirma que os dois Flows novos estao la, e faz commit.
+
+O prompt template tem um tipo de metadata proprio que nao esta provado neste
+projeto. Procura-o com `sf project list metadata --metadata-type` ou pelo
+Metadata Coverage Report antes de o tentares trazer.
+
+Continua pendente de LEVAR, de blocos anteriores:
+
+```
+sf project deploy start -m "Workflow:Contract" \
+                        -m "ApprovalProcess:Contract.Comissao_Abaixo_do_Minimo" -o terravista
+
+sf project deploy start -m "CustomField:Lead.Plano_de_Procura__c" \
+                        -m "PermissionSet:Terravista_Acesso_Base" \
+                        -m "Layout:Lead-Lead Compra" \
+                        -m "Layout:Lead-Lead Arrendamento" -o terravista
+```
+
+O ApprovalProcess continua ausente da org — confirmado por SOQL, ProcessDefinition
+devolve zero. O contrato 00000138 tem comissao a 3% e e o caso perfeito para o
+demonstrar.
 
 ---
 

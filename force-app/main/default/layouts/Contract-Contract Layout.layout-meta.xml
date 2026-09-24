@@ -6,43 +6,47 @@
         <editHeading>true</editHeading>
         <label>Contrato de Mediação</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>ContractNumber</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Required</behavior>
-                    <field>AccountId</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Required</behavior>
-                    <field>Status</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>OwnerId</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Regime__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ContractNumber</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>AccountId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Status</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OwnerId</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Exclusivo__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Comissao__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>Estado_Aprovacao__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Pricebook2Id</field>
-                </layoutItems>
-                <layoutItems>
-                    <emptySpace>true</emptySpace>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Exclusivo__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Comissao__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Estado_Aprovacao__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Pricebook2Id</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -52,16 +56,16 @@
         <editHeading>true</editHeading>
         <label>Empreendimento</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Nome_Empreendimento__c</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Nome_Empreendimento__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Localizacao__c</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Localizacao__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -71,23 +75,23 @@
         <editHeading>true</editHeading>
         <label>Comercialização</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>Imoveis_Total__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>Imoveis_Vendidos__c</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Imoveis_Total__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Imoveis_Vendidos__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>Percentagem_Comercializada__c</field>
-                </layoutItems>
-                <layoutItems>
-                    <emptySpace>true</emptySpace>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Percentagem_Comercializada__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -97,24 +101,24 @@
         <editHeading>true</editHeading>
         <label>Vigência</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Required</behavior>
-                    <field>StartDate</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Required</behavior>
-                    <field>ContractTerm</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>StartDate</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>ContractTerm</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>EndDate</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>OwnerExpirationNotice</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EndDate</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OwnerExpirationNotice</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -124,31 +128,31 @@
         <editHeading>true</editHeading>
         <label>Assinaturas</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>CustomerSignedId</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>CustomerSignedTitle</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>CustomerSignedDate</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CustomerSignedId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CustomerSignedTitle</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CustomerSignedDate</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>CompanySignedId</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>CompanySignedDate</field>
-                </layoutItems>
-                <layoutItems>
-                    <emptySpace>true</emptySpace>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CompanySignedId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CompanySignedDate</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -158,16 +162,16 @@
         <editHeading>true</editHeading>
         <label>Ativação</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>ActivatedById</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ActivatedById</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>ActivatedDate</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ActivatedDate</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -177,10 +181,10 @@
         <editHeading>true</editHeading>
         <label>Morada de Faturação</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>BillingAddress</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BillingAddress</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -190,14 +194,14 @@
         <editHeading>true</editHeading>
         <label>Condições e Notas</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>SpecialTerms</field>
-                </layoutItems>
-                <layoutItems>
-                    <behavior>Edit</behavior>
-                    <field>Description</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SpecialTerms</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Description</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -207,24 +211,29 @@
         <editHeading>true</editHeading>
         <label>Informação de Sistema</label>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>CreatedById</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CreatedById</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-                <layoutItems>
-                    <behavior>Readonly</behavior>
-                    <field>LastModifiedById</field>
-                </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LastModifiedById</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
-    <!--
-      Os Dias Disponivel entram porque sao o que diz onde agir: numa lista de 32
-      fracoes, 32 linhas iguais nao dizem nada. Este padrao - campos custom sem
-      prefixo numa related list de objeto custom - ja deploia desde agosto.
-    -->
+    <layoutSections>
+        <customLabel>false</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>false</editHeading>
+        <layoutColumns/>
+        <style>CustomLinks</style>
+    </layoutSections>
+    <miniLayout>
+        <fields>Regime__c</fields>
+    </miniLayout>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Tipologia__c</fields>
@@ -242,4 +251,9 @@
         <fields>TASK.STATUS</fields>
         <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
+    <showEmailCheckbox>false</showEmailCheckbox>
+    <showHighlightsPanel>false</showHighlightsPanel>
+    <showInteractionLogPanel>false</showInteractionLogPanel>
+    <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
+    <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
 </Layout>

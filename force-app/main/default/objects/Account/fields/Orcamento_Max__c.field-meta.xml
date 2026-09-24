@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Orcamento_Max__c</fullName>
-    <label>Orçamento Máximo</label>
+    <description>Tecto de investimento desta construtora num terreno. NAO confundir com o campo homonimo do Contact (Orcamento_Max__pc), que e o orcamento do cliente particular. As etiquetas eram iguais e trocaram-se no layout.</description>
+    <label>Orçamento Máximo (Construtora)</label>
     <precision>14</precision>
     <required>false</required>
     <scale>2</scale>

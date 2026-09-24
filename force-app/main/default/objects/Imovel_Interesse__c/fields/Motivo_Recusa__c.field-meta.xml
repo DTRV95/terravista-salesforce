@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Motivo_Recusa__c</fullName>
+    <description>Porque é que o cliente disse que não. Texto e não picklist: a razão real raramente cabe numa lista, e é ela que diz se o imóvel está mal posicionado no preço ou se foi só este cliente.</description>
+    <label>Motivo da Recusa</label>
+    <length>255</length>
+    <required>false</required>
+    <type>Text</type>
+</CustomField>

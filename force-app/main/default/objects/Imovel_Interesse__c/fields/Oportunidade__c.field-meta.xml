@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Oportunidade__c</fullName>
+    <description>O negócio a que este interesse pertence. Master-Detail para permitir o Roll-Up Summary nativo na Opportunity e para as linhas morrerem com o negócio — um interesse sem negócio não quer dizer nada.</description>
+    <label>Negócio</label>
+    <referenceTo>Opportunity</referenceTo>
+    <relationshipLabel>Imóveis de Interesse</relationshipLabel>
+    <relationshipName>Imoveis_Interesse</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

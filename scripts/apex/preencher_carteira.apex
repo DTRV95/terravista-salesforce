@@ -13,28 +13,27 @@
  * Unsplash, livres de usar. So nos imoveis da demonstracao: um link partido a
  * frente do juri custa mais do que a foto vale. O terreno fica sem foto de
  * proposito - a unica que havia era de banco de imagens pago.
+ *
+ * DE VOLTA AOS URLs EXTERNOS (por agora)
+ * Chegou-se a trocar isto por Static Resource (servido pela propria org, sem
+ * depender da rede da sala nem de um terceiro) mas os tres ficheiros
+ * (predio.jpg, moradia.jpg, interior.jpg) nunca chegaram a ser largados em
+ * force-app/main/default/staticresources/fotos_imoveis/. Com o campo vazio
+ * as fotos nao apareciam de todo, o que e pior do que o risco de um link
+ * externo falhar. Quando esses ficheiros existirem, trocar outra vez para
+ * BASE + nome do ficheiro é so reativar o bloco comentado abaixo.
  */
-// URLs servidos pelo proprio Salesforce (Static Resource fotos_imoveis).
-// Um URL externo depende da rede da sala e de um servico de terceiros: ja
-// falhou duas vezes aqui, e um link partido a frente do juri custa mais do que
-// a foto vale.
-// O dominio vem da propria org em tempo de execucao. Escrito a mao, o script
-// deixava de correr em qualquer outra org - e o projeto tem de poder ser
-// reconstruido do zero.
-// AS IMAGENS AINDA NAO EXISTEM.
-// O Static Resource fotos_imoveis esta criado mas vazio - falta la largar os
-// tres ficheiros. Enquanto isso, os URLs apontariam para 404 e o campo de
-// formula mostraria o icone de imagem partida em 44 imoveis. Uma foto que nao
-// carrega e pior do que nenhuma foto.
-//
-// Poe isto a true depois de largares predio.jpg, moradia.jpg e interior.jpg em
-// force-app/main/default/staticresources/fotos_imoveis/ e fazeres deploy.
-final Boolean HA_IMAGENS = false;
+final Boolean HA_IMAGENS = true;
 
-final String BASE = URL.getOrgDomainUrl().toExternalForm() + '/resource/fotos_imoveis/';
-final String FOTO_PREDIO   = BASE + 'predio.jpg';
-final String FOTO_MORADIA  = BASE + 'moradia.jpg';
-final String FOTO_INTERIOR = BASE + 'interior.jpg';
+final String FOTO_PREDIO   = 'https://images.unsplash.com/photo-1580041065738-e72023775cdc?q=80&w=1170&auto=format&fit=crop';
+final String FOTO_MORADIA  = 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1074&auto=format&fit=crop';
+final String FOTO_INTERIOR = 'https://images.unsplash.com/photo-1745429523615-2a82c60bfc02?q=80&w=1074&auto=format&fit=crop';
+
+// Versao Static Resource, para quando os ficheiros existirem:
+// final String BASE = URL.getOrgDomainUrl().toExternalForm() + '/resource/fotos_imoveis/';
+// final String FOTO_PREDIO   = BASE + 'predio.jpg';
+// final String FOTO_MORADIA  = BASE + 'moradia.jpg';
+// final String FOTO_INTERIOR = BASE + 'interior.jpg';
 
 List<Imovel__c> todos = [SELECT Id, Name, Tipo_Imovel__c, Localizacao__c,
                                 Elevador__c, Foto_URL__c FROM Imovel__c];
