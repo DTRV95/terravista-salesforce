@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pos_Escritura</fullName>
+    <active>true</active>
+    <description>Pedidos que chegam depois de o negócio fechar: documentação, chaves, certificado energético, condomínio. Começam onde a Opportunity acaba — um pedido de informação sobre um imóvel à venda é um Lead, não um Case.</description>
+    <label>Pós-Escritura</label>
+</RecordType>

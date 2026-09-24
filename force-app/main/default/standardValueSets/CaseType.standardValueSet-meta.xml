@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue><fullName>Documentacao</fullName><default>true</default><label>Documentação</label></standardValue>
+    <standardValue><fullName>Chaves e Acessos</fullName><default>false</default><label>Chaves e Acessos</label></standardValue>
+    <standardValue><fullName>Certificado Energetico</fullName><default>false</default><label>Certificado Energético</label></standardValue>
+    <standardValue><fullName>Condominio</fullName><default>false</default><label>Condomínio</label></standardValue>
+    <standardValue><fullName>Fiscal e IMT</fullName><default>false</default><label>Fiscal e IMT</label></standardValue>
+    <standardValue><fullName>Reclamacao</fullName><default>false</default><label>Reclamação</label></standardValue>
+    <standardValue><fullName>Outro</fullName><default>false</default><label>Outro</label></standardValue>
+</StandardValueSet>

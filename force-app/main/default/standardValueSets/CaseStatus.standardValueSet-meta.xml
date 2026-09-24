@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue><fullName>Novo</fullName><default>true</default><closed>false</closed><label>Novo</label></standardValue>
+    <standardValue><fullName>Em Tratamento</fullName><default>false</default><closed>false</closed><label>Em Tratamento</label></standardValue>
+    <standardValue><fullName>A Aguardar Cliente</fullName><default>false</default><closed>false</closed><label>A Aguardar Cliente</label></standardValue>
+    <standardValue><fullName>Resolvido</fullName><default>false</default><closed>true</closed><label>Resolvido</label></standardValue>
+    <standardValue><fullName>Fechado sem Resolucao</fullName><default>false</default><closed>true</closed><label>Fechado sem Resolução</label></standardValue>
+</StandardValueSet>

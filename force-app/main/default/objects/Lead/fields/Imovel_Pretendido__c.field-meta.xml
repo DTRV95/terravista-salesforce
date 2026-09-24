@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Imovel_Pretendido__c</fullName>
+    <description>O imóvel por que o lead se interessou, tipicamente vindo do site. Não confundir com os campos Imovel_Tipo__c, Imovel_Localizacao__c e Imovel_Area_m2__c: esses descrevem o imóvel que o cliente quer VENDER, numa angariação. Este é o que ele quer COMPRAR.</description>
+    <label>Imóvel Pretendido</label>
+    <referenceTo>Imovel__c</referenceTo>
+    <relationshipLabel>Leads Interessados</relationshipLabel>
+    <relationshipName>Leads_Interessados</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

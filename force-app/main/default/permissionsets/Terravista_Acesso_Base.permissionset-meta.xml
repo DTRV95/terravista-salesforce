@@ -29,6 +29,16 @@
     </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Imovel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Imovel_Pretendido__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Imovel_Interesse__c.Motivo_Recusa__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -445,6 +455,10 @@
         <application>Terravista</application>
         <visible>true</visible>
     </applicationVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Case.Pos_Escritura</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.Empresa</recordType>
         <visible>true</visible>

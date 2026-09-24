@@ -41,6 +41,38 @@ Depois do deploy, na org e a mao (o repositorio nao toca na UI):
 
 ---
 
+## Bloco 24/09 (b) — Cases de pos-escritura e o imovel pretendido nas leads
+
+Base para o site e para o portal. Pode ir sozinho ou em cima do bloco anterior.
+
+```
+git pull
+python scripts/verificar_metadados.py
+sf project deploy start \
+  -m "CustomField:Lead.Imovel_Pretendido__c" \
+  -m "CustomField:Case.Imovel__c" \
+  -m "RecordType:Case.Pos_Escritura" \
+  -m "StandardValueSet:CaseType" \
+  -m "StandardValueSet:CaseOrigin" \
+  -m "StandardValueSet:CaseStatus" \
+  -m "PermissionSet:Terravista_Acesso_Base" \
+  -o terravista
+```
+
+ATENCAO aos StandardValueSet: um deploy destes SUBSTITUI a lista inteira de
+valores do campo standard na org. Aqui e seguro porque o Case tem 0 registos
+e ninguem usou ainda Type, Origin ou Status. Num objecto com dados, isto
+apagava valores que registos existentes estariam a usar.
+
+A fila "Apoio ao Cliente" ja existe e aceita Case - nao e preciso criar outra.
+
+Depois do deploy, na org e a mao:
+- atribuir o record type Pos-Escritura ao perfil/layout
+- por o campo Imovel no layout do Case
+- por o campo Imovel Pretendido no layout de Lead do record type Compra
+
+---
+
 ## Bloco atual — falta TRAZER da org, nao levar
 
 A org tem quatro coisas que o repositorio nao tem. Nada disto se deploya: faz-se
