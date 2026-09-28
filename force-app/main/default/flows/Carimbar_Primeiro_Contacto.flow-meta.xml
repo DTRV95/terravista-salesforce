@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <description>Quando uma chamada e dada por concluida num lead, carimba a Data do 1o Contacto. E este Flow que alimenta a metrica de latencia: sem ele o campo so existia porque o script de dados o escrevia, e numa org real ficaria sempre vazio.</description>
     <environments>Default</environments>
     <interviewLabel>Carimbar Primeiro Contacto {!$Flow.CurrentDateTime}</interviewLabel>
@@ -40,17 +41,9 @@
         <connector>
             <targetReference>Carimbar_o_lead</targetReference>
         </connector>
-        <!--
-          So conta uma chamada CONCLUIDA. Uma tarefa aberta nao prova contacto
-          nenhum, e era isso que o LastActivityDate deixava passar.
-
-          O filtro do Id na atualizacao resolve sozinho o caso de a tarefa estar
-          num Contacto e nao num Lead: nao encontra nenhum Lead e nao faz nada.
-          Evita ter de comparar prefixos de Id em formula.
-        -->
         <filterFormula>AND(
-  ISPICKVAL({!$Record.Status}, "Completed"),
-  ISPICKVAL({!$Record.TaskSubtype}, "Call"),
+  ISPICKVAL({!$Record.Status}, &quot;Completed&quot;),
+  ISPICKVAL({!$Record.TaskSubtype}, &quot;Call&quot;),
   NOT(ISBLANK({!$Record.WhoId}))
 )</filterFormula>
         <object>Task</object>

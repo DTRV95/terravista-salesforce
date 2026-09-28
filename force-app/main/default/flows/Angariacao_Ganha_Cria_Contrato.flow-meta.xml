@@ -1,37 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <description>Quando uma angariacao chega a Contrato Assinado, cria o CMI em rascunho e uma Task para o agente completar o que so se sabe no terreno. Nao cria o Imovel: nessa altura ainda ninguem mediu nem avaliou.</description>
     <environments>Default</environments>
-    <interviewLabel>Angariacao Ganha Cria Contrato {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Angariacao Ganha Cria Contrato</label>
-    <processType>AutoLaunchedFlow</processType>
-    <status>Active</status>
-    <start>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Criar_Contrato</targetReference>
-        </connector>
-        <filterFormula>AND(
-  {!$Record.RecordType.DeveloperName} = "Angariacao",
-  ISPICKVAL({!$Record.StageName}, "Contrato Assinado"),
-  ISCHANGED({!$Record.StageName})
-)</filterFormula>
-        <object>Opportunity</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <triggerType>RecordAfterSave</triggerType>
-    </start>
     <formulas>
         <name>frmRegime</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!$Record.Linha_Negocio__c}, "B2B"), "Comercializacao de Empreendimento", "Mediacao a Particular")</expression>
+        <expression>IF(ISPICKVAL({!$Record.Linha_Negocio__c}, &quot;B2B&quot;), &quot;Comercializacao de Empreendimento&quot;, &quot;Mediacao a Particular&quot;)</expression>
     </formulas>
     <formulas>
         <name>frmVencimentoTask</name>
         <dataType>Date</dataType>
         <expression>TODAY() + 3</expression>
     </formulas>
+    <interviewLabel>Angariacao Ganha Cria Contrato {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Angariacao Ganha Cria Contrato</label>
+    <processType>AutoLaunchedFlow</processType>
     <recordCreates>
         <name>Criar_Contrato</name>
         <label>Criar Contrato de Mediacao em rascunho</label>
@@ -147,4 +132,20 @@
         </inputAssignments>
         <object>Opportunity</object>
     </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Criar_Contrato</targetReference>
+        </connector>
+        <filterFormula>AND(
+  {!$Record.RecordType.DeveloperName} = &quot;Angariacao&quot;,
+  ISPICKVAL({!$Record.StageName}, &quot;Contrato Assinado&quot;),
+  ISCHANGED({!$Record.StageName})
+)</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
 </Flow>

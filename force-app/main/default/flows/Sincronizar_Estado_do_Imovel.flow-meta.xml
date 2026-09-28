@@ -1,27 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
-    <description>Mantem Imovel__c.Estado_Comercial__c em sincronia com a fase do negocio. Exclui o Record Type Angariacao, onde Contrato Assinado significa CMI assinado e nao imovel transacionado.</description>
-    <environments>Default</environments>
-    <interviewLabel>Sincronizar Estado do Imovel {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Sincronizar Estado do Imovel</label>
-    <processType>AutoLaunchedFlow</processType>
-    <status>Active</status>
-    <start>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Que_estado_comercial</targetReference>
-        </connector>
-        <filterFormula>AND(
-  NOT(ISBLANK({!$Record.Imovel__c})),
-  {!$Record.RecordType.DeveloperName} &lt;&gt; "Angariacao",
-  OR( ISNEW(), ISCHANGED({!$Record.StageName}) )
-)</filterFormula>
-        <object>Opportunity</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <triggerType>RecordAfterSave</triggerType>
-    </start>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>Que_estado_comercial</name>
         <label>Que estado comercial?</label>
@@ -30,7 +10,6 @@
         <defaultConnectorLabel>Nao mexer no imovel</defaultConnectorLabel>
         <rules>
             <name>Reservar</name>
-            <label>CPCV assinado</label>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.StageName</leftValueReference>
@@ -42,10 +21,10 @@
             <connector>
                 <targetReference>Marcar_Reservado</targetReference>
             </connector>
+            <label>CPCV assinado</label>
         </rules>
         <rules>
             <name>Vender</name>
-            <label>Escritura realizada</label>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.StageName</leftValueReference>
@@ -57,10 +36,10 @@
             <connector>
                 <targetReference>Marcar_Vendido</targetReference>
             </connector>
+            <label>Escritura realizada</label>
         </rules>
         <rules>
             <name>Arrendar</name>
-            <label>Contrato de arrendamento assinado</label>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.StageName</leftValueReference>
@@ -72,10 +51,10 @@
             <connector>
                 <targetReference>Marcar_Arrendado</targetReference>
             </connector>
+            <label>Contrato de arrendamento assinado</label>
         </rules>
         <rules>
             <name>Libertar</name>
-            <label>Negocio perdido</label>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.StageName</leftValueReference>
@@ -87,8 +66,63 @@
             <connector>
                 <targetReference>Libertar_Imovel</targetReference>
             </connector>
+            <label>Negocio perdido</label>
         </rules>
     </decisions>
+    <description>Mantem Imovel__c.Estado_Comercial__c em sincronia com a fase do negocio. Exclui o Record Type Angariacao, onde Contrato Assinado significa CMI assinado e nao imovel transacionado.</description>
+    <environments>Default</environments>
+    <interviewLabel>Sincronizar Estado do Imovel {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Sincronizar Estado do Imovel</label>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Libertar_Imovel</name>
+        <label>Devolver imovel a carteira</label>
+        <locationX>842</locationX>
+        <locationY>278</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Imovel__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Estado_Comercial__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Reservado</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Estado_Comercial__c</field>
+            <value>
+                <stringValue>Disponivel</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Imovel__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Marcar_Arrendado</name>
+        <label>Marcar imovel como Arrendado</label>
+        <locationX>578</locationX>
+        <locationY>278</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Imovel__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Estado_Comercial__c</field>
+            <value>
+                <stringValue>Arrendado</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Imovel__c</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Marcar_Reservado</name>
         <label>Marcar imovel como Reservado</label>
@@ -131,53 +165,20 @@
         </inputAssignments>
         <object>Imovel__c</object>
     </recordUpdates>
-    <recordUpdates>
-        <name>Marcar_Arrendado</name>
-        <label>Marcar imovel como Arrendado</label>
-        <locationX>578</locationX>
-        <locationY>278</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Imovel__c</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Estado_Comercial__c</field>
-            <value>
-                <stringValue>Arrendado</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Imovel__c</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Libertar_Imovel</name>
-        <label>Devolver imovel a carteira</label>
-        <locationX>842</locationX>
-        <locationY>278</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Imovel__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Estado_Comercial__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Reservado</stringValue>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Estado_Comercial__c</field>
-            <value>
-                <stringValue>Disponivel</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Imovel__c</object>
-    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Que_estado_comercial</targetReference>
+        </connector>
+        <filterFormula>AND(
+  NOT(ISBLANK({!$Record.Imovel__c})),
+  {!$Record.RecordType.DeveloperName} &lt;&gt; &quot;Angariacao&quot;,
+  OR( ISNEW(), ISCHANGED({!$Record.StageName}) )
+)</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
 </Flow>
