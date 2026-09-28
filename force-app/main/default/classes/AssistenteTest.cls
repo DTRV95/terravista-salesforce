@@ -384,4 +384,101 @@ private class AssistenteTest {
             [SELECT Estado__c FROM Imovel_Interesse__c].Estado__c,
             'Uma segunda visita a um imovel recusado nao o torna menos recusado');
     }
+
+    // --- Os caminhos que faltavam no AssistenteMarcarVisita ---------------
+    //
+    // Nao foram escritos para subir a cobertura: sao os ramos em que a classe
+    // RECUSA fazer alguma coisa, e um ramo de recusa por testar e uma recusa
+    // que ninguem viu acontecer.
+
+    @IsTest
+    static void pessoa_desconhecida_nao_marca_nada() {
+        AssistenteMarcarVisita.PedidoVisita p = new AssistenteMarcarVisita.PedidoVisita();
+        p.nomeCliente = 'Ninguem Com Este Nome';
+        p.nomeImovel = 'Apartamento de Teste';
+        p.quando = Datetime.now().addDays(1);
+
+        List<AssistenteResposta> r =
+            AssistenteMarcarVisita.executar(new List<AssistenteMarcarVisita.PedidoVisita>{ p });
+
+        System.assertEquals(false, r[0].sucesso);
+        System.assert(r[0].mensagem.contains('cliente nem lead'));
+        System.assertEquals(0, [SELECT COUNT() FROM Event]);
+    }
+
+    @IsTest
+    static void cliente_e_lead_homonimos_perguntam_qual_antes_de_marcar() {
+        insert new Account(RecordTypeId = rtPessoa, FirstName = 'Vera', LastName = 'Antunes');
+        novaLead('Vera', 'Antunes');
+
+        AssistenteMarcarVisita.PedidoVisita p = new AssistenteMarcarVisita.PedidoVisita();
+        p.nomeCliente = 'Antunes';
+        p.nomeImovel = 'Apartamento de Teste';
+        p.quando = Datetime.now().addDays(1);
+
+        List<AssistenteResposta> r =
+            AssistenteMarcarVisita.executar(new List<AssistenteMarcarVisita.PedidoVisita>{ p });
+
+        System.assertEquals(false, r[0].sucesso);
+        System.assert(r[0].mensagem.contains('(Cliente)') && r[0].mensagem.contains('(Lead)'),
+            'A pergunta tem de trazer a origem: ' + r[0].mensagem);
+        System.assertEquals(0, [SELECT COUNT() FROM Event]);
+    }
+
+    @IsTest
+    static void imovel_ambiguo_pergunta_qual() {
+        outroImovel('Apartamento de Teste II');
+
+        AssistenteMarcarVisita.PedidoVisita p = new AssistenteMarcarVisita.PedidoVisita();
+        p.nomeCliente = 'Dono';
+        p.nomeImovel = 'Apartamento de Teste';
+        p.quando = Datetime.now().addDays(1);
+
+        List<AssistenteResposta> r =
+            AssistenteMarcarVisita.executar(new List<AssistenteMarcarVisita.PedidoVisita>{ p });
+
+        System.assertEquals(false, r[0].sucesso);
+        System.assert(r[0].mensagem.contains('mais do que um imovel'));
+        System.assertEquals(0, [SELECT COUNT() FROM Event]);
+    }
+
+    @IsTest
+    static void cliente_sem_negocio_aberto_liga_a_visita_ao_imovel() {
+        Account cliente = new Account(RecordTypeId = rtPessoa,
+            FirstName = 'Sofia', LastName = 'SemNegocio');
+        insert cliente;
+        Imovel__c im = [SELECT Id FROM Imovel__c LIMIT 1];
+
+        Test.startTest();
+        marcar('SemNegocio', 'Apartamento de Teste', 4);
+        Test.stopTest();
+
+        Event e = [SELECT WhatId FROM Event LIMIT 1];
+        System.assertEquals(im.Id, e.WhatId,
+            'Sem negocio nao ha linha de interesse - a visita fica no imovel');
+        System.assertEquals(0, [SELECT COUNT() FROM Imovel_Interesse__c],
+            'Uma linha de interesse sem negocio nao quer dizer nada');
+    }
+
+    @IsTest
+    static void a_visita_promove_o_imovel_de_sugerido_para_visitado() {
+        Account cliente = new Account(RecordTypeId = rtPessoa,
+            FirstName = 'Rui', LastName = 'Comprador');
+        insert cliente;
+        Opportunity o = negocioDe(cliente);
+        Imovel__c im = [SELECT Id FROM Imovel__c LIMIT 1];
+
+        insert new Imovel_Interesse__c(Oportunidade__c = o.Id, Imovel__c = im.Id,
+            Estado__c = 'Sugerido');
+
+        Test.startTest();
+        marcar('Comprador', 'Apartamento de Teste', 6);
+        Test.stopTest();
+
+        System.assertEquals('Visitado',
+            [SELECT Estado__c FROM Imovel_Interesse__c].Estado__c,
+            'Sugerido e o unico estado de onde se promove');
+        System.assertEquals(1, [SELECT COUNT() FROM Imovel_Interesse__c],
+            'Reaproveita a linha que ja existia');
+    }
 }
