@@ -27,6 +27,18 @@
                 <name>terravista.david@agentforce.com</name>
                 <type>user</type>
             </approver>
+            <!--
+              So ha UM aprovador, e mesmo assim a Metadata API exige isto: basta
+              existir um <assignedApprover> para ela pedir a regra de decisao,
+              sem olhar a quantos aprovadores la estao. Com um so, FirstResponse
+              e Unanimous dao o mesmo resultado - e uma formalidade, nao uma
+              decisao de negocio.
+
+              No dia em que a direcao passar a ser duas pessoas, isto passa a
+              importar: FirstResponse deixa qualquer uma decidir, Unanimous
+              obriga as duas a concordar.
+            -->
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <description>A direção decide. Um passo só: dois passos numa agência de dois consultores seria burocracia a fingir de governo.</description>
         <label>Aprovação da Direção</label>
