@@ -14,102 +14,53 @@ sf project deploy start -o terravista
 
 ---
 
-## Bloco 24/09 — Imovel_Interesse__c (LEVAR, e tem de ir tudo junto)
+## Feito a 28/09 — confirmado por query, nao por mensagem de deploy
 
-Um deploy e atomico, e este e o caso em que isso importa: o Flow carimba pela
-linha de interesse, e o Apex poe o WhatId nela. Se um for sem o outro, a
-validation rule que exige a Data da Visita bloqueia todas as oportunidades.
+| O que | Como se confirmou |
+|---|---|
+| `Imovel_Interesse__c` + roll-ups | `EntityDefinition` devolve o objecto |
+| `Case.Pos_Escritura` + Business Process | `RecordType` com `BusinessProcessId` preenchido |
+| `Lead.Imovel_Pretendido__c`, `Case.Imovel__c` | no deploy dos 16 componentes |
+| `Carimbar_Visita` com o salto pela linha de interesse | `FlowDefinitionView` diz `VersionNumber 2` |
+| `ApprovalProcess Comissao_Abaixo_do_Minimo` | `ProcessDefinition` deixou de devolver zero |
 
-```
-git pull
-python scripts/verificar_metadados.py
-sf project deploy start \
-  -m "CustomObject:Imovel_Interesse__c" \
-  -m "CustomField:Opportunity.Imoveis_Mostrados__c" \
-  -m "CustomField:Opportunity.Imoveis_Recusados__c" \
-  -m "PermissionSet:Terravista_Acesso_Base" \
-  -m "Flow:Carimbar_Visita" \
-  -m "ApexClass:AssistenteMarcarVisita" \
-  -m "ApexClass:AssistenteTest" \
-  --test-level RunSpecifiedTests --tests AssistenteTest --tests MatchImoveisTest \
-  -o terravista
-```
+### As tres licoes deste dia, que custaram uma tarde
 
-Depois do deploy, na org e a mao (o repositorio nao toca na UI):
-- related list "Imoveis de Interesse" na pagina da Opportunity
-- campos "Imoveis Mostrados" e "Imoveis Recusados" na mesma pagina
+**1. Um deploy verde nao prova que alguma coisa mudou.** O `Carimbar_Visita`
+correu com "sucesso", 16 de 16 componentes, e ficou na versao 1 de 7 de
+Setembro. O deploy mandou de volta o que ja la estava. So a query o denunciou.
 
----
+**2. Um retrieve traz o que a org tem, nao o que o repositorio devia ter.**
+Foi um `-m "Flow"` - todos os Flows - que apagou noventa linhas de trabalho
+acabado de escrever. O retrieve vai ANTES do deploy, e nunca sobre os mesmos
+componentes.
 
-## Bloco 24/09 (b) — Cases de pos-escritura e o imovel pretendido nas leads
-
-Base para o site e para o portal. Pode ir sozinho ou em cima do bloco anterior.
-
-```
-git pull
-python scripts/verificar_metadados.py
-sf project deploy start \
-  -m "CustomField:Lead.Imovel_Pretendido__c" \
-  -m "CustomField:Case.Imovel__c" \
-  -m "RecordType:Case.Pos_Escritura" \
-  -m "StandardValueSet:CaseType" \
-  -m "StandardValueSet:CaseOrigin" \
-  -m "StandardValueSet:CaseStatus" \
-  -m "PermissionSet:Terravista_Acesso_Base" \
-  -o terravista
-```
-
-ATENCAO aos StandardValueSet: um deploy destes SUBSTITUI a lista inteira de
-valores do campo standard na org. Aqui e seguro porque o Case tem 0 registos
-e ninguem usou ainda Type, Origin ou Status. Num objecto com dados, isto
-apagava valores que registos existentes estariam a usar.
-
-A fila "Apoio ao Cliente" ja existe e aceita Case - nao e preciso criar outra.
-
-Depois do deploy, na org e a mao:
-- atribuir o record type Pos-Escritura ao perfil/layout
-- por o campo Imovel no layout do Case
-- por o campo Imovel Pretendido no layout de Lead do record type Compra
+**3. Perguntar a org e mais barato do que testar hipoteses.** O
+"Picklist value not found" custou horas de variacoes; uma query de cinco
+segundos ao `CaseStatus` mostrava que o valor nao existia. O mesmo com o
+`AccountId` do layout de aprovacao: uma query a `FieldDefinition` mostrou dois
+erros de uma vez, e poupou uma viagem.
 
 ---
 
-## Bloco atual — falta TRAZER da org, nao levar
-
-A org tem quatro coisas que o repositorio nao tem. Nada disto se deploya: faz-se
-retrieve, ao contrario do habitual.
-
-- `Lead.Sem_Imoveis__c` — checkbox criada a mao
-- `Gerar Plano de Procura - Criacao` — Flow
-- `Gerar Plano de Procura - Alteracao` — Flow
-- O prompt template de Field Generation
+## Continua pendente de LEVAR
 
 ```
-git pull
-sf project retrieve start -m "CustomField:Lead.Sem_Imoveis__c" -m "Flow" -o terravista
-git status
-```
-
-Ve o que apareceu, confirma que os dois Flows novos estao la, e faz commit.
-
-O prompt template tem um tipo de metadata proprio que nao esta provado neste
-projeto. Procura-o com `sf project list metadata --metadata-type` ou pelo
-Metadata Coverage Report antes de o tentares trazer.
-
-Continua pendente de LEVAR, de blocos anteriores:
-
-```
-sf project deploy start -m "Workflow:Contract" \
-                        -m "ApprovalProcess:Contract.Comissao_Abaixo_do_Minimo" -o terravista
-
 sf project deploy start -m "CustomField:Lead.Plano_de_Procura__c" \
-                        -m "PermissionSet:Terravista_Acesso_Base" \
                         -m "Layout:Lead-Lead Compra" \
                         -m "Layout:Lead-Lead Arrendamento" -o terravista
 ```
 
-O ApprovalProcess continua ausente da org — confirmado por SOQL, ProcessDefinition
-devolve zero. O contrato 00000138 tem comissao a 3% e e o caso perfeito para o
-demonstrar.
+**Cuidado com os Layouts:** so corre isto se souberes que nao mexeste nesses
+dois na org. Se mexeste, faz `retrieve` deles primeiro e ve o `git diff`.
+
+## Na org, a mao - sem isto nao se ve nada do que foi deployado
+
+- related list **Imoveis de Interesse** na pagina da Opportunity
+- campos **Imoveis Mostrados** e **Imoveis Recusados** na mesma pagina
+- record type **Pos-Escritura** atribuido ao perfil
+- campo **Imovel** no layout do Case
+- campo **Imovel Pretendido** no layout de Lead do record type Compra
 
 ---
 
