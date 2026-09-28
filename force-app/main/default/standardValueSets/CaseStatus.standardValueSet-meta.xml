@@ -5,5 +5,5 @@
     <standardValue><fullName>Em Tratamento</fullName><default>false</default><closed>false</closed><label>Em Tratamento</label></standardValue>
     <standardValue><fullName>A Aguardar Cliente</fullName><default>false</default><closed>false</closed><label>A Aguardar Cliente</label></standardValue>
     <standardValue><fullName>Resolvido</fullName><default>false</default><closed>true</closed><label>Resolvido</label></standardValue>
-    <standardValue><fullName>Fechado sem Resolucao</fullName><default>false</default><closed>true</closed><label>Fechado sem Resolução</label></standardValue>
+    <standardValue><fullName>Fechado_Sem_Resolucao</fullName><default>false</default><closed>true</closed><label>Fechado - Sem Resolução</label></standardValue>
 </StandardValueSet>
