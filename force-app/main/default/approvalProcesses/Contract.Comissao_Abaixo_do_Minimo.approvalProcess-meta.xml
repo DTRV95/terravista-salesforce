@@ -12,9 +12,23 @@
     <allowedSubmitters>
         <type>owner</type>
     </allowedSubmitters>
+    <!--
+      O QUE UM APROVADOR PRECISA DE VER, E COMO SE NOMEIA
+
+      Duas armadilhas aqui, as duas apanhadas pelo deploy:
+
+      O Contract NAO TEM campo Name. O identificador e o ContractNumber, um
+      auto number. Pedir Name a um layout de aprovacao e pedir um campo que
+      nao existe.
+
+      E o lookup para a conta nao se escreve AccountId. Num layout de
+      aprovacao usa-se o NOME DA RELACAO - Account - e nao o nome do campo de
+      Id. A FieldDefinition mostra as duas faces: QualifiedApiName AccountId,
+      durable id Contract.Account.
+    -->
     <approvalPageFields>
-        <field>Name</field>
-        <field>AccountId</field>
+        <field>ContractNumber</field>
+        <field>Account</field>
         <field>Nome_Empreendimento__c</field>
         <field>Comissao__c</field>
         <field>Regime__c</field>
