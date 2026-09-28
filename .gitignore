@@ -46,3 +46,7 @@ $RECYCLE.BIN/
 **/__pycache__/
 **/.venv/
 **/venv/
+
+leads.csv
+opps.csv
+retry_attempt_*.json
