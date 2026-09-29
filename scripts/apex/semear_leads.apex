@@ -59,7 +59,11 @@ Integer t2 = 913000200;
 for (String l : lds) {
     List<String> c = l.split('\\|', -1);
     t2++;
-    Lead ld = new Lead(FirstName=c[0], LastName=c[1], Company=c[0] + ' ' + c[1] + ' (Particular)',
+    // Company FICA EM BRANCO nos particulares: numa org com Person Accounts, e
+    // o Company vazio que faz a conversao criar uma Person Account. Preenchido,
+    // criava uma empresa chamada "Miguel Ferreirinha (Particular)" - e o cliente
+    // desaparecia do matching, que filtra por IsPersonAccount = true.
+    Lead ld = new Lead(FirstName=c[0], LastName=c[1],
         Email=c[0].toLowerCase() + '.' + c[1].toLowerCase() + '@exemplo.pt', Phone=String.valueOf(t2),
         LeadSource=c[2], RecordTypeId=rtL.get(c[3]), Status=c[4],
         Procura_Tipologia__c=c[5], Procura_Zonas__c=c[6], Prazo_Decisao__c=c[10],
@@ -71,7 +75,7 @@ for (String l : lds) {
     leads.add(ld);
 }
 // Angariacoes em curso
-leads.add(new Lead(FirstName='Armando', LastName='Peixoto', Company='Armando Peixoto (Particular)',
+leads.add(new Lead(FirstName='Armando', LastName='Peixoto',
     Email='armando.peixoto@exemplo.pt', Phone='913000301', LeadSource='Referencia',
     RecordTypeId=rtL.get('Angariacao'), Status='Em Contacto', OwnerId=CARLA,
     Imovel_Tipo__c='Apartamento', Imovel_Localizacao__c='Matosinhos', Imovel_Area_m2__c=95,
@@ -123,7 +127,6 @@ for (Integer i = 0; i < nomes.size(); i++) {
     Datetime criado = Datetime.newInstance(HOJE.addDays(-7 * semana), Time.newInstance(9, 15, 0, 0));
     Lead ld = new Lead(
         FirstName = n[0], LastName = n[1],
-        Company = n[0] + ' ' + n[1] + ' (Particular)',
         Email = n[0].toLowerCase() + '.' + n[1].toLowerCase() + '@exemplo.pt',
         Phone = String.valueOf(t3),
         LeadSource = (Math.mod(i, 3) == 0) ? 'Site'
