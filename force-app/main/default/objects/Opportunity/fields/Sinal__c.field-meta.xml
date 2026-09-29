@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sinal__c</fullName>
+    <description>Sinal entregue na assinatura do CPCV. É o que vincula as partes e o que o comprador perde se desistir — por isso é o primeiro número que alguém pergunta quando um negócio cai.</description>
+    <label>Sinal</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <type>Currency</type>
+</CustomField>

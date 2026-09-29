@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_CPCV__c</fullName>
+    <description>Data do Contrato Promessa de Compra e Venda. Não se reaproveitou o objeto Contract: esse é o contrato de mediação, onde a Terravista é parte e que é dono dos imóveis. No CPCV as partes são o comprador e o vendedor, e a Terravista é só mediadora.</description>
+    <label>Data do CPCV</label>
+    <required>false</required>
+    <type>Date</type>
+</CustomField>

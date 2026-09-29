@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Envio_Contrato__c</fullName>
+    <description>Quando o contrato foi enviado ao proprietário para assinar. O standard tem CustomerSignedDate mas não tem "enviado" — e é a diferença entre os dois que diz quem está a demorar.</description>
+    <label>Data de Envio</label>
+    <required>false</required>
+    <type>Date</type>
+</CustomField>

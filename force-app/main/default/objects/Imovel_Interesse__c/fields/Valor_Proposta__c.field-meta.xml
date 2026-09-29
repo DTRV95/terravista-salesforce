@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valor_Proposta__c</fullName>
+    <description>Quanto este cliente ofereceu por este imóvel. Vive aqui e não na Opportunity porque duas propostas concorrentes sobre o mesmo imóvel só se vêem lado a lado se estiverem na junção.</description>
+    <label>Valor da Proposta</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <type>Currency</type>
+</CustomField>
