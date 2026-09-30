@@ -41,6 +41,29 @@
       que imoveis sao muito mostrados e nunca comprados. O consultor cria e
       edita; apagar fica para quem nao tem nada a ganhar em faze-lo.
     -->
+    <!--
+      A OPPORTUNITY TEM DE ESTAR AQUI, E NAO E DECORACAO
+
+      O Imovel_Interesse__c e master-detail da Opportunity com
+      ControlledByParent: quem ve a linha ve-a PORQUE ve o negocio. A
+      plataforma recusa a permissao do filho sem a do pai, e faz bem - conceder
+      acesso a um detalhe sem acesso ao mestre seria uma porta lateral para ver
+      negocios alheios pelos imoveis que lhes foram mostrados.
+
+      O viewAllRecords aqui e o que distingue a direccao do consultor: ver a
+      carteira de toda a gente, e nao so a propria. Sem isso, um gestor nao
+      consegue responder a pergunta que justifica o cargo - que imoveis sao
+      muito mostrados em toda a agencia e nunca comprados.
+    -->
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Opportunity</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
