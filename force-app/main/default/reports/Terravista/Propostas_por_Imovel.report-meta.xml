@@ -22,6 +22,4 @@
     <showDetails>true</showDetails>
     <showGrandTotal>false</showGrandTotal>
     <showSubTotals>true</showSubTotals>
-    <sortColumn>Imovel_Interesse__c.Data_Proposta__c</sortColumn>
-    <sortOrder>Asc</sortOrder>
 </Report>
