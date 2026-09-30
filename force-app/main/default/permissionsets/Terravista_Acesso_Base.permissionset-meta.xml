@@ -33,6 +33,11 @@
     </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Opportunity.Proximo_Passo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Imovel_Interesse__c.Valor_Proposta__c</field>
         <readable>true</readable>
     </fieldPermissions>
