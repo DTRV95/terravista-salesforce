@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Acesso da DIRECAO, por cima do Terravista_Acesso_Base. Da as tres coisas que um consultor nao pode ter: corrigir as datas que o medem, apagar registos, e ver a carteira de toda a gente. Atribui-se a quem responde pelo resultado, nao a quem o produz.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Terravista — Direção</label>
+
+    <!--
+      PORQUE E QUE ESTES TRES CAMPOS ESTAO AQUI E NAO NO ACESSO BASE
+
+      Sao carimbados por Flow e sao a prova de duas coisas: quanto tempo se
+      demorou a ligar ao cliente, e que a visita existiu mesmo.
+
+      Se o consultor os pudesse editar, podia escrever a hora que lhe
+      conviesse - e a medicao da latencia, que e a tese inteira deste projecto,
+      deixava de provar seja o que for. Pior: as validation rules que exigem a
+      data da visita para avancar de fase passavam a ser teatro, porque bastava
+      escrever uma data para avancar sem nunca ter marcado visita nenhuma.
+
+      Quem mede nao pode ser quem e medido. A correccao legitima existe - erros
+      acontecem - mas passa por quem nao tem interesse no numero.
+    -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Data_Primeiro_Contacto__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.Data_Visita_Agendada__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Data_Visita__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+
+    <!--
+      Apagar uma linha de interesse e apagar o registo de que se mostrou aquele
+      imovel aquele cliente. E precisamente o dado que justificou o objecto:
+      que imoveis sao muito mostrados e nunca comprados. O consultor cria e
+      edita; apagar fica para quem nao tem nada a ganhar em faze-lo.
+    -->
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Imovel_Interesse__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+</PermissionSet>
