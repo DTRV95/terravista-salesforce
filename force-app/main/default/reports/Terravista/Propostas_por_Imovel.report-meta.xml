@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns><field>Imovel_Interesse__c.Oportunidade__c</field></columns>
+    <columns><field>Imovel_Interesse__c.Valor_Proposta__c</field></columns>
+    <columns><field>Imovel_Interesse__c.Data_Proposta__c</field></columns>
+    <description>Propostas em aberto, agrupadas por imovel. E a lista que o consultor leva a reuniao com o proprietario quando ha mais do que um interessado: quanto ofereceu cada um, e quem chegou primeiro.</description>
+    <filter>
+        <criteriaItems>
+            <column>Imovel_Interesse__c.Estado__c</column>
+            <operator>equals</operator>
+            <value>Proposta feita</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>Imovel_Interesse__c.Imovel__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Propostas por imóvel</name>
+    <reportType>Imoveis_de_Interesse</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>false</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>Imovel_Interesse__c.Data_Proposta__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+</Report>

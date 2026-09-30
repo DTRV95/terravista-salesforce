@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Imovel_Interesse__c</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <!--
+      Mesma razao do Imoveis_da_Carteira: o Imovel_Interesse__c e o lado DETAIL
+      de um Master-Detail com a Opportunity, e objectos nessa posicao nao geram
+      report type automatico. Sem este ficheiro nao ha por onde comecar um
+      relatorio sobre propostas.
+    -->
+    <description>Imoveis mostrados a clientes, com o estado em que ficaram e a proposta feita, se houve.</description>
+    <label>Imóveis de Interesse</label>
+    <sections>
+        <columns><checkedByDefault>true</checkedByDefault><field>Imovel__c</field><table>Imovel_Interesse__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Oportunidade__c</field><table>Imovel_Interesse__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Estado__c</field><table>Imovel_Interesse__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Valor_Proposta__c</field><table>Imovel_Interesse__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Data_Proposta__c</field><table>Imovel_Interesse__c</table></columns>
+        <columns><checkedByDefault>true</checkedByDefault><field>Motivo_Recusa__c</field><table>Imovel_Interesse__c</table></columns>
+        <columns><checkedByDefault>false</checkedByDefault><field>Name</field><table>Imovel_Interesse__c</table></columns>
+        <columns><checkedByDefault>false</checkedByDefault><field>CreatedDate</field><table>Imovel_Interesse__c</table></columns>
+        <masterLabel>Imóveis de Interesse</masterLabel>
+    </sections>
+</ReportType>
