@@ -17,7 +17,7 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Propostas por imóvel</name>
-    <reportType>Imoveis_de_Interesse</reportType>
+    <reportType>Imoveis_de_Interesse__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>false</showGrandTotal>
