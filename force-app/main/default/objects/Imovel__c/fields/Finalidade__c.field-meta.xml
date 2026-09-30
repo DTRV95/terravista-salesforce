@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Finalidade__c</fullName>
-    <description>Sem este campo o Preco e ambiguo: 620.000 numa moradia a venda e 850 num T1 para arrendar. Qualquer soma ou media misturava os dois. Todo o relatorio de valores filtra por aqui.</description>
+    <description>Venda ou arrendamento. Distingue a leitura do preco.</description>
     <label>Finalidade</label>
     <required>true</required>
     <type>Picklist</type>

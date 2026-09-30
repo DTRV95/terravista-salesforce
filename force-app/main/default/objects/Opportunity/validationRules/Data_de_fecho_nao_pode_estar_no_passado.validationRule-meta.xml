@@ -2,12 +2,12 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Data_de_fecho_nao_pode_estar_no_passado</fullName>
     <active>true</active>
-    <description>Guardada por ISCHANGED(StageName) para nao bloquear a edicao livre de registos atrasados - so obriga a atualizar quando o negocio avanca.</description>
+    <description>So obriga a atualizar a data quando o negocio avanca de fase.</description>
     <errorConditionFormula>AND(
   ISCHANGED(StageName),
   NOT(IsClosed),
   CloseDate &lt; TODAY()
 )</errorConditionFormula>
     <errorDisplayField>CloseDate</errorDisplayField>
-    <errorMessage>Este negócio avançou mas a data de fecho está no passado. Atualize a previsão antes de continuar.</errorMessage>
+    <errorMessage>A data de fecho está no passado. Atualize a previsão.</errorMessage>
 </ValidationRule>

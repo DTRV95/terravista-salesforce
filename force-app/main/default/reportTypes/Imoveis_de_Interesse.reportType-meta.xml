@@ -9,7 +9,7 @@
       report type automatico. Sem este ficheiro nao ha por onde comecar um
       relatorio sobre propostas.
     -->
-    <description>Imoveis mostrados a clientes, com o estado em que ficaram e a proposta feita, se houve.</description>
+    <description>Imoveis mostrados a clientes, com o estado e a proposta.</description>
     <label>Imóveis de Interesse</label>
     <sections>
         <columns><checkedByDefault>true</checkedByDefault><field>Imovel__c</field><table>Imovel_Interesse__c</table></columns>

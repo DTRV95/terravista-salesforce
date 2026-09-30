@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Resultado_Visita__c</fullName>
-    <description>Preencher apos uma visita (Event). O motivo da rejeicao vale mais que o que foi visto: e o que alimenta o matching por AI. Campos em Activity aparecem em Task e Event.</description>
+    <description>Resultado da visita. Preencher depois do Evento.</description>
     <label>Resultado da Visita</label>
     <required>false</required>
     <type>Picklist</type>

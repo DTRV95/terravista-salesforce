@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Comissao_Angariador__c</fullName>
-    <description>O que o angariador recebe deste negocio. Se for a mesma pessoa que vendeu, este valor esta ja incluido na Comissao do Consultor - nao se somam os dois.</description>
+    <description>Valor que o angariador recebe deste negocio.</description>
     <formula>Comissao_Terravista__c * 0.5 * Angariador__r.Percentagem_Comissao__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Comissão do Angariador</label>

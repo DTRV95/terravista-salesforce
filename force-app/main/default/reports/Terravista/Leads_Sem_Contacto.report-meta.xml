@@ -13,7 +13,7 @@
     <columns><field>LAST_NAME</field></columns>
     <columns><field>STATUS</field></columns>
     <columns><field>Lead.Prazo_Decisao__c</field></columns>
-    <description>Leads que ainda nao foram contactados. E a lista sobre a qual se age hoje - nao um indicador, uma fila de trabalho.</description>
+    <description>Fila de trabalho: leads ainda nao contactados.</description>
     <filter>
         <criteriaItems>
             <column>Lead.Data_Primeiro_Contacto__c</column>

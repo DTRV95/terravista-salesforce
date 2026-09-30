@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Minutos_Ate_Atribuicao__c</fullName>
-    <description>Latencia entre a entrada do lead e a atribuicao a um agente. Meta: menos de 5 minutos.</description>
+    <description>Minutos entre a entrada do lead e a atribuicao. Meta: 5 minutos.</description>
     <formula>IF(
    OR(ISBLANK(Data_Atribuicao__c), ISBLANK(Data_Entrada__c)),
    null,

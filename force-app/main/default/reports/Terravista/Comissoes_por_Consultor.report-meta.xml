@@ -20,7 +20,7 @@
         <aggregateTypes>Sum</aggregateTypes>
         <field>Opportunity.Comissao_Consultor__c</field>
     </columns>
-    <description>Quanto cada consultor tem a receber. So conta o que ja fez escritura - uma comissao so se paga quando o negocio fecha.</description>
+    <description>Comissoes a receber por consultor. So negocios fechados.</description>
     <filter>
         <criteriaItems>
             <column>STAGE_NAME</column>

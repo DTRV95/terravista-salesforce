@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Linha_Negocio__c</fullName>
-    <description>Segmento de cliente, nao processo. Separado do Record Type de proposito: permite responder a "e se um investidor B2B comprar uma moradia?".</description>
+    <description>Segmento de cliente: particular ou empresa.</description>
     <label>Linha de Negócio</label>
     <required>true</required>
     <type>Picklist</type>

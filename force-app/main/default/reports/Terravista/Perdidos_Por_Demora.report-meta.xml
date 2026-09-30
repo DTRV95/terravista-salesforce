@@ -18,7 +18,7 @@
         <aggregateTypes>Average</aggregateTypes>
         <field>Lead.Horas_Ate_Primeiro_Contacto__c</field>
     </columns>
-    <description>Separa o que se perdeu por culpa nossa do que nunca foi viavel. A media de horas ao lado prova a ligacao: os que se perderam sao os que esperaram mais.</description>
+    <description>Leads perdidos por demora no contacto, com as horas de espera.</description>
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>

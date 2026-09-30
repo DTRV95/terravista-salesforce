@@ -18,7 +18,7 @@
         <aggregateTypes>Average</aggregateTypes>
         <field>Contract.Percentagem_Comercializada__c</field>
     </columns>
-    <description>Quanto de cada empreendimento ja esta colocado. E o relatorio que o Miguel reconstruia a mao, e o que permite prestar contas a construtora sem o pedir a ninguem.</description>
+    <description>Percentagem de cada empreendimento ja colocada.</description>
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>

@@ -2,11 +2,11 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Proxima_acao_obrigatoria_em_negociacao</fullName>
     <active>true</active>
-    <description>PP8 literal: negociacoes de terreno arrastam-se meses e e facil perder o fio a meada. O funil existe por causa disto.</description>
+    <description>Negociacoes de terreno arrastam-se: obriga a definir o passo seguinte.</description>
     <errorConditionFormula>AND(
   ISPICKVAL(StageName, "Negociacao"),
   ISBLANK(NextStep)
 )</errorConditionFormula>
     <errorDisplayField>NextStep</errorDisplayField>
-    <errorMessage>Uma negociação de terreno sem próxima ação definida adormece. Indique o que fica combinado a seguir.</errorMessage>
+    <errorMessage>Indique a próxima ação combinada.</errorMessage>
 </ValidationRule>

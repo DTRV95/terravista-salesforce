@@ -12,7 +12,7 @@
         <title>Origem e estado do lead</title>
     </chart>
     <columns><field>LAST_NAME</field></columns>
-    <description>Quantos leads de cada origem chegam a qualificado e quantos morrem pelo caminho. Contar leads sem contar o que lhes acontece premeia a origem que traz volume mau.</description>
+    <description>Taxa de conversao de leads por origem.</description>
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>

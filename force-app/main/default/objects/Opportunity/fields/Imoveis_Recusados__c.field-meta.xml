@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Imoveis_Recusados__c</fullName>
-    <description>Quantos dos imóveis mostrados o cliente recusou. Lido ao lado dos Imóveis Mostrados, diz se o problema é a carteira ou o perfil que se registou do cliente.</description>
+    <description>Quantos dos imóveis mostrados o cliente recusou.</description>
     <label>Imóveis Recusados</label>
     <summaryFilterItems>
         <field>Imovel_Interesse__c.Estado__c</field>

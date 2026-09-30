@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Visita_realizada_exige_evento</fullName>
     <active>true</active>
-    <description>Homologa da regra do Lead. So se aplica a venda e ao arrendamento: um terreno negoceia-se sem visita agendada no CRM, e uma angariacao tem visita de avaliacao, que e outra coisa. O ISCHANGED deixa passar as cargas de dados.</description>
+    <description>So se aplica a venda e arrendamento. Nao bloqueia cargas de dados.</description>
     <errorConditionFormula>AND(
   ISCHANGED(StageName),
   ISPICKVAL(StageName, "Visita Realizada"),
@@ -11,5 +11,5 @@
   ISBLANK(Data_Visita__c)
 )</errorConditionFormula>
     <errorDisplayField>StageName</errorDisplayField>
-    <errorMessage>Não há nenhuma visita registada neste negócio. Marque o Evento da visita antes de avançar a fase.</errorMessage>
+    <errorMessage>Marque o Evento da visita antes de avançar a fase.</errorMessage>
 </ValidationRule>

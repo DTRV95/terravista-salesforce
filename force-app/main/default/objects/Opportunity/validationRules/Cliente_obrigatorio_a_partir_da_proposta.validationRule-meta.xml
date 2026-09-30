@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Cliente_obrigatorio_a_partir_da_proposta</fullName>
     <active>true</active>
-    <description>Nao se faz uma proposta a ninguem. Exige limpeza previa: os negocios do Aurora foram criados sem Account.</description>
+    <description>Nao se faz uma proposta sem cliente identificado.</description>
     <errorConditionFormula>AND(
   OR(ISPICKVAL(StageName, "Proposta Apresentada"),
      ISPICKVAL(StageName, "Proposta de Mediacao"),
@@ -13,5 +13,5 @@
   ISBLANK(AccountId)
 )</errorConditionFormula>
     <errorDisplayField>AccountId</errorDisplayField>
-    <errorMessage>Indique o cliente. Não é possível apresentar uma proposta sem saber a quem.</errorMessage>
+    <errorMessage>Indique o cliente do negócio.</errorMessage>
 </ValidationRule>

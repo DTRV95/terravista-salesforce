@@ -3,6 +3,6 @@
     <fullName>Arrendamento</fullName>
     <active>true</active>
     <businessProcess>Arrendamento</businessProcess>
-    <description>Arrendamento de imóvel. Processo sem escritura, com fiador, caução e duração.</description>
+    <description>Arrendamento de imóvel: fiador, caução e duração.</description>
     <label>Arrendamento</label>
 </RecordType>

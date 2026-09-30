@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Fase_Obra__c</fullName>
-    <description>Muda tudo no planeamento: em projeto significa venda na planta e 18 meses ate a primeira escritura; concluido vende-se em seis.</description>
+    <description>Fase da obra: em projeto, em construcao ou concluido.</description>
     <label>Fase da Obra</label>
     <required>false</required>
     <type>Picklist</type>

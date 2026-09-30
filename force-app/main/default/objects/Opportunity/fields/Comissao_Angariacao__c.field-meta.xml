@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Comissao_Angariacao__c</fullName>
-    <description>Metade da comissao que remunera quem trouxe o imovel. So existe quando ha venda: um CMI assinado nao paga nada ate uma fracao ser vendida.</description>
+    <description>Metade da comissao que remunera a angariacao. So existe com venda.</description>
     <formula>Comissao_Terravista__c * 0.5</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Parte da Angariação</label>

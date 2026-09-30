@@ -2,6 +2,6 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Empresa</fullName>
     <active>true</active>
-    <description>Conta empresarial: construtoras, promotores, sociedades proprietarias e empresas compradoras. Existe tambem porque ter pelo menos um Record Type em Account e pre-requisito para ativar Person Accounts.</description>
+    <description>Construtoras, promotores e empresas compradoras.</description>
     <label>Empresa</label>
 </RecordType>

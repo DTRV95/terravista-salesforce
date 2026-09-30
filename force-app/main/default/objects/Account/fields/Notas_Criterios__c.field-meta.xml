@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Notas_Criterios__c</fullName>
-    <description>Responde diretamente a PP9: o conhecimento sobre o que cada construtora procura deixa de estar apenas na cabeca dos agentes.</description>
+    <description>Critérios de procura desta construtora, em texto livre.</description>
     <label>Notas e Critérios</label>
     <length>32768</length>
     <type>LongTextArea</type>

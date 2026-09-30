@@ -13,7 +13,7 @@
     <columns><field>Imovel_Interesse__c$Oportunidade__c</field></columns>
     <columns><field>Imovel_Interesse__c$Valor_Proposta__c</field></columns>
     <columns><field>Imovel_Interesse__c$Data_Proposta__c</field></columns>
-    <description>Propostas em aberto, agrupadas por imovel. E a lista que o consultor leva a reuniao com o proprietario quando ha mais do que um interessado: quanto ofereceu cada um, e quem chegou primeiro.</description>
+    <description>Propostas em aberto por imovel: valor e data de cada uma.</description>
     <filter>
         <criteriaItems>
             <column>Imovel_Interesse__c$Estado__c</column>

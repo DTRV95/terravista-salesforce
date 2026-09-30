@@ -3,6 +3,6 @@
     <fullName>Angariacao</fullName>
     <active>true</active>
     <businessProcess>Lead_Angariacao</businessProcess>
-    <description>Proprietário que quer vender ou arrendar o seu imóvel. A Terravista ganha um imóvel na carteira — e é o que alimenta o negócio.</description>
+    <description>Proprietário que quer vender ou arrendar o seu imóvel.</description>
     <label>Angariação de Imóvel</label>
 </RecordType>

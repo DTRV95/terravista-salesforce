@@ -69,7 +69,7 @@
             <label>Negocio perdido</label>
         </rules>
     </decisions>
-    <description>Mantem Imovel__c.Estado_Comercial__c em sincronia com a fase do negocio. Exclui o Record Type Angariacao, onde Contrato Assinado significa CMI assinado e nao imovel transacionado.</description>
+    <description>Mantem o Estado Comercial do imovel em sincronia com a fase do negocio.</description>
     <environments>Default</environments>
     <interviewLabel>Sincronizar Estado do Imovel {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Sincronizar Estado do Imovel</label>

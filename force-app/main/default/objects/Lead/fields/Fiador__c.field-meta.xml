@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Fiador__c</fullName>
-    <description>Ocupa na pontuacao o lugar que o financiamento ocupa numa compra. E o que trava um arrendamento, nao o credito.</description>
+    <description>Existencia de fiador. Pesa na pontuacao de um arrendamento.</description>
     <label>Fiador</label>
     <required>false</required>
     <type>Picklist</type>

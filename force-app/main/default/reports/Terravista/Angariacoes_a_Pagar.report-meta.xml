@@ -19,7 +19,7 @@
         <aggregateTypes>Sum</aggregateTypes>
         <field>Opportunity.Comissao_Angariador__c</field>
     </columns>
-    <description>Quanto se deve a quem angariou. A angariacao so se paga quando o imovel vende, por isso o filtro e a escritura - antes disso o valor e estimativa, nao divida.</description>
+    <description>Quanto se deve a quem angariou. So conta imoveis ja escriturados.</description>
     <filter>
         <criteriaItems>
             <column>STAGE_NAME</column>

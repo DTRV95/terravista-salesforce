@@ -3,6 +3,6 @@
     <fullName>Interessado</fullName>
     <active>false</active>
     <businessProcess>Lead_Interessado</businessProcess>
-    <description>SUBSTITUIDO por Compra e Arrendamento. Desativado e nao apagado: preserva o historico dos registos ja associados.</description>
+    <description>Substituido por Compra e Arrendamento. Desativado para preservar o historico.</description>
     <label>Interessado (descontinuado)</label>
 </RecordType>

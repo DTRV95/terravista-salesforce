@@ -20,7 +20,7 @@
         <field>AMOUNT</field>
     </columns>
     <columns><field>Opportunity.Dias_Sem_Atividade__c</field></columns>
-    <description>Onde esta o negocio que ainda nao fechou. Inclui os dias sem atividade: uma fase avancada parada ha muito tempo e o sinal mais util que um pipeline da.</description>
+    <description>Negocios em aberto por fase, com os dias sem atividade.</description>
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>

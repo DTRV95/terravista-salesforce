@@ -19,7 +19,7 @@
         <aggregateTypes>Average</aggregateTypes>
         <field>Lead.Horas_Ate_Primeiro_Contacto__c</field>
     </columns>
-    <description>Quanto tempo demoramos a ligar de volta. E a metrica que a agencia nunca conseguiu ver, e a que explica os negocios perdidos.</description>
+    <description>Tempo medio ate ao primeiro contacto com o lead.</description>
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Week</dateGranularity>

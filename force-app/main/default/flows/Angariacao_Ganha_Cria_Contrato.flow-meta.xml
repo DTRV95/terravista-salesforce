@@ -2,7 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <description>Quando uma angariacao chega a Contrato Assinado, cria o CMI em rascunho e uma Task para o agente completar o que so se sabe no terreno. Nao cria o Imovel: nessa altura ainda ninguem mediu nem avaliou.</description>
+    <description>Angariacao ganha: cria o contrato de mediacao em rascunho e uma tarefa ao agente.</description>
     <environments>Default</environments>
     <formulas>
         <name>frmRegime</name>

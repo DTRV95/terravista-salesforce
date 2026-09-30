@@ -17,7 +17,7 @@
         <field>AMOUNT</field>
     </columns>
     <columns><field>Opportunity.Comissao_Terravista__c</field></columns>
-    <description>Quanto vem de particulares e quanto vem de empreendimentos. Sao dois negocios diferentes com o mesmo nome.</description>
+    <description>Vendas de particulares e de empreendimentos, separadas.</description>
     <filter>
         <criteriaItems>
             <column>STAGE_NAME</column>

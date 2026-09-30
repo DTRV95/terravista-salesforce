@@ -3,6 +3,6 @@
     <fullName>Pos_Escritura</fullName>
     <active>true</active>
     <businessProcess>Pos_Escritura</businessProcess>
-    <description>Pedidos que chegam depois de o negócio fechar: documentação, chaves, certificado energético, condomínio. Um pedido de informação sobre um imóvel à venda é um Lead, não um Case.</description>
+    <description>Pedidos após o fecho do negócio: documentação, chaves, certificados, condomínio.</description>
     <label>Pós-Escritura</label>
 </RecordType>

@@ -7,5 +7,5 @@
   ISBLANK(TEXT(Motivo_Perda__c))
 )</errorConditionFormula>
     <errorDisplayField>Motivo_Perda__c</errorDisplayField>
-    <errorMessage>Indique o motivo da perda. Um negócio perdido sem razão registada não ensina nada à equipa.</errorMessage>
+    <errorMessage>Indique o motivo da perda.</errorMessage>
 </ValidationRule>

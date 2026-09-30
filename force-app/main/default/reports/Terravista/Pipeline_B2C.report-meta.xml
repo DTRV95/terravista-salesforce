@@ -19,7 +19,7 @@
         <field>AMOUNT</field>
     </columns>
     <columns><field>Opportunity.Dias_Sem_Atividade__c</field></columns>
-    <description>O negocio B2C que ainda nao fechou. Separado do B2B porque sao dois ciclos de venda diferentes e misturados nao se le nenhum.</description>
+    <description>Negocio de particulares ainda em aberto.</description>
     <filter>
         <criteriaItems>
             <column>Opportunity.Linha_Negocio__c</column>

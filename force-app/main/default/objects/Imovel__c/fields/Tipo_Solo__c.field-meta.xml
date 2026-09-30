@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Tipo_Solo__c</fullName>
-    <description>Classificacao do solo em PDM. Aplica-se quando Tipo_Imovel__c = Terreno.</description>
+    <description>Classificacao do solo em PDM. Aplica-se a terrenos.</description>
     <label>Tipo de Solo</label>
     <required>false</required>
     <type>Picklist</type>

@@ -23,7 +23,7 @@
             <label>Sim</label>
         </rules>
     </decisions>
-    <description>Quando se agenda um Evento, carimba a data da visita no lead e no negocio. Sem isto nenhuma validation rule consegue exigir uma visita, porque uma formula nao ve Eventos.</description>
+    <description>Carimba a data da visita no lead e no negocio quando se agenda um Evento.</description>
     <environments>Default</environments>
     <interviewLabel>Carimbar Visita {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Carimbar Visita</label>

@@ -18,7 +18,7 @@
         <aggregateTypes>Sum</aggregateTypes>
         <field>Opportunity.Comissao_Terravista__c</field>
     </columns>
-    <description>Quanto e que cada campanha deu de comissao, e nao quantos leads trouxe. E a pergunta que o marketing nunca conseguia responder a direcao.</description>
+    <description>Comissao gerada por cada campanha.</description>
     <filter>
         <criteriaItems>
             <column>STAGE_NAME</column>

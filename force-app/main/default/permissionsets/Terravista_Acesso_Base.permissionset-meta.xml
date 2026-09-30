@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Acesso do CONSULTOR. Da tudo o que e preciso para trabalhar e NAO da edicao nos campos que medem o proprio consultor: as datas de primeiro contacto e de visita sao carimbadas por Flow e ficam so de leitura. Para as corrigir existe o Terravista_Direcao.</description>
+    <description>Acesso do consultor. As datas carimbadas por Flow ficam so de leitura.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Terravista — Acesso Base</label>
     <classAccesses>
@@ -483,6 +483,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Opportunity</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Imovel__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

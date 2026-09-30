@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Proximo_Passo__c</fullName>
-    <description>Leitura do estado do negócio gerada por Prompt Template: o que está em risco e o que fazer a seguir. É Rich Text e não Long Text Area porque o Prompt Builder não oferece os Long Text Area como destino — foi o que nos travou no Plano de Procura da Lead.</description>
+    <description>Leitura do negócio gerada por AI: o que está em risco e o que fazer.</description>
     <externalId>false</externalId>
     <label>Próximo Passo</label>
     <length>32768</length>

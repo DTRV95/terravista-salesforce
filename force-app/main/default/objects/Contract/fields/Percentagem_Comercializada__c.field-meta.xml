@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Percentagem_Comercializada__c</fullName>
-    <description>Ritmo de comercialização do empreendimento, sem qualquer automação. Protegido contra divisão por zero.</description>
+    <description>Percentagem de frações do empreendimento já vendidas.</description>
     <formula>IF(Imoveis_Total__c = 0, 0, Imoveis_Vendidos__c / Imoveis_Total__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>% Comercializada</label>

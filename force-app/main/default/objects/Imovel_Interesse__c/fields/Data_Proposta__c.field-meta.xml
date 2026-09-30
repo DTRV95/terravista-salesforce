@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Data_Proposta__c</fullName>
-    <description>Quando a proposta foi feita. Sem ela não se sabe quem chegou primeiro, e no dia em que houver duas propostas é a primeira pergunta que o proprietário faz.</description>
+    <description>Data em que a proposta foi feita.</description>
     <label>Data da Proposta</label>
     <required>false</required>
     <type>Date</type>

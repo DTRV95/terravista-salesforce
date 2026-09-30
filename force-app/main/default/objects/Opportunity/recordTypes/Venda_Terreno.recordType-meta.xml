@@ -3,6 +3,6 @@
     <fullName>Venda_Terreno</fullName>
     <active>true</active>
     <businessProcess>Venda_Terreno</businessProcess>
-    <description>Venda de terreno a construtora ou a particular. Inclui avaliação de viabilidade construtiva.</description>
+    <description>Venda de terreno. Inclui avaliação de viabilidade construtiva.</description>
     <label>Venda de Terreno</label>
 </RecordType>

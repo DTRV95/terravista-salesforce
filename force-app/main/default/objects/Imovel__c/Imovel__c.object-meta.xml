@@ -2,7 +2,7 @@
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <compactLayoutAssignment>Terravista_Imovel</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Imóvel angariado pela Terravista. Serve as duas linhas de negócio: um imóvel de particular (B2C) e uma fração de empreendimento (B2B) são o mesmo conceito — o que os distingue é o Contrato de Mediação a que pertencem.</description>
+    <description>Imóvel angariado pela Terravista. Serve particulares e empreendimentos.</description>
     <enableActivities>true</enableActivities>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>

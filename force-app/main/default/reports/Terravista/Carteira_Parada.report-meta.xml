@@ -21,7 +21,7 @@
       objeto standard - foi por isso que os reports de Contract, Lead e
       Opportunity passaram todos a primeira.
     -->
-    <description>O que esta em carteira por vender, e ha quanto tempo. Um imovel parado ha muito tempo ou esta mal avaliado ou esta mal mostrado - qualquer das duas coisas se resolve.</description>
+    <description>Imoveis por vender e ha quanto tempo estao em carteira.</description>
     <filter>
         <criteriaItems>
             <column>Imovel__c$Estado_Comercial__c</column>

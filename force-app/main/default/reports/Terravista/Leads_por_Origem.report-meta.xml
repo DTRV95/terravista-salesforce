@@ -12,7 +12,7 @@
     </chart>
     <columns><field>LAST_NAME</field></columns>
     <columns><field>STATUS</field></columns>
-    <description>Quantos leads entram por cada origem. E o denominador de tudo o resto que o marketing mede.</description>
+    <description>Quantos leads entram por cada origem.</description>
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>

@@ -54,14 +54,14 @@
             -->
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
-        <description>A direção decide. Um passo só: dois passos numa agência de dois consultores seria burocracia a fingir de governo.</description>
+        <description>A direção aprova. Um único passo.</description>
         <label>Aprovação da Direção</label>
         <name>Aprovacao_da_Direcao</name>
         <rejectBehavior>
             <type>RejectRequest</type>
         </rejectBehavior>
     </approvalStep>
-    <description>Uma comissão abaixo de 4% precisa de segunda assinatura. É o único sítio onde uma pessoa sozinha pode dar dinheiro da empresa: o Comissao__c alimenta a comissão de TODAS as vendas do contrato.</description>
+    <description>Comissão abaixo de 4% exige aprovação da direção.</description>
     <enableMobileDeviceAccess>true</enableMobileDeviceAccess>
     <entryCriteria>
         <!--

@@ -20,7 +20,7 @@
         <aggregateTypes>Sum</aggregateTypes>
         <field>Opportunity.Margem_Terravista__c</field>
     </columns>
-    <description>O que sobra para a empresa depois de pagas as comissoes. A comissao bruta sozinha nao diz nada - o que interessa e a margem.</description>
+    <description>Margem da agencia por mes, depois das comissoes.</description>
     <filter>
         <criteriaItems>
             <column>STAGE_NAME</column>

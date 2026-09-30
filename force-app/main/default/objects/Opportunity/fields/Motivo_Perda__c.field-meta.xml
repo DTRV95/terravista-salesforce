@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Motivo_Perda__c</fullName>
-    <description>Porque morreu este negocio. Facto da transacao, distinto da capacidade de financiamento da pessoa.</description>
+    <description>Motivo da perda do negocio.</description>
     <label>Motivo da Perda</label>
     <required>false</required>
     <type>Picklist</type>

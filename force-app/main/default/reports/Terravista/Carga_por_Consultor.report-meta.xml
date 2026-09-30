@@ -14,7 +14,7 @@
     <columns><field>STAGE_NAME</field></columns>
     <columns><field>CLOSE_DATE</field></columns>
     <columns><field>Opportunity.Dias_Sem_Atividade__c</field></columns>
-    <description>Quantos negocios abertos tem cada consultor. Resolve a decisao que se tomava a olho: a quem atribuir sem saber quem esta ocupado.</description>
+    <description>Negocios abertos por consultor. Apoia a atribuicao de leads.</description>
     <filter>
         <criteriaItems>
             <column>STAGE_NAME</column>
