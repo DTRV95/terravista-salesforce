@@ -4,6 +4,10 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Terravista — Acesso Base</label>
     <classAccesses>
+        <apexClass>ConverterLead</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AssistenteCriarCliente</apexClass>
         <enabled>true</enabled>
     </classAccesses>
